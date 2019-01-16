@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { IList } from "../interfaces";
 
-const List = ({ list, setList, setPod }: IList) => {
+const List = (props: IList) => {
   useEffect(() => {
     /*
       1. setList (state)
@@ -9,14 +9,14 @@ const List = ({ list, setList, setPod }: IList) => {
       3. fetch and setList (API)
       4. store in storage
      */
-    setList(list);
+    // setList(list);
   });
 
   return (
     <div>
       <ul>
-        {list.map((l: string) => (
-          <li onClick={() => setPod(l)}>{l}</li>
+        {props.list.map((l: string) => (
+          <li onClick={() => props.setPod(l)}>{l}</li>
         ))}
       </ul>
     </div>

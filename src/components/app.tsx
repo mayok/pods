@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import List from "./list";
 import Contents from "./contents";
-import { Channel } from "../interfaces";
+import { Channels } from "../interfaces";
 
 const App = () => {
   const [list, setList] = useState<string[]>([]);
-  const [channel, setChannel] = useState<Channel[]>([]);
+
+  // todo: do not use any
+  const [channels, setChannels] = useState<any>(null);
   const [pod, setPod] = useState("");
 
   return (
     <div>
       <List list={list} setList={setList} setPod={setPod} />
-      <Contents pod={pod} channel={channel} setChannel={setChannel} />
+      <Contents pod={pod} channels={channels} setChannels={setChannels} />
     </div>
   );
 };

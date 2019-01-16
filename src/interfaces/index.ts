@@ -5,11 +5,16 @@ export interface IList {
 }
 
 export interface Channel {
-  item: string;
+  title: string;
+  contents: string[];
+}
+
+export interface Channels {
+  [key: string]: Channel;
 }
 
 export interface IContents {
   pod: string;
-  channel: Channel[];
-  setChannel: (channel: Channel[]) => void;
+  channels: Channels;
+  setChannels: (channels: Channels) => void;
 }
