@@ -7,7 +7,7 @@ import { fetchList } from "../provider/api";
 const List = ({ list, setList, setPod }: IList) => {
   useEffect(
     () => {
-      if (!list.length) {
+      if (list.length === 0) {
         // get from storage
         const storage_value = Storage._get("list");
         if (storage_value) {
@@ -15,10 +15,10 @@ const List = ({ list, setList, setPod }: IList) => {
         }
 
         // fetch from api
-        // const api_value = fetchList();
-        // setList(api_value);
-
-        // Storage._set("list", JSON.stringify(api_value));
+        fetchList().then(v => {
+          setList(v);
+          Storage._set("list", JSON.stringify(v));
+        });
       }
     },
     [list]
@@ -26,7 +26,6 @@ const List = ({ list, setList, setPod }: IList) => {
 
   return (
     <div>
-      {console.log(list, "list")}
       <ul>
         {list.map((l: string) => (
           <li onClick={() => setPod(l)}>{l}</li>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { IContents, Channels } from "../interfaces";
+import { IContents, Item } from "../interfaces";
 import { fetchContents } from "../provider/api";
 import Storage from "../provider/storage";
 import Loading from "./loading";
@@ -9,14 +9,16 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
     () => {
       if (pod && !channels[pod]) {
         // get from storage
-        // todo: storage may return empty
         const storage_value = JSON.parse(Storage._get(pod));
-        setChannels(Object.assign(channels, storage_value));
+        if (storage_value) {
+          setChannels(Object.assign(channels, storage_value));
+        }
 
         // fetch from API
-        const api_value = fetchContents(pod);
-        setChannels(Object.assign(channels, api_value));
-        Storage._set(pod, JSON.stringify(api_value));
+        fetchContents(pod).then(v => {
+          setChannels(Object.assign(channels, v));
+          Storage._set(pod, JSON.stringify(v));
+        });
       }
     },
     [pod]
@@ -27,8 +29,13 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
       <div>
         <h2>{channels[pod].title}</h2>
         <ul>
-          {channels[pod].contents.map((c: string) => (
-            <li>{c}</li>
+          {channels[pod].contents.map((c: Item) => (
+            <li>
+              <h2>{c.title}</h2>
+              <span>{c.url}</span>
+              <span>{c.date}</span>
+              <span>{c.type}</span>
+            </li>
           ))}
         </ul>
       </div>

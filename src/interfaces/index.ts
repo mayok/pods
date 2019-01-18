@@ -4,9 +4,16 @@ export interface IList {
   setPod: (pod: string) => void;
 }
 
+export interface Item {
+  title: string;
+  url: string;
+  type: string;
+  date: string;
+}
+
 export interface Channel {
   title: string;
-  contents: string[];
+  contents: Item[];
 }
 
 export interface Channels {
