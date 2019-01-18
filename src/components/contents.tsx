@@ -9,14 +9,14 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
     () => {
       if (pod && !channels[pod]) {
         // get from storage
-        const storage_value = JSON.parse(Storage._get(pod));
+        const storage_value = Storage._get(pod);
         if (storage_value) {
-          setChannels(Object.assign(channels, storage_value));
+          setChannels(Object.assign({}, channels, JSON.parse(storage_value)));
         }
 
         // fetch from API
         fetchContents(pod).then(v => {
-          setChannels(Object.assign(channels, v));
+          setChannels(Object.assign({}, channels, v));
           Storage._set(pod, JSON.stringify(v));
         });
       }
