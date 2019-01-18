@@ -28,7 +28,9 @@ const List = ({ list, setList, setPod }: IList) => {
     <div>
       <ul>
         {list.map((l: string) => (
-          <li onClick={() => setPod(l)}>{l}</li>
+          <li key={l} onClick={() => setPod(l)}>
+            {l}
+          </li>
         ))}
       </ul>
     </div>

@@ -30,7 +30,7 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
         <h2>{channels[pod].title}</h2>
         <ul>
           {channels[pod].contents.map((c: Item) => (
-            <li>
+            <li key={c.title}>
               <h2>{c.title}</h2>
               <span>{c.url}</span>
               <span>{c.date}</span>
