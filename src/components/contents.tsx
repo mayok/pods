@@ -24,7 +24,7 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
     [pod]
   );
 
-  if (pod && !!channels[pod]) {
+  if (pod && channels.hasOwnProperty(pod)) {
     return (
       <div>
         <h2>{channels[pod].title}</h2>
