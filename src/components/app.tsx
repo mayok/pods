@@ -5,9 +5,7 @@ import { Channels } from "../interfaces";
 
 const App = () => {
   const [list, setList] = useState<string[]>([]);
-
-  // todo: do not use any
-  const [channels, setChannels] = useState<any>(null);
+  const [channels, setChannels] = useState<Channels>({});
   const [pod, setPod] = useState("");
 
   return (
