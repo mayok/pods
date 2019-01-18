@@ -33,7 +33,7 @@ export const fetchContents = async (channel: string): Promise<IContents> => {
         title: e.title._text,
         url: e.guid._text,
         type: e.enclosure._attributes.type,
-        date: e.pubDate
+        date: e.pubDate._text
       }))
     }
   };
