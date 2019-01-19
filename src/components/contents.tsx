@@ -39,7 +39,9 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
           {channels[pod].contents.map((c: IChannelItem) => (
             <Channel key={c.title}>
               <ChannelName>{c.title}</ChannelName>
-              <Link>{c.url}</Link>
+              <Link as="a" href={c.url}>
+                {c.url}
+              </Link>
             </Channel>
           ))}
         </Channels>
