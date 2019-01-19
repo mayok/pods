@@ -58,7 +58,7 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
 export default Contents;
 
 const Container = styled.div`
-  padding: 10px;
+  padding: 12px 24px;
   width: 740px;
   background: var(--daight);
 `;
@@ -87,5 +87,5 @@ const Channel = styled.li`
 
 const ChannelName = styled.h2`
   margin: 0;
-  font-fize: 1.3em;
+  font-size: 1.3em;
 `;

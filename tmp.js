@@ -20,5 +20,8 @@ var xml = `
 var convert = require("xml-js");
 var result1 = convert.xml2json(xml, { compact: true, trim: true });
 var json = JSON.parse(result1);
+// console.log(json.rss[0].channel[0].title[0]._text[0]);
+// console.log(json.rss[0].channel[0].item.map(e => e));
+console.log(json.rss.channel.item instanceof Array);
 console.log(json.rss.channel.title._text);
-console.log(json.rss.channel.item[0]);
+console.log(json.rss.channel.item);

@@ -26,15 +26,32 @@ export const fetchContents = async (channel: string): Promise<IContents> => {
   const json_string = convert.xml2json(xml, { compact: true, trim: true });
   const json = JSON.parse(json_string);
 
+  // memo: xml-js has alwaysArray options
+  if (json.rss.chanel.item instanceof Array) {
+    return {
+      [channel]: {
+        title: json.rss.channel.title._text,
+        contents: json.rss.channel.item.map((e: any) => ({
+          title: e.title._text,
+          url: e.guid._text,
+          type: e.enclosure._attributes.type,
+          date: e.pubDate._text
+        }))
+      }
+    };
+  }
+
   return {
     [channel]: {
       title: json.rss.channel.title._text,
-      contents: json.rss.channel.item.map((e: any) => ({
-        title: e.title._text,
-        url: e.guid._text,
-        type: e.enclosure._attributes.type,
-        date: e.pubDate._text
-      }))
+      contents: [
+        {
+          title: json.rss.channel.item.title._text,
+          url: json.rss.channel.item.guid._text,
+          type: json.rss.channel.item.enclosure._attributes.type,
+          date: json.rss.channel.item.pubDate._text
+        }
+      ]
     }
   };
 };
