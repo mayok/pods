@@ -40,8 +40,6 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
             <Channel key={c.title}>
               <ChannelName>{c.title}</ChannelName>
               <span>{c.url}</span>
-              <span>{c.date}</span>
-              <span>{c.type}</span>
             </Channel>
           ))}
         </Channels>
@@ -61,6 +59,7 @@ const Container = styled.div`
   padding: 12px 24px;
   width: 740px;
   background: var(--daight);
+  overflow-y: auto;
 `;
 
 const Title = styled.h1`

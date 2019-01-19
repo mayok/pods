@@ -47,6 +47,14 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(128, 128, 128, 0.5);
+  }
 `;
 
 const Container = styled.div`
@@ -55,4 +63,6 @@ const Container = styled.div`
   width: 960px;
   height: calc(100vh - 60px);
   background: var(--dark);
+  min-height: 50vh;
+  overflow-y: hidden;
 `;
