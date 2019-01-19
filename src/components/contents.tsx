@@ -39,7 +39,7 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
           {channels[pod].contents.map((c: IChannelItem) => (
             <Channel key={c.title}>
               <ChannelName>{c.title}</ChannelName>
-              <span>{c.url}</span>
+              <Link>{c.url}</Link>
             </Channel>
           ))}
         </Channels>
@@ -87,4 +87,14 @@ const Channel = styled.li`
 const ChannelName = styled.h2`
   margin: 0;
   font-size: 1.3em;
+`;
+
+const Link = styled.a`
+  color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text-active);
+    text-decoration: underline;
+  }
 `;
