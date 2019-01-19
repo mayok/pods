@@ -40,7 +40,8 @@ const GlobalStyle = createGlobalStyle`
     --text-active-hover: #fff;
     --black: #23272a;
     --dark: #2c2f33;
-    --dark-hover: #414345;
+    --dark-hover: #3e424f;
+    --daight: #353840
   }
 
   * {
