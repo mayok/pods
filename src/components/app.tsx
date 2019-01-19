@@ -35,9 +35,12 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --text: #99aab5;
+    --text-hover: #A3B2BC;
     --text-active: #fefefe;
+    --text-active-hover: #fff;
     --black: #23272a;
     --dark: #2c2f33;
+    --dark-hover: #414345;
   }
 
   * {

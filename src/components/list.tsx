@@ -69,8 +69,14 @@ const ListContainer = styled.ul`
 `;
 
 const ChannelName = styled.li`
-  padding-left: 1em;
+  padding: 4px 4px 4px 1.1em;
   list-style-type: none;
   font-size: 1.1em;
   color: var(--text);
+  border-radius: 3px;
+
+  &:hover {
+    color: var(--text-hover);
+    background: var(--dark-hover);
+  }
 `;
