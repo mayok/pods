@@ -27,7 +27,7 @@ export const fetchContents = async (channel: string): Promise<IContents> => {
   const json = JSON.parse(json_string);
 
   // memo: xml-js has alwaysArray options
-  if (json.rss.chanel.item instanceof Array) {
+  if (json.rss.channel.item instanceof Array) {
     return {
       [channel]: {
         title: json.rss.channel.title._text,
