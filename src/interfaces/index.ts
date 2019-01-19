@@ -1,20 +1,15 @@
-export interface IList {
-  list: string[];
-  setList: (list: string[]) => void;
-  setPod: (pod: string) => void;
-}
-
-export interface Channel {
+export interface IChannelItem {
   title: string;
-  contents: string[];
+  url: string;
+  type: string;
+  date: string;
 }
 
-export interface Channels {
-  [key: string]: Channel;
+export interface IChannel {
+  title: string;
+  contents: IChannelItem[];
 }
 
-export interface IContents {
-  pod: string;
-  channels: Channels;
-  setChannels: (channels: Channels) => void;
+export interface IChannels {
+  [key: string]: IChannel;
 }
