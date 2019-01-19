@@ -30,16 +30,21 @@ const List = ({ list, setList, setPod }: IList) => {
     [list]
   );
 
+  const handleClick = (evt: React.MouseEvent, channel: string) => {
+    // todo: change channel name color
+    setPod(channel);
+  };
+
   return (
     <Container>
       <Title>Channels</Title>
-      <ul>
+      <ListContainer>
         {list.map((l: string) => (
-          <li key={l} onClick={() => setPod(l)}>
+          <ChannelName key={l} onClick={(e: React.MouseEvent) => handleClick(e, l)}>
             {l}
-          </li>
+          </ChannelName>
         ))}
-      </ul>
+      </ListContainer>
     </Container>
   );
 };
@@ -57,4 +62,15 @@ const Title = styled.h1`
   font-size: 1.5em;
   color: var(--text-active);
   border-bottom: 1px solid var(--black);
+`;
+
+const ListContainer = styled.ul`
+  padding: 0;
+`;
+
+const ChannelName = styled.li`
+  padding-left: 1em;
+  list-style-type: none;
+  font-size: 1.1em;
+  color: var(--text);
 `;
