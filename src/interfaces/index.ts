@@ -1,15 +1,15 @@
-export interface Item {
+export interface IChannelItem {
   title: string;
   url: string;
   type: string;
   date: string;
 }
 
-export interface Channel {
+export interface IChannel {
   title: string;
-  contents: Item[];
+  contents: IChannelItem[];
 }
 
-export interface Channels {
-  [key: string]: Channel;
+export interface IChannels {
+  [key: string]: IChannel;
 }

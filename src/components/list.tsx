@@ -3,14 +3,14 @@ import styled from "styled-components";
 import Storage from "../provider/storage";
 import { fetchList } from "../provider/api";
 
-interface IList {
+interface Props {
   list: string[];
   setList: (list: string[]) => void;
   setPod: (pod: string) => void;
 }
 
 // use memo
-const List = ({ list, setList, setPod }: IList) => {
+const List = ({ list, setList, setPod }: Props) => {
   useEffect(
     () => {
       if (list.length === 0) {

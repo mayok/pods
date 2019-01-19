@@ -1,12 +1,12 @@
 import * as convert from "xml-js";
 import config = require("../config.json");
-import { Channel } from "../interfaces";
+import { IChannel } from "../interfaces";
 
 interface IList {
   channels: string[];
 }
 interface IContents {
-  [x: string]: Channel;
+  [x: string]: IChannel;
 }
 
 // fetch channel list

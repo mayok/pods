@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Item, Channels } from "../interfaces";
+import { IChannelItem, IChannels } from "../interfaces";
 import { fetchContents } from "../provider/api";
 import Storage from "../provider/storage";
 import Loading from "./loading";
 
-interface IContents {
+interface Props {
   pod: string;
-  channels: Channels;
-  setChannels: (channels: Channels) => void;
+  channels: IChannels;
+  setChannels: (channels: IChannels) => void;
 }
 
-const Contents = ({ pod, channels, setChannels }: IContents) => {
+const Contents = ({ pod, channels, setChannels }: Props) => {
   useEffect(
     () => {
       if (pod && !channels[pod]) {
@@ -35,16 +35,16 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
     return (
       <Container>
         <Title>{channels[pod].title}</Title>
-        <ul>
-          {channels[pod].contents.map((c: Item) => (
-            <li key={c.title}>
-              <h2>{c.title}</h2>
+        <Channels>
+          {channels[pod].contents.map((c: IChannelItem) => (
+            <Channel key={c.title}>
+              <ChannelName>{c.title}</ChannelName>
               <span>{c.url}</span>
               <span>{c.date}</span>
               <span>{c.type}</span>
-            </li>
+            </Channel>
           ))}
-        </ul>
+        </Channels>
       </Container>
     );
   }
@@ -70,4 +70,22 @@ const Title = styled.h1`
   border-bottom: 1px solid var(--black);
 `;
 
-const Channel = styled.div``;
+const Channels = styled.ul`
+  margin: 24px;
+  padding: 0;
+
+  & li:not(:first-child) {
+    margin: 20px 0 0;
+  }
+`;
+const Channel = styled.li`
+  padding: 8px 8px 32px;
+  list-style-type: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--dark);
+`;
+
+const ChannelName = styled.h2`
+  margin: 0;
+  font-fize: 1.3em;
+`;

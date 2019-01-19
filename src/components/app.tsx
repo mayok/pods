@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import List from "./list";
 import Contents from "./contents";
-import { Channels } from "../interfaces";
+import { IChannels } from "../interfaces";
 
 const App = () => {
   const [list, setList] = useState<string[]>([]);
-  const [channels, setChannels] = useState<Channels>({});
+  const [channels, setChannels] = useState<IChannels>({});
 
   // todo: set last seen as initial value
   const [pod, setPod] = useState("");
