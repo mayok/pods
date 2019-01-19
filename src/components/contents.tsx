@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
-import { IContents, Item } from "../interfaces";
+import styled from "styled-components";
+import { Item, Channels } from "../interfaces";
 import { fetchContents } from "../provider/api";
 import Storage from "../provider/storage";
 import Loading from "./loading";
+
+interface IContents {
+  pod: string;
+  channels: Channels;
+  setChannels: (channels: Channels) => void;
+}
 
 const Contents = ({ pod, channels, setChannels }: IContents) => {
   useEffect(
@@ -26,8 +33,8 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
 
   if (pod && channels.hasOwnProperty(pod)) {
     return (
-      <div>
-        <h2>{channels[pod].title}</h2>
+      <Container>
+        <Title>{channels[pod].title}</Title>
         <ul>
           {channels[pod].contents.map((c: Item) => (
             <li key={c.title}>
@@ -38,10 +45,28 @@ const Contents = ({ pod, channels, setChannels }: IContents) => {
             </li>
           ))}
         </ul>
-      </div>
+      </Container>
     );
   }
-  return <Loading />;
+  return (
+    <Container>
+      <Loading />
+    </Container>
+  );
 };
 
 export default Contents;
+
+const Container = styled.div`
+  padding: 10px;
+  width: 740px;
+`;
+
+const Title = styled.h1`
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--text-active);
+  border-bottom: 1px solid var(--black);
+`;
+
+const Channel = styled.div``;
