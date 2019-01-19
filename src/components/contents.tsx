@@ -60,6 +60,7 @@ export default Contents;
 const Container = styled.div`
   padding: 10px;
   width: 740px;
+  background: var(--daight);
 `;
 
 const Title = styled.h1`
