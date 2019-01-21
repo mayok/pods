@@ -14,7 +14,7 @@ interface Props {
 const Contents = ({ pod, channels, setChannels }: Props) => {
   useEffect(
     () => {
-      if (pod.name && channels.hasOwnProperty(pod.name)) {
+      if (pod.name && !channels.hasOwnProperty(pod.name)) {
         // get from storage
         const storage_value = Storage._get(pod.name);
         if (storage_value) {
