@@ -24,17 +24,19 @@ const List = ({ list, setList, setPod }: Props) => {
 
         // fetch from api
         const obj = config.paths
-          .map(async path => {
+          .map(path => {
             // use last direcotry name as keyword
-            return await fetchList(path.split("/").pop() as string);
+            let res = {};
+            fetchList(path.split("/").pop() as string).then(v => {
+              res = v;
+            });
+            return res;
           })
-          .reduce((acc, val) => Object.assign(acc, val));
+          .reduce((acc, val) => Object.assign(acc, val), {});
 
         Storage._set("list", JSON.stringify(obj));
-        obj.then(v => {
-          console.log(v);
-          setList(v);
-        });
+        console.log(obj);
+        setList(obj);
       }
     },
     [list]
