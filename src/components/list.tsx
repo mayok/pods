@@ -37,21 +37,31 @@ const List = ({ list, setList, setPod }: Props) => {
 
   const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color
-    setPod({group, name});
+    setPod({ group, name });
   };
 
   return (
     <Container>
       <Title>Channels</Title>
-      <ListContainer>
-        {Object.keys(list).map(group =>
-          list[group].channels.map(channel => (
-            <ChannelName key={`${group}-${channel}`} onClick={(e: React.MouseEvent) => handleClick(e, group, channel)}>
-              {channel}
-            </ChannelName>
-          ))
-        )}
-      </ListContainer>
+      {Object.keys(list).map(group => (
+        <GroupContainer>
+          <Input type="checkbox" id={group} checked={true} />
+          <Label htmlFor={group}>
+            {group}
+          </Label>
+
+          <ListContainer>
+            {list[group].channels.map(channel => (
+              <ChannelName
+                key={`${group}-${channel}`}
+                onClick={(e: React.MouseEvent) => handleClick(e, group, channel)}
+              >
+                {channel}
+              </ChannelName>
+            ))}
+          </ListContainer>
+        </GroupContainer>
+      ))}
     </Container>
   );
 };
@@ -71,9 +81,29 @@ const Title = styled.h1`
   border-bottom: 1px solid var(--black);
 `;
 
+const GroupContainer = styled.div``;
+
 const ListContainer = styled.ul`
   padding: 0;
 `;
+
+const Input = styled.input`
+  display: none;
+
+  &:checked ~ ul {
+    display: block;
+  }
+
+  &:checked ~ label:before {
+    content: "-"
+  }
+
+  &:not(:checked) ~ label:before {
+    content: "+"
+  }
+`;
+
+const Label = styled.label``;
 
 const ChannelName = styled.li`
   padding: 4px 4px 4px 1.1em;
