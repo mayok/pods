@@ -19,7 +19,8 @@ const List = ({ list, setList, setPod }: Props) => {
         // get from storage
         const storage_value = Storage._get("list");
         if (storage_value && storage_value !== JSON.stringify(list)) {
-          setList(JSON.parse(storage_value));
+          console.log("hoge");
+          // setList(JSON.parse(storage_value));
         }
 
         // fetch from api
@@ -29,15 +30,17 @@ const List = ({ list, setList, setPod }: Props) => {
           })
           .reduce(async (acc, val) => {
             const _val = await val;
-            console.log(_val);
+            console.log(acc, "acc");
+            console.log(_val, "_val");
             return Object.assign({}, acc, _val);
           }, {});
 
         console.log(obj);
         obj.then(v => {
+          console.log(v, "v");
           Storage._set("list", JSON.stringify(v));
           if (Object.keys(v).length > 0) {
-            setList(obj);
+            // setList(obj);
           }
         });
       }
