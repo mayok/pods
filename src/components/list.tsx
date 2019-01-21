@@ -29,10 +29,12 @@ const List = ({ list, setList, setPod }: Props) => {
             return await fetchList(path.split("/").pop() as string);
           })
           .reduce((acc, val) => Object.assign(acc, val));
+
+        Storage._set("list", JSON.stringify(obj));
         obj.then(v => {
+          console.log(v);
           setList(v);
         });
-        Storage._set("list", JSON.stringify(obj));
       }
     },
     [list]
