@@ -31,7 +31,7 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
     [pod]
   );
 
-  if (pod && channels.hasOwnProperty(pod.name)) {
+  if (pod.name && channels.hasOwnProperty(pod.name)) {
     return (
       <Container>
         <Title>{channels[pod.name].title}</Title>
