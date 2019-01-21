@@ -23,14 +23,15 @@ const List = ({ list, setList, setPod }: Props) => {
         }
 
         // fetch from api
-        config.paths.map(path => {
+        let obj = {};
+        config.paths.forEach(path => {
           // use last direcotry name as keyword
           fetchList(path.split("/").pop() as string).then(v => {
-            const new_list = Object.assign({}, list, v)
-            setList(new_list);
-            Storage._set("list", JSON.stringify(new_list));
+            Object.assign(obj, v);
           });
         });
+        setList(obj);
+        Storage._set("list", JSON.stringify(obj));
       }
     },
     [list]
@@ -45,11 +46,9 @@ const List = ({ list, setList, setPod }: Props) => {
     <Container>
       <Title>Channels</Title>
       {Object.keys(list).map(group => (
-        <GroupContainer>
+        <GroupContainer key={group}>
           <Input type="checkbox" id={group} checked={true} />
-          <Label htmlFor={group}>
-            {group}
-          </Label>
+          <Label htmlFor={group}>{group}</Label>
 
           <ListContainer>
             {list[group].channels.map(channel => (
@@ -96,11 +95,11 @@ const Input = styled.input`
   }
 
   &:checked ~ label:before {
-    content: "-"
+    content: "-";
   }
 
   &:not(:checked) ~ label:before {
-    content: "+"
+    content: "+";
   }
 `;
 
