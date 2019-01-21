@@ -29,14 +29,17 @@ const List = ({ list, setList, setPod }: Props) => {
           })
           .reduce(async (acc, val) => {
             const _val = await val;
+            console.log(_val);
             return Object.assign({}, acc, _val);
           }, {});
 
         console.log(obj);
-        Storage._set("list", JSON.stringify(obj));
-        if (Object.keys(obj).length > 0) {
-          setList(obj);
-        }
+        obj.then(v => {
+          Storage._set("list", JSON.stringify(v));
+          if (Object.keys(v).length > 0) {
+            setList(obj);
+          }
+        });
       }
     },
     [list]
