@@ -48,7 +48,7 @@ const List = ({ list, setList, setPod }: Props) => {
       <Title>Channels</Title>
       {Object.keys(list).map(group => (
         <GroupContainer key={group}>
-          <Input type="checkbox" id={group} checked={true} />
+          <Input type="checkbox" id={group} defaultChecked={true} />
           <Label htmlFor={group}>{group}</Label>
 
           <ListContainer>
