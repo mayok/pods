@@ -28,15 +28,20 @@ const List = ({ list, setList, setPod }: Props) => {
             // use last direcotry name as keyword
             let res = {};
             fetchList(path.split("/").pop() as string).then(v => {
+              console.log(v, "in fetchList.then")
               res = v;
             });
+            console.log(res, "in map")
             return res;
           })
-          .reduce((acc, val) => Object.assign(acc, val), {});
+          .reduce((acc, val) => Object.assign({}, acc, val), {});
 
         Storage._set("list", JSON.stringify(obj));
         console.log(obj);
-        setList(obj);
+
+        if (Object.keys(obj).length > 0) {
+          setList(obj);
+        }
       }
     },
     [list]
