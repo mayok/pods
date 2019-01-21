@@ -18,27 +18,22 @@ const List = ({ list, setList, setPod }: Props) => {
       if (Object.keys(list).length === 0) {
         // get from storage
         const storage_value = Storage._get("list");
-        if (storage_value) {
+        if (storage_value && storage_value !== JSON.stringify(list)) {
           setList(JSON.parse(storage_value));
         }
 
         // fetch from api
         const obj = config.paths
-          .map(path => {
-            // use last direcotry name as keyword
-            let res = {};
-            fetchList(path.split("/").pop() as string).then(v => {
-              console.log(v, "in fetchList.then")
-              res = v;
-            });
-            console.log(res, "in map")
-            return res;
+          .map(async path => {
+            return fetchList(path.split("/").pop() as string);
           })
-          .reduce((acc, val) => Object.assign({}, acc, val), {});
+          .reduce(async (acc, val) => {
+            const _val = await val;
+            return Object.assign({}, acc, _val);
+          }, {});
 
-        Storage._set("list", JSON.stringify(obj));
         console.log(obj);
-
+        Storage._set("list", JSON.stringify(obj));
         if (Object.keys(obj).length > 0) {
           setList(obj);
         }
