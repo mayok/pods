@@ -26,8 +26,9 @@ const List = ({ list, setList, setPod }: Props) => {
         config.paths.map(path => {
           // use last direcotry name as keyword
           fetchList(path.split("/").pop() as string).then(v => {
-            setList(v);
-            Storage._set("list", JSON.stringify(v));
+            const new_list = Object.assign({}, list, v)
+            setList(new_list);
+            Storage._set("list", JSON.stringify(new_list));
           });
         });
       }
