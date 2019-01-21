@@ -1,3 +1,10 @@
+export interface IChannels {
+  [key: string]: IChannel;
+}
+export interface IChannel {
+  title: string;
+  contents: IChannelItem[];
+}
 export interface IChannelItem {
   title: string;
   url: string;
@@ -5,11 +12,14 @@ export interface IChannelItem {
   date: string;
 }
 
-export interface IChannel {
-  title: string;
-  contents: IChannelItem[];
+export interface IList {
+  [key: string]: IChannelList;
+}
+export interface IChannelList {
+  channels: string[];
 }
 
-export interface IChannels {
-  [key: string]: IChannel;
+export interface IPods {
+  group: string;
+  name: string;
 }

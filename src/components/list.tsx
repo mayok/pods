@@ -2,18 +2,20 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Storage from "../provider/storage";
 import { fetchList } from "../provider/api";
+import { IList, IPods } from "../interfaces";
+import config = require("../config.json");
 
 interface Props {
-  list: string[];
-  setList: (list: string[]) => void;
-  setPod: (pod: string) => void;
+  list: IList;
+  setList: (list: IList) => void;
+  setPod: (pod: IPods) => void;
 }
 
 // use memo
 const List = ({ list, setList, setPod }: Props) => {
   useEffect(
     () => {
-      if (list.length === 0) {
+      if (Object.keys(list).length === 0) {
         // get from storage
         const storage_value = Storage._get("list");
         if (storage_value) {
@@ -21,29 +23,34 @@ const List = ({ list, setList, setPod }: Props) => {
         }
 
         // fetch from api
-        fetchList().then(v => {
-          setList(v);
-          Storage._set("list", JSON.stringify(v));
+        config.paths.map(path => {
+          // use last direcotry name as keyword
+          fetchList(path.split("/").pop() as string).then(v => {
+            setList(v);
+            Storage._set("list", JSON.stringify(v));
+          });
         });
       }
     },
     [list]
   );
 
-  const handleClick = (evt: React.MouseEvent, channel: string) => {
+  const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color
-    setPod(channel);
+    setPod({group, name});
   };
 
   return (
     <Container>
       <Title>Channels</Title>
       <ListContainer>
-        {list.map((l: string) => (
-          <ChannelName key={l} onClick={(e: React.MouseEvent) => handleClick(e, l)}>
-            {l}
-          </ChannelName>
-        ))}
+        {Object.keys(list).map(group =>
+          list[group].channels.map(channel => (
+            <ChannelName key={`${group}-${channel}`} onClick={(e: React.MouseEvent) => handleClick(e, group, channel)}>
+              {channel}
+            </ChannelName>
+          ))
+        )}
       </ListContainer>
     </Container>
   );

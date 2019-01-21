@@ -1,26 +1,27 @@
 import * as convert from "xml-js";
 import config = require("../config.json");
-import { IChannel } from "../interfaces";
+import { IList, IChannel } from "../interfaces";
 
-interface IList {
-  channels: string[];
-}
 interface IContents {
   [x: string]: IChannel;
 }
 
 // fetch channel list
-export const fetchList = async (): Promise<string[]> => {
-  const response = await fetch(`${config.host}:${config.port}/podcast/`);
-  const list: IList = await response.json();
+export const fetchList = async (path: string): Promise<IList> => {
+  const response = await fetch(`${config.host}/${path}/`);
+  const list = await response.json();
 
-  return list.channels;
+  return {
+    [path]: {
+      channels: list.channels
+    }
+  };
 };
 
 // fetch channel contents
-export const fetchContents = async (channel: string): Promise<IContents> => {
+export const fetchContents = async (path: string, channel: string): Promise<IContents> => {
   // todo: think when server returns error
-  const response = await fetch(`${config.host}:${config.port}/podcast/${channel}/`);
+  const response = await fetch(`${config.host}/${path}/${channel}/`);
   const xml = await response.text();
 
   const json_string = convert.xml2json(xml, { compact: true, trim: true });

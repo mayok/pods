@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import List from "./list";
 import Contents from "./contents";
-import { IChannels } from "../interfaces";
+import { IList, IChannels, IPods } from "../interfaces";
 
 const App = () => {
-  const [list, setList] = useState<string[]>([]);
+  const [list, setList] = useState<IList>({});
   const [channels, setChannels] = useState<IChannels>({});
 
   // todo: set last seen as initial value
-  const [pod, setPod] = useState("");
+  const [pod, setPod] = useState<IPods>({group: "", name: ""});
 
   return (
     <>

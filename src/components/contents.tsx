@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { IChannelItem, IChannels } from "../interfaces";
+import { IChannelItem, IChannels, IPods } from "../interfaces";
 import { fetchContents } from "../provider/api";
 import Storage from "../provider/storage";
 import Loading from "./loading";
 
 interface Props {
-  pod: string;
+  pod: IPods;
   channels: IChannels;
   setChannels: (channels: IChannels) => void;
 }
@@ -14,29 +14,29 @@ interface Props {
 const Contents = ({ pod, channels, setChannels }: Props) => {
   useEffect(
     () => {
-      if (pod && !channels[pod]) {
+      if (pod.name && channels.hasOwnProperty(pod.name)) {
         // get from storage
-        const storage_value = Storage._get(pod);
+        const storage_value = Storage._get(pod.name);
         if (storage_value) {
           setChannels(Object.assign({}, channels, JSON.parse(storage_value)));
         }
 
         // fetch from API
-        fetchContents(pod).then(v => {
+        fetchContents(pod.group, pod.name).then(v => {
           setChannels(Object.assign({}, channels, v));
-          Storage._set(pod, JSON.stringify(v));
+          Storage._set(pod.name, JSON.stringify(v));
         });
       }
     },
     [pod]
   );
 
-  if (pod && channels.hasOwnProperty(pod)) {
+  if (pod && channels.hasOwnProperty(pod.name)) {
     return (
       <Container>
-        <Title>{channels[pod].title}</Title>
+        <Title>{channels[pod.name].title}</Title>
         <Channels>
-          {channels[pod].contents.map((c: IChannelItem) => (
+          {channels[pod.name].contents.map((c: IChannelItem) => (
             <Channel key={c.title}>
               <ChannelName>{c.title}</ChannelName>
               <Link as="a" href={c.url}>
