@@ -24,20 +24,14 @@ const List = ({ list, setList, setPod }: Props) => {
         }
 
         // fetch from api
-        const obj = config.paths
-          .map(async path => {
+        const obj = Promise.all(
+          config.paths.map(async path => {
             return fetchList(path.split("/").pop() as string);
           })
-          .reduce(async (acc, val) => {
-            const _val = await val;
-            console.log(acc, "acc");
-            console.log(_val, "_val");
-            return Object.assign({}, acc, _val);
-          }, {});
+        ).then(lists => lists.reduce((acc, val) => Object.assign({}, acc, val), {}));
 
-        console.log(obj);
         obj.then(v => {
-          console.log(v, "v");
+          console.log(v);
           Storage._set("list", JSON.stringify(v));
           if (Object.keys(v).length > 0) {
             // setList(obj);
