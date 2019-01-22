@@ -37,7 +37,7 @@ export const fetchContents = async (path: string, channel: string): Promise<ICon
           url: e.guid._text,
           type: e.enclosure._attributes.type,
           date: e.pubDate._text
-        }))
+        })).reverse()
       }
     };
   }
