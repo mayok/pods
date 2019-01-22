@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { IChannelItem, IChannels, IPods } from "../interfaces";
+
 import { fetchContents } from "../provider/api";
 import Storage from "../provider/storage";
 import Loading from "./loading";
@@ -80,6 +81,7 @@ const Title = styled.h1`
   background: var(--daight);
   border-bottom: 1px solid var(--black);
   z-index: 5;
+
 `;
 
 const Channels = styled.ul`

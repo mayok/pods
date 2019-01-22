@@ -11,6 +11,7 @@ const App = () => {
   // todo: set last seen as initial value
   const [pod, setPod] = useState<IPods>({group: "", name: ""});
 
+
   return (
     <>
       <GlobalStyle />
@@ -66,4 +67,5 @@ const Container = styled.div`
   min-height: 50vh;
   overflow-y: hidden;
   background: var(--dark);
+
 `;

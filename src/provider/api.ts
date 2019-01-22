@@ -38,6 +38,7 @@ export const fetchContents = async (path: string, channel: string): Promise<ICon
           type: e.enclosure._attributes.type,
           date: e.pubDate._text
         })).reverse()
+
       }
     };
   }
