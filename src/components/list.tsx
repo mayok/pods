@@ -23,9 +23,9 @@ const List = ({ list, setList, setPod }: Props) => {
         }
 
         // fetch from api
-        const obj = Promise.all(
-          config.paths.map(async path => fetchList(path.split("/").pop() as string))
-        ).then(lists => lists.reduce((acc, val) => Object.assign({}, acc, val), {}));
+        const obj = Promise.all(config.paths.map(async path => fetchList(path.split("/").pop() as string))).then(
+          lists => lists.reduce((acc, val) => Object.assign({}, acc, val), {})
+        );
 
         obj.then(v => {
           Storage._set("list", JSON.stringify(v));
@@ -82,9 +82,12 @@ const Title = styled.h1`
   border-bottom: 1px solid var(--black);
 `;
 
-const GroupContainer = styled.div``;
+const GroupContainer = styled.div`
+  position: relative;
+`;
 
 const ListContainer = styled.ul`
+  display: none;
   padding: 0;
 `;
 
@@ -104,7 +107,20 @@ const Input = styled.input`
   }
 `;
 
-const Label = styled.label``;
+const Label = styled.label`
+  margin-left: 0.9em;
+  color: var(--text);
+  font-size: 1.1em;
+  font-weight: bold;
+
+  &:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.9em;
+  }
+`;
 
 const ChannelName = styled.li`
   padding: 4px 4px 4px 1.1em;
