@@ -70,13 +70,21 @@ const List = ({ list, setList, setPod }: Props) => {
 export default List;
 
 const Container = styled.div`
-  padding: 12px 24px;
+  padding: 90px 24px 12px;
   width: 220px;
   height: calc(100vh - 60px);
 `;
 
 const Title = styled.h1`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
   margin: 0;
+  padding: 0 24px;
+  width: 220px;
+  height: 62px;
+  line-height: 60px;
   font-size: 1.5em;
   color: var(--text-active);
   border-bottom: 1px solid var(--black);

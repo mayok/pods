@@ -58,14 +58,23 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
 export default Contents;
 
 const Container = styled.div`
-  padding: 12px 24px;
+  position: relative;
+  padding: 90px 24px 12px;
   width: 740px;
   background: var(--daight);
   overflow-y: auto;
 `;
 
 const Title = styled.h1`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
   margin: 0;
+  padding: 0 24px;
+  width: 740px;
+  height: 62px;
+  line-height: 60px;
   font-size: 1.5em;
   color: var(--text-active);
   border-bottom: 1px solid var(--black);

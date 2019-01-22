@@ -58,11 +58,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Container = styled.div`
-  margin: auto;
   display: flex;
+  position: relative;
+  margin: auto;
   width: 960px;
   height: calc(100vh - 60px);
-  background: var(--dark);
   min-height: 50vh;
   overflow-y: hidden;
+  background: var(--dark);
 `;
