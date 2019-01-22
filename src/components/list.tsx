@@ -73,7 +73,7 @@ const Container = styled.div`
   padding: 0;
   width: 220px;
   height: calc(100vh - 60px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `;
 
