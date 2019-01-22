@@ -2,6 +2,14 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Storage from "../provider/storage";
 import { fetchList } from "../provider/api";
+import { IList, IPods } from "../interfaces";
+import config = require("../config.json");
+
+interface Props {
+  list: IList;
+  setList: (list: IList) => void;
+  setPod: (pod: IPods) => void;
+}
 
 interface Props {
   list: string[];
@@ -13,38 +21,54 @@ interface Props {
 const List = ({ list, setList, setPod }: Props) => {
   useEffect(
     () => {
-      if (list.length === 0) {
+      if (Object.keys(list).length === 0) {
         // get from storage
         const storage_value = Storage._get("list");
-        if (storage_value) {
+        if (storage_value && storage_value !== JSON.stringify(list)) {
           setList(JSON.parse(storage_value));
         }
 
         // fetch from api
-        fetchList().then(v => {
-          setList(v);
+        const obj = Promise.all(config.paths.map(async path => fetchList(path.split("/").pop() as string))).then(
+          lists => lists.reduce((acc, val) => Object.assign({}, acc, val), {})
+        );
+
+        obj.then(v => {
           Storage._set("list", JSON.stringify(v));
+          if (Object.keys(v).length > 0) {
+            setList(v);
+          }
         });
       }
     },
     [list]
   );
 
-  const handleClick = (evt: React.MouseEvent, channel: string) => {
+  const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color
-    setPod(channel);
+    setPod({ group, name });
   };
 
   return (
     <Container>
       <Title>Channels</Title>
-      <ListContainer>
-        {list.map((l: string) => (
-          <ChannelName key={l} onClick={(e: React.MouseEvent) => handleClick(e, l)}>
-            {l}
-          </ChannelName>
-        ))}
-      </ListContainer>
+      {Object.keys(list).map(group => (
+        <GroupContainer key={group}>
+          <Input type="checkbox" id={group} defaultChecked={true} />
+          <Label htmlFor={group}>{group}</Label>
+
+          <ListContainer>
+            {list[group].channels.map(channel => (
+              <ChannelName
+                key={`${group}-${channel}`}
+                onClick={(e: React.MouseEvent) => handleClick(e, group, channel)}
+              >
+                {channel}
+              </ChannelName>
+            ))}
+          </ListContainer>
+        </GroupContainer>
+      ))}
     </Container>
   );
 };
@@ -52,20 +76,68 @@ const List = ({ list, setList, setPod }: Props) => {
 export default List;
 
 const Container = styled.div`
-  padding: 12px 24px;
+  padding: 0;
   width: 220px;
   height: calc(100vh - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const Title = styled.h1`
-  margin: 0;
+  position: sticky;
+  top: 0;
+  display: block;
+  margin: 0 0 32px;
+  padding: 0 24px;
+  width: 220px;
+  height: 62px;
+  line-height: 60px;
   font-size: 1.5em;
   color: var(--text-active);
+  background: var(--dark);
   border-bottom: 1px solid var(--black);
+  z-index: 5;
+`;
+
+const GroupContainer = styled.div`
+  position: relative;
+  margin: 0 24px;
 `;
 
 const ListContainer = styled.ul`
+  display: none;
   padding: 0;
+`;
+
+const Input = styled.input`
+  display: none;
+
+  &:checked ~ ul {
+    display: block;
+  }
+
+  &:checked ~ label:before {
+    content: "-";
+  }
+
+  &:not(:checked) ~ label:before {
+    content: "+";
+  }
+`;
+
+const Label = styled.label`
+  margin-left: 0.9em;
+  color: var(--text);
+  font-size: 1.1em;
+  font-weight: bold;
+
+  &:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.9em;
+  }
 `;
 
 const ChannelName = styled.li`

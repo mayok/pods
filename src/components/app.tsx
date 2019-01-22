@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import List from "./list";
 import Contents from "./contents";
-import { IChannels } from "../interfaces";
+import { IList, IChannels, IPods } from "../interfaces";
 
 const App = () => {
-  const [list, setList] = useState<string[]>([]);
+  const [list, setList] = useState<IList>({});
   const [channels, setChannels] = useState<IChannels>({});
 
   // todo: set last seen as initial value
-  const [pod, setPod] = useState("");
+  const [pod, setPod] = useState<IPods>({group: "", name: ""});
+
 
   return (
     <>
@@ -58,11 +59,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Container = styled.div`
-  margin: auto;
   display: flex;
+  position: relative;
+  margin: auto;
   width: 960px;
   height: calc(100vh - 60px);
-  background: var(--dark);
   min-height: 50vh;
   overflow-y: hidden;
+  background: var(--dark);
+
 `;

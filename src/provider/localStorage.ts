@@ -1,4 +1,4 @@
-export const _set = (key: string, value: string) => {
+export const _set = async (key: string, value: string) => {
   localStorage.setItem(key, value);
 };
 

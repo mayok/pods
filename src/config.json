@@ -1,4 +1,7 @@
 {
-  "host": "https://mayok.github.io",
-  "port": "443"
+  "host": "https://mayok.github.io/podcast",
+  "paths": [
+    "group1",
+    "group2"
+  ]
 }
