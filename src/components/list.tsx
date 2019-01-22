@@ -70,28 +70,32 @@ const List = ({ list, setList, setPod }: Props) => {
 export default List;
 
 const Container = styled.div`
-  padding: 90px 24px 12px;
+  padding: 0;
   width: 220px;
   height: calc(100vh - 60px);
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const Title = styled.h1`
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
   display: block;
-  margin: 0;
+  margin: 0 0 32px;
   padding: 0 24px;
   width: 220px;
   height: 62px;
   line-height: 60px;
   font-size: 1.5em;
   color: var(--text-active);
+  background: var(--dark);
   border-bottom: 1px solid var(--black);
+  z-index: 5;
 `;
 
 const GroupContainer = styled.div`
   position: relative;
+  margin: 0 24px;
 `;
 
 const ListContainer = styled.ul`

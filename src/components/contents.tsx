@@ -59,16 +59,16 @@ export default Contents;
 
 const Container = styled.div`
   position: relative;
-  padding: 90px 24px 12px;
+  padding: 0;
   width: 740px;
   background: var(--daight);
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const Title = styled.h1`
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
   display: block;
   margin: 0;
   padding: 0 24px;
@@ -77,7 +77,9 @@ const Title = styled.h1`
   line-height: 60px;
   font-size: 1.5em;
   color: var(--text-active);
+  background: var(--daight);
   border-bottom: 1px solid var(--black);
+  z-index: 5;
 `;
 
 const Channels = styled.ul`
