@@ -11,12 +11,6 @@ interface Props {
   setPod: (pod: IPods) => void;
 }
 
-interface Props {
-  list: string[];
-  setList: (list: string[]) => void;
-  setPod: (pod: string) => void;
-}
-
 // use memo
 const List = ({ list, setList, setPod }: Props) => {
   useEffect(
