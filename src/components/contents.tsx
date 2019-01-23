@@ -13,24 +13,21 @@ interface Props {
 }
 
 const Contents = ({ pod, channels, setChannels }: Props) => {
-  useEffect(
-    () => {
-      if (pod.name && !channels.hasOwnProperty(pod.name)) {
-        // get from storage
-        const storage_value = Storage._get(pod.name);
-        if (storage_value) {
-          setChannels(Object.assign({}, channels, JSON.parse(storage_value)));
-        }
-
-        // fetch from API
-        fetchContents(pod.group, pod.name).then(v => {
-          setChannels(Object.assign({}, channels, v));
-          Storage._set(pod.name, JSON.stringify(v));
-        });
+  useEffect(() => {
+    if (pod.name && !channels.hasOwnProperty(pod.name)) {
+      // get from storage
+      const storage = Storage._get(pod.name);
+      if (storage) {
+        setChannels(Object.assign({}, channels, JSON.parse(storage)));
       }
-    },
-    [pod]
-  );
+
+      // fetch from API
+      fetchContents(pod.group, pod.name).then(v => {
+        setChannels(Object.assign({}, channels, v));
+        Storage._set(pod.name, JSON.stringify(v));
+      });
+    }
+  }, [pod]);
 
   if (pod.name && channels.hasOwnProperty(pod.name)) {
     return (
@@ -81,7 +78,6 @@ const Title = styled.h1`
   background: var(--daight);
   border-bottom: 1px solid var(--black);
   z-index: 5;
-
 `;
 
 const Channels = styled.ul`

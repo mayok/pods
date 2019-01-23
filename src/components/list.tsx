@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Storage from "../provider/storage";
-import { fetchList } from "../provider/api";
-import { IList, IPods } from "../interfaces";
 import config = require("../config.json");
+import { IList, IPods } from "../interfaces";
+import { fetchList } from "../provider/api";
+import Storage from "../provider/storage";
 
 interface Props {
   list: IList;
@@ -13,30 +13,27 @@ interface Props {
 
 // use memo
 const List = ({ list, setList, setPod }: Props) => {
-  useEffect(
-    () => {
-      if (Object.keys(list).length === 0) {
-        // get from storage
-        const storage_value = Storage._get("list");
-        if (storage_value && storage_value !== JSON.stringify(list)) {
-          setList(JSON.parse(storage_value));
-        }
-
-        // fetch from api
-        const obj = Promise.all(config.paths.map(async path => fetchList(path.split("/").pop() as string))).then(
-          lists => lists.reduce((acc, val) => Object.assign({}, acc, val), {})
-        );
-
-        obj.then(v => {
-          Storage._set("list", JSON.stringify(v));
-          if (Object.keys(v).length > 0) {
-            setList(v);
-          }
-        });
+  useEffect(() => {
+    if (Object.keys(list).length === 0) {
+      // get from storage
+      const storage = Storage._get("list");
+      if (storage && storage !== JSON.stringify(list)) {
+        setList(JSON.parse(storage));
       }
-    },
-    [list]
-  );
+
+      // fetch from api
+      const obj = Promise.all(config.paths.map(async path => fetchList(path.split("/").pop() as string))).then(lists =>
+        lists.reduce((acc, val) => Object.assign({}, acc, val), {})
+      );
+
+      obj.then(v => {
+        Storage._set("list", JSON.stringify(v));
+        if (Object.keys(v).length > 0) {
+          setList(v);
+        }
+      });
+    }
+  }, [list]);
 
   const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color

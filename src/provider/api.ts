@@ -1,6 +1,6 @@
 import * as convert from "xml-js";
 import config = require("../config.json");
-import { IList, IChannel } from "../interfaces";
+import { IChannel, IList } from "../interfaces";
 
 interface IContents {
   [x: string]: IChannel;
@@ -24,21 +24,22 @@ export const fetchContents = async (path: string, channel: string): Promise<ICon
   const response = await fetch(`${config.host}/${path}/${channel}/`);
   const xml = await response.text();
 
-  const json_string = convert.xml2json(xml, { compact: true, trim: true });
-  const json = JSON.parse(json_string);
+  const _json = convert.xml2json(xml, { compact: true, trim: true });
+  const json = JSON.parse(_json);
 
   // memo: xml-js has alwaysArray options
   if (json.rss.channel.item instanceof Array) {
     return {
       [channel]: {
         title: json.rss.channel.title._text,
-        contents: json.rss.channel.item.map((e: any) => ({
-          title: e.title._text,
-          url: e.guid._text,
-          type: e.enclosure._attributes.type,
-          date: e.pubDate._text
-        })).reverse()
-
+        contents: json.rss.channel.item
+          .map((e: any) => ({
+            title: e.title._text,
+            url: e.guid._text,
+            type: e.enclosure._attributes.type,
+            date: e.pubDate._text
+          }))
+          .reverse()
       }
     };
   }
