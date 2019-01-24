@@ -1,33 +1,33 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { IChannelItem, IChannels, IPods } from "../interfaces";
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { IChannelItem, IChannels, IPods } from '../interfaces'
 
-import { fetchContents } from "../provider/api";
-import Storage from "../provider/storage";
-import Loading from "./loading";
+import { fetchContents } from '../provider/api'
+import Storage from '../provider/storage'
+import Loading from './loading'
 
 interface Props {
-  pod: IPods;
-  channels: IChannels;
-  setChannels: (channels: IChannels) => void;
+  pod: IPods
+  channels: IChannels
+  setChannels: (channels: IChannels) => void
 }
 
 const Contents = ({ pod, channels, setChannels }: Props) => {
   useEffect(() => {
     if (pod.name && !channels.hasOwnProperty(pod.name)) {
       // get from storage
-      const storage = Storage._get(pod.name);
+      const storage = Storage._get(pod.name)
       if (storage) {
-        setChannels(Object.assign({}, channels, JSON.parse(storage)));
+        setChannels(Object.assign({}, channels, JSON.parse(storage)))
       }
 
       // fetch from API
       fetchContents(pod.group, pod.name).then(v => {
-        setChannels(Object.assign({}, channels, v));
-        Storage._set(pod.name, JSON.stringify(v));
-      });
+        setChannels(Object.assign({}, channels, v))
+        Storage._set(pod.name, JSON.stringify(v))
+      })
     }
-  }, [pod]);
+  }, [pod])
 
   if (pod.name && channels.hasOwnProperty(pod.name)) {
     return (
@@ -44,16 +44,16 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
           ))}
         </Channels>
       </Container>
-    );
+    )
   }
   return (
     <Container>
       <Loading />
     </Container>
-  );
-};
+  )
+}
 
-export default Contents;
+export default Contents
 
 const Container = styled.div`
   position: relative;
@@ -62,7 +62,7 @@ const Container = styled.div`
   background: var(--daight);
   overflow-y: auto;
   overflow-x: hidden;
-`;
+`
 
 const Title = styled.h1`
   position: sticky;
@@ -78,7 +78,7 @@ const Title = styled.h1`
   background: var(--daight);
   border-bottom: 1px solid var(--black);
   z-index: 5;
-`;
+`
 
 const Channels = styled.ul`
   margin: 24px;
@@ -87,18 +87,18 @@ const Channels = styled.ul`
   & li:not(:first-child) {
     margin: 20px 0 0;
   }
-`;
+`
 const Channel = styled.li`
   padding: 8px 8px 32px;
   list-style-type: none;
   color: var(--text);
   border-bottom: 1px solid var(--dark);
-`;
+`
 
 const ChannelName = styled.h2`
   margin: 0;
   font-size: 1.3em;
-`;
+`
 
 const Link = styled.a`
   color: var(--text);
@@ -108,4 +108,4 @@ const Link = styled.a`
     color: var(--text-active);
     text-decoration: underline;
   }
-`;
+`

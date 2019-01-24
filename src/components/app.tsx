@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import { IChannels, IList, IPods } from "../interfaces";
-import Contents from "./contents";
-import List from "./list";
+import React, { useState } from 'react'
+import styled, { createGlobalStyle } from 'styled-components'
+import { IChannels, IList, IPods } from '../interfaces'
+import Contents from './contents'
+import List from './list'
 
 const App = () => {
-  const [list, setList] = useState<IList>({});
-  const [channels, setChannels] = useState<IChannels>({});
+  const [list, setList] = useState<IList>({})
+  const [channels, setChannels] = useState<IChannels>({})
 
   // todo: set last seen as initial value
-  const [pod, setPod] = useState<IPods>({ group: "", name: "" });
+  const [pod, setPod] = useState<IPods>({ group: '', name: '' })
 
   return (
     <>
@@ -19,10 +19,10 @@ const App = () => {
         <Contents pod={pod} channels={channels} setChannels={setChannels} />
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -55,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(128, 128, 128, 0.5);
   }
-`;
+`
 
 const Container = styled.div`
   display: flex;
@@ -66,4 +66,4 @@ const Container = styled.div`
   min-height: 50vh;
   overflow-y: hidden;
   background: var(--dark);
-`;
+`

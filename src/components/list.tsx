@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import config = require("../config.json");
-import { IList, IPods } from "../interfaces";
-import { fetchList } from "../provider/api";
-import Storage from "../provider/storage";
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import config = require('../config.json')
+import { IList, IPods } from '../interfaces'
+import { fetchList } from '../provider/api'
+import Storage from '../provider/storage'
 
 interface Props {
-  list: IList;
-  setList: (list: IList) => void;
-  setPod: (pod: IPods) => void;
+  list: IList
+  setList: (list: IList) => void
+  setPod: (pod: IPods) => void
 }
 
 // use memo
@@ -16,29 +16,33 @@ const List = ({ list, setList, setPod }: Props) => {
   useEffect(() => {
     if (Object.keys(list).length === 0) {
       // get from storage
-      const storage = Storage._get("list");
+      const storage = Storage._get('list')
       if (storage && storage !== JSON.stringify(list)) {
-        setList(JSON.parse(storage));
+        setList(JSON.parse(storage))
       }
 
       // fetch from api
-      const obj = Promise.all(config.paths.map(async path => fetchList(path.split("/").pop() as string))).then(lists =>
+      const obj = Promise.all(
+        config.paths.map(async path =>
+          fetchList(path.split('/').pop() as string)
+        )
+      ).then(lists =>
         lists.reduce((acc, val) => Object.assign({}, acc, val), {})
-      );
+      )
 
       obj.then(v => {
-        Storage._set("list", JSON.stringify(v));
+        Storage._set('list', JSON.stringify(v))
         if (Object.keys(v).length > 0) {
-          setList(v);
+          setList(v)
         }
-      });
+      })
     }
-  }, [list]);
+  }, [list])
 
   const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color
-    setPod({ group, name });
-  };
+    setPod({ group, name })
+  }
 
   return (
     <Container>
@@ -52,7 +56,9 @@ const List = ({ list, setList, setPod }: Props) => {
             {list[group].channels.map(channel => (
               <ChannelName
                 key={`${group}-${channel}`}
-                onClick={(e: React.MouseEvent) => handleClick(e, group, channel)}
+                onClick={(e: React.MouseEvent) =>
+                  handleClick(e, group, channel)
+                }
               >
                 {channel}
               </ChannelName>
@@ -61,10 +67,10 @@ const List = ({ list, setList, setPod }: Props) => {
         </GroupContainer>
       ))}
     </Container>
-  );
-};
+  )
+}
 
-export default List;
+export default List
 
 const Container = styled.div`
   padding: 0;
@@ -72,7 +78,7 @@ const Container = styled.div`
   height: calc(100vh - 60px);
   overflow-y: auto;
   overflow-x: hidden;
-`;
+`
 
 const Title = styled.h1`
   position: sticky;
@@ -88,17 +94,17 @@ const Title = styled.h1`
   background: var(--dark);
   border-bottom: 1px solid var(--black);
   z-index: 5;
-`;
+`
 
 const GroupContainer = styled.div`
   position: relative;
   margin: 0 24px;
-`;
+`
 
 const ListContainer = styled.ul`
   display: none;
   padding: 0;
-`;
+`
 
 const Input = styled.input`
   display: none;
@@ -108,13 +114,13 @@ const Input = styled.input`
   }
 
   &:checked ~ label:before {
-    content: "-";
+    content: '-';
   }
 
   &:not(:checked) ~ label:before {
-    content: "+";
+    content: '+';
   }
-`;
+`
 
 const Label = styled.label`
   margin-left: 0.9em;
@@ -129,7 +135,7 @@ const Label = styled.label`
     left: 0;
     width: 0.9em;
   }
-`;
+`
 
 const ChannelName = styled.li`
   padding: 4px 4px 4px 1.1em;
@@ -142,4 +148,4 @@ const ChannelName = styled.li`
     color: var(--text-hover);
     background: var(--dark-hover);
   }
-`;
+`
