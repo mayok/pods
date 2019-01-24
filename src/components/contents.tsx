@@ -16,10 +16,11 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
   useEffect(() => {
     if (pod.name && !channels.hasOwnProperty(pod.name)) {
       // get from storage
-      const storage = Storage._get(pod.name)
-      if (storage) {
-        setChannels(Object.assign({}, channels, JSON.parse(storage)))
-      }
+      Storage._get(pod.name).then(v => {
+        if (v) {
+          setChannels(Object.assign({}, channels, JSON.parse(v)))
+        }
+      })
 
       // fetch from API
       fetchContents(pod.group, pod.name).then(v => {

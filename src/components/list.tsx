@@ -14,10 +14,11 @@ interface Props {
 const List = React.memo(({ list, setList, setPod }: Props) => {
   useEffect(() => {
     // get from storage
-    const storage = Storage._get('list')
-    if (storage && storage !== JSON.stringify(list)) {
-      setList(JSON.parse(storage))
-    }
+    Storage._get('list').then(v => {
+      if (v && v !== JSON.stringify(list)) {
+        setList(JSON.parse(v))
+      }
+    })
 
     // fetch from api
     Promise.all(config.paths.map(async path => fetchList(path)))
