@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.html --open",
-    "build": "parcel build src/index.html --public-url ./ --out-file bundle.js",
+    "build": "parcel build src/index.html --public-url ./",
     "build:dev": "cross-env NODE_ENV=development parcel build src/index.html --public-url ./"
   },
   "dependencies": {
