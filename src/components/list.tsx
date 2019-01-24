@@ -11,33 +11,26 @@ interface Props {
   setPod: (pod: IPods) => void
 }
 
-// const List = ({ list, setList, setPod }: Props) => {
 const List = React.memo(({ list, setList, setPod }: Props) => {
   useEffect(() => {
-    if (Object.keys(list).length === 0) {
-      // get from storage
-      const storage = Storage._get('list')
-      if (storage && storage !== JSON.stringify(list)) {
-        setList(JSON.parse(storage))
-      }
+    // get from storage
+    const storage = Storage._get('list')
+    if (storage && storage !== JSON.stringify(list)) {
+      setList(JSON.parse(storage))
+    }
 
-      // fetch from api
-      const obj = Promise.all(
-        config.paths.map(async path =>
-          fetchList(path.split('/').pop() as string)
-        )
-      ).then(lists =>
+    // fetch from api
+    Promise.all(config.paths.map(async path => fetchList(path)))
+      .then(lists =>
         lists.reduce((acc, val) => Object.assign({}, acc, val), {})
       )
-
-      obj.then(v => {
+      .then(v => {
         Storage._set('list', JSON.stringify(v))
         if (Object.keys(v).length > 0) {
           setList(v)
         }
       })
-    }
-  }, [list])
+  }, [])
 
   const handleClick = (evt: React.MouseEvent, group: string, name: string) => {
     // todo: change channel name color
