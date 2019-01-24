@@ -46,6 +46,16 @@ const Contents = ({ pod, channels, setChannels }: Props) => {
       </Container>
     )
   }
+
+  if (pod.name && !channels.hasOwnProperty(pod.name)) {
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    )
+  }
+
+  // todo: first view
   return (
     <Container>
       <Loading />
