@@ -11,8 +11,8 @@ interface Props {
   setPod: (pod: IPods) => void
 }
 
-// use memo
-const List = ({ list, setList, setPod }: Props) => {
+// const List = ({ list, setList, setPod }: Props) => {
+const List = React.memo(({ list, setList, setPod }: Props) => {
   useEffect(() => {
     if (Object.keys(list).length === 0) {
       // get from storage
@@ -68,7 +68,7 @@ const List = ({ list, setList, setPod }: Props) => {
       ))}
     </Container>
   )
-}
+})
 
 export default List
 
