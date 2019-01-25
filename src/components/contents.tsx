@@ -4,30 +4,12 @@ import { IChannelItem, IChannels, IMedia, IPods } from '../interfaces'
 import { fetchContents } from '../provider/api'
 import Storage from '../provider/storage'
 import Loading from './loading'
-import { requestPiP } from '../utils/video'
 
 interface Props {
   pod: IPods
   channels: IChannels
   setChannels: (channels: IChannels) => void
   setMedia: (media: IMedia) => void
-}
-
-const handleClick = async (e: Event, setMedia: Function) => {
-  console.log(e)
-  const url = (e.currentTarget as HTMLElement).dataset.url as string
-  let type = (e.currentTarget as HTMLElement).dataset.type as string
-  type = type.split('/')[0]
-
-  setMedia({ url, type })
-
-  if (type === 'video') {
-    const video = document.querySelector('#video') as HTMLVideoElement
-    await new Promise(resolve => setTimeout(resolve, 5000))
-
-    // @ts-ignore
-    await video.requestPictureInPicture()
-  }
 }
 
 const Contents = React.memo(
@@ -48,19 +30,6 @@ const Contents = React.memo(
         })
       }
 
-      document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener('click', handleClick.bind(null, setMedia), false)
-      })
-
-      return function cleanup() {
-        document.querySelectorAll('.btn').forEach(elm => {
-          elm.removeEventListener(
-            'click',
-            handleClick.bind(null, setMedia),
-            false
-          )
-        })
-      }
       // console.log(document.querySelectorAll('.btn'))
       // document.querySelectorAll('.btn').forEach(elm => {
       //   elm.addEventListener('click', async e => {
@@ -89,9 +58,10 @@ const Contents = React.memo(
             {channels[pod.name].contents.map((c: IChannelItem) => (
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
-                <Button className="btn" data-url={c.url} data-type={c.type}>
-                  Play
-                </Button>
+                <PlayButton
+                  {...{ url: c.url, type: c.type.split('/')[0], setMedia }}
+                />
+                >
               </Channel>
             ))}
           </Channels>
@@ -117,6 +87,55 @@ const Contents = React.memo(
 )
 
 export default Contents
+
+const handleClick = async (e: Event, setMedia: Function) => {
+  const url = (e.currentTarget as HTMLElement).dataset.url as string
+  let type = (e.currentTarget as HTMLElement).dataset.type as string
+  type = type.split('/')[0]
+
+  setMedia({ url, type })
+
+  if (type === 'video') {
+    const video = document.querySelector('#video') as HTMLVideoElement
+    await new Promise(resolve => setTimeout(resolve, 5000))
+
+    // @ts-ignore
+    await video.requestPictureInPicture()
+  }
+}
+
+const PlayButton = ({
+  url,
+  type,
+  setMedia,
+}: {
+  url: string
+  type: string
+  setMedia: Function
+}) => {
+  useEffect(() => {
+    console.log(document.querySelectorAll('.btn'))
+    document.querySelectorAll('.btn').forEach(elm => {
+      elm.addEventListener('click', handleClick.bind(null, setMedia), false)
+    })
+
+    return function cleanup() {
+      document.querySelectorAll('.btn').forEach(elm => {
+        elm.removeEventListener(
+          'click',
+          handleClick.bind(null, setMedia),
+          false
+        )
+      })
+    }
+  })
+
+  return (
+    <Button data-url={url} data-type={type}>
+      Play
+    </Button>
+  )
+}
 
 const Container = styled.div`
   position: relative;
