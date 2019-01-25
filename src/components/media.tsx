@@ -23,7 +23,9 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         .then(() => {
           // if type equals video, use play in pip mode
           if (media.type.split('/')[0] === 'video') {
-            ;(_media as any).requestPictureInPicture()
+            ;(_media as any).requestPictureInPicture().catch((e: string) => {
+              console.log(e)
+            })
           }
         })
         .catch(e => {
