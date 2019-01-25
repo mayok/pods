@@ -15,7 +15,7 @@ const Media = React.memo(({ media, setMedia }: Props) => {
       ) as HTMLMediaElement
       _media.src = media.url
 
-      _media.play()
+      // _media.play()
     }
   }, [media])
 

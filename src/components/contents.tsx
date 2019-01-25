@@ -41,12 +41,18 @@ const Contents = React.memo(
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
                 <Button
-                  onClick={() => {
+                  onClick={async () => {
                     const type = c.type.split('/')[0]
                     setMedia({ url: c.url, type })
-                    if (type === 'video') {
-                      requestPiP(setMedia)
-                    }
+
+                    const video = document.querySelector(
+                      '#video'
+                    ) as HTMLVideoElement
+
+                    await new Promise(resolve => setTimeout(resolve, 5000))
+
+                    // @ts-ignore
+                    await video.requestPictureInPicture()
                   }}
                 >
                   Play
