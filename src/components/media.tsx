@@ -10,55 +10,29 @@ interface Props {
 const Media = React.memo(({ media, setMedia }: Props) => {
   useEffect(() => {
     if (media.type) {
-      // get media element, video or audio
-      const _media = document.querySelector('#media') as
-        | HTMLVideoElement
-        | HTMLAudioElement
+      const _media = document.querySelector(
+        `#${media.type}`
+      ) as HTMLMediaElement
+      _media.src = media.url
 
-      _media.load()
-
-      // play
-      _media
-        .play()
-        .then(() => {
-          // if type equals video, use play in pip mode
-          if (media.type.split('/')[0] === 'video') {
-            ;(_media as any).requestPictureInPicture().catch((e: string) => {
-              console.log(e)
-            })
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-
-      // register EventListener
-      _media.addEventListener('leavepictureinpicture', () => {
-        setMedia({ url: '', type: '' })
-      })
+      _media.play()
     }
-  })
-
-  // if media not defined, do nothing
-  if (!media.type) {
-    return null
-  }
+  }, [media])
 
   return (
     <Player>
       <MediaContainer>
-        {media.type.split('/')[0] === 'video' ? (
-          <video id="media" preload="none" src={media.url} />
-        ) : (
-          <audio id="media" preload="none" src={media.url} />
-        )}
+        <video id="video" preload="none" src="" />
+        <audio id="audio" preload="none" src="" />
       </MediaContainer>
 
-      <Controls>
-        <Play className="play" />
-        <Rewind className="rewind" />
-        <Forward className="rewind" />
-      </Controls>
+      {media.type ? (
+        <Controls>
+          <Play className="play" />
+          <Rewind className="rewind" />
+          <Forward className="rewind" />
+        </Controls>
+      ) : null}
     </Player>
   )
 })
@@ -70,7 +44,8 @@ const MediaContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  display: hidden;
+  display: block;
+  visibility: hidden;
   width: 100vw;
   height: 100vh;
   z-index: -1;

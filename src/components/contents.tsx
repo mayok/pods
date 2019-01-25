@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { IChannelItem, IChannels, IMedia, IPods } from '../interfaces'
-
 import { fetchContents } from '../provider/api'
 import Storage from '../provider/storage'
 import Loading from './loading'
+import { requestPiP } from '../utils/video'
 
 interface Props {
   pod: IPods
@@ -32,10 +32,6 @@ const Contents = React.memo(
       }
     }, [pod])
 
-    const handleClick = (evt: React.MouseEvent, url: string, type: string) => {
-      setMedia({ url, type })
-    }
-
     if (pod.name && channels.hasOwnProperty(pod.name)) {
       return (
         <Container>
@@ -45,9 +41,13 @@ const Contents = React.memo(
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
                 <Button
-                  onClick={(e: React.MouseEvent) =>
-                    handleClick(e, c.url, c.type)
-                  }
+                  onClick={() => {
+                    const type = c.type.split('/')[0]
+                    setMedia({ url: c.url, type })
+                    if (type === 'video') {
+                      requestPiP(setMedia)
+                    }
+                  }}
                 >
                   Play
                 </Button>
