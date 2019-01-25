@@ -23,3 +23,8 @@ export interface IPods {
   group: string
   name: string
 }
+
+export interface IMedia {
+  url: string
+  type: string
+}

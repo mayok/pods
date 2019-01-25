@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { IChannelItem, IChannels, IPods } from '../interfaces'
+import { IChannelItem, IChannels, IMedia, IPods } from '../interfaces'
 
 import { fetchContents } from '../provider/api'
 import Storage from '../provider/storage'
@@ -10,59 +10,70 @@ interface Props {
   pod: IPods
   channels: IChannels
   setChannels: (channels: IChannels) => void
+  setMedia: (media: IMedia) => void
 }
 
-const Contents = ({ pod, channels, setChannels }: Props) => {
-  useEffect(() => {
-    if (pod.name && !channels.hasOwnProperty(pod.name)) {
-      // get from storage
-      Storage._get(pod.name).then(v => {
-        if (v) {
-          setChannels(Object.assign({}, channels, JSON.parse(v)))
-        }
-      })
+const Contents = React.memo(
+  ({ pod, channels, setChannels, setMedia }: Props) => {
+    useEffect(() => {
+      if (pod.name && !channels.hasOwnProperty(pod.name)) {
+        // get from storage
+        Storage._get(pod.name).then(v => {
+          if (v) {
+            setChannels(Object.assign({}, channels, JSON.parse(v)))
+          }
+        })
 
-      // fetch from API
-      fetchContents(pod.group, pod.name).then(v => {
-        setChannels(Object.assign({}, channels, v))
-        Storage._set(pod.name, JSON.stringify(v))
-      })
+        // fetch from API
+        fetchContents(pod.group, pod.name).then(v => {
+          setChannels(Object.assign({}, channels, v))
+          Storage._set(pod.name, JSON.stringify(v))
+        })
+      }
+    }, [pod])
+
+    const handleClick = (evt: React.MouseEvent, url: string, type: string) => {
+      setMedia({ url, type })
     }
-  }, [pod])
 
-  if (pod.name && channels.hasOwnProperty(pod.name)) {
-    return (
-      <Container>
-        <Title>{channels[pod.name].title}</Title>
-        <Channels>
-          {channels[pod.name].contents.map((c: IChannelItem) => (
-            <Channel key={c.title}>
-              <ChannelName>{c.title}</ChannelName>
-              <Link as="a" href={c.url}>
-                {c.url}
-              </Link>
-            </Channel>
-          ))}
-        </Channels>
-      </Container>
-    )
-  }
+    if (pod.name && channels.hasOwnProperty(pod.name)) {
+      return (
+        <Container>
+          <Title>{channels[pod.name].title}</Title>
+          <Channels>
+            {channels[pod.name].contents.map((c: IChannelItem) => (
+              <Channel key={c.title}>
+                <ChannelName>{c.title}</ChannelName>
+                <Button
+                  onClick={(e: React.MouseEvent) =>
+                    handleClick(e, c.url, c.type)
+                  }
+                >
+                  Play
+                </Button>
+              </Channel>
+            ))}
+          </Channels>
+        </Container>
+      )
+    }
 
-  if (pod.name && !channels.hasOwnProperty(pod.name)) {
+    if (pod.name && !channels.hasOwnProperty(pod.name)) {
+      return (
+        <Container>
+          <Loading />
+        </Container>
+      )
+    }
+
+    // todo: first view
     return (
       <Container>
         <Loading />
       </Container>
     )
   }
-
-  // todo: first view
-  return (
-    <Container>
-      <Loading />
-    </Container>
-  )
-}
+)
 
 export default Contents
 
@@ -119,4 +130,8 @@ const Link = styled.a`
     color: var(--text-active);
     text-decoration: underline;
   }
+`
+
+const Button = styled.span`
+  cursor: pointer;
 `

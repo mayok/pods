@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import { IChannels, IList, IPods } from '../interfaces'
+import { IChannels, IList, IMedia, IPods } from '../interfaces'
 import Contents from './contents'
 import List from './list'
+import Media from './media'
 
 const App = () => {
   const [list, setList] = useState<IList>({})
@@ -11,12 +12,15 @@ const App = () => {
   // todo: set last seen as initial value
   const [pod, setPod] = useState<IPods>({ group: '', name: '' })
 
+  const [media, setMedia] = useState<IMedia>({ url: '', type: '' })
+
   return (
     <>
       <GlobalStyle />
       <Container>
-        <List list={list} setList={setList} setPod={setPod} />
-        <Contents pod={pod} channels={channels} setChannels={setChannels} />
+        <List {...{ list, setList, setPod }} />
+        <Contents {...{ pod, channels, setChannels, setMedia }} />
+        <Media {...{ media }} />
       </Container>
     </>
   )
