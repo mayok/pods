@@ -31,8 +31,10 @@ const Contents = React.memo(
         })
       }
 
+      console.log(document.querySelectorAll('.btn'))
       document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener('click', async (e: Event) => {
+        elm.addEventListener('click', async e => {
+          console.log(e)
           const url = (e.currentTarget as HTMLElement).dataset.url as string
           const type = (e.currentTarget as HTMLElement).dataset.type as string
 
@@ -57,24 +59,7 @@ const Contents = React.memo(
             {channels[pod.name].contents.map((c: IChannelItem) => (
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
-                <Button
-                  className="btn"
-                  data-url={c.url}
-                  data-type={c.type}
-                  // onClick={async () => {
-                  //   const type = c.type.split('/')[0]
-                  //   setMedia({ url: c.url, type })
-
-                  //   const video = document.querySelector(
-                  //     '#video'
-                  //   ) as HTMLVideoElement
-
-                  //   await new Promise(resolve => setTimeout(resolve, 5000))
-
-                  //   // @ts-ignore
-                  //   await video.requestPictureInPicture()
-                  // }}
-                >
+                <Button className="btn" data-url={c.url} data-type={c.type}>
                   Play
                 </Button>
               </Channel>
