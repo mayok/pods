@@ -32,7 +32,7 @@ const Contents = React.memo(
       }
 
       document.querySelectorAll('.btn').forEach(elm => {
-        addEventListener('click', async (e: MouseEvent) => {
+        elm.addEventListener('click', async (e: Event) => {
           const url = (e.currentTarget as HTMLElement).dataset.url as string
           const type = (e.currentTarget as HTMLElement).dataset.type as string
 
