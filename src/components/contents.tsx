@@ -30,6 +30,23 @@ const Contents = React.memo(
           Storage._set(pod.name, JSON.stringify(v))
         })
       }
+
+      document.querySelectorAll('.btn').forEach(elm => {
+        addEventListener('click', async (e: MouseEvent) => {
+          const url = (e.currentTarget as HTMLElement).dataset.url as string
+          const type = (e.currentTarget as HTMLElement).dataset.type as string
+
+          setMedia({ url, type })
+
+          if (type === 'video') {
+            const video = document.querySelector('#video') as HTMLVideoElement
+            await new Promise(resolve => setTimeout(resolve, 5000))
+
+            // @ts-ignore
+            await video.requestPictureInPicture()
+          }
+        })
+      })
     }, [pod])
 
     if (pod.name && channels.hasOwnProperty(pod.name)) {
@@ -41,19 +58,22 @@ const Contents = React.memo(
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
                 <Button
-                  onClick={async () => {
-                    const type = c.type.split('/')[0]
-                    setMedia({ url: c.url, type })
+                  className="btn"
+                  data-url={c.url}
+                  data-type={c.type}
+                  // onClick={async () => {
+                  //   const type = c.type.split('/')[0]
+                  //   setMedia({ url: c.url, type })
 
-                    const video = document.querySelector(
-                      '#video'
-                    ) as HTMLVideoElement
+                  //   const video = document.querySelector(
+                  //     '#video'
+                  //   ) as HTMLVideoElement
 
-                    await new Promise(resolve => setTimeout(resolve, 5000))
+                  //   await new Promise(resolve => setTimeout(resolve, 5000))
 
-                    // @ts-ignore
-                    await video.requestPictureInPicture()
-                  }}
+                  //   // @ts-ignore
+                  //   await video.requestPictureInPicture()
+                  // }}
                 >
                   Play
                 </Button>
