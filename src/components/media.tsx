@@ -41,6 +41,7 @@ export default Media
 
 const Player = styled.div``
 const MediaContainer = styled.div`
+  /*
   position: absolute;
   top: 0;
   left: 0;
@@ -49,6 +50,7 @@ const MediaContainer = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: -1;
+  */
 `
 
 const Controls = styled.div`
