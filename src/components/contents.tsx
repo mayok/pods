@@ -13,6 +13,23 @@ interface Props {
   setMedia: (media: IMedia) => void
 }
 
+const handleClick = async (e: Event, setMedia: Function) => {
+  console.log(e)
+  const url = (e.currentTarget as HTMLElement).dataset.url as string
+  let type = (e.currentTarget as HTMLElement).dataset.type as string
+  type = type.split('/')[0]
+
+  setMedia({ url, type })
+
+  if (type === 'video') {
+    const video = document.querySelector('#video') as HTMLVideoElement
+    await new Promise(resolve => setTimeout(resolve, 5000))
+
+    // @ts-ignore
+    await video.requestPictureInPicture()
+  }
+}
+
 const Contents = React.memo(
   ({ pod, channels, setChannels, setMedia }: Props) => {
     useEffect(() => {
@@ -31,24 +48,37 @@ const Contents = React.memo(
         })
       }
 
-      console.log(document.querySelectorAll('.btn'))
       document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener('click', async e => {
-          console.log(e)
-          const url = (e.currentTarget as HTMLElement).dataset.url as string
-          const type = (e.currentTarget as HTMLElement).dataset.type as string
-
-          setMedia({ url, type })
-
-          if (type === 'video') {
-            const video = document.querySelector('#video') as HTMLVideoElement
-            await new Promise(resolve => setTimeout(resolve, 5000))
-
-            // @ts-ignore
-            await video.requestPictureInPicture()
-          }
-        })
+        elm.addEventListener('click', handleClick.bind(null, setMedia), false)
       })
+
+      return function cleanup() {
+        document.querySelectorAll('.btn').forEach(elm => {
+          elm.removeEventListener(
+            'click',
+            handleClick.bind(null, setMedia),
+            false
+          )
+        })
+      }
+      // console.log(document.querySelectorAll('.btn'))
+      // document.querySelectorAll('.btn').forEach(elm => {
+      //   elm.addEventListener('click', async e => {
+      //     console.log(e)
+      //     const url = (e.currentTarget as HTMLElement).dataset.url as string
+      //     const type = (e.currentTarget as HTMLElement).dataset.type as string
+
+      //     setMedia({ url, type })
+
+      //     if (type === 'video') {
+      //       const video = document.querySelector('#video') as HTMLVideoElement
+      //       await new Promise(resolve => setTimeout(resolve, 5000))
+
+      //       // @ts-ignore
+      //       await video.requestPictureInPicture()
+      //     }
+      //   })
+      // })
     }, [pod])
 
     if (pod.name && channels.hasOwnProperty(pod.name)) {
