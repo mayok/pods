@@ -4,9 +4,10 @@ import { IMedia } from '../interfaces'
 
 interface Props {
   media: IMedia
+  setMedia: (media: IMedia) => void
 }
 
-const Media = React.memo(({ media }: Props) => {
+const Media = React.memo(({ media, setMedia }: Props) => {
   useEffect(() => {
     if (media.type) {
       // get media element, video or audio
@@ -14,33 +15,42 @@ const Media = React.memo(({ media }: Props) => {
         | HTMLVideoElement
         | HTMLAudioElement
 
-      // if type equals video, use play in pip mode
-      if (media.type.split('/')[0] === 'video') {
-        ;(_media as any).requestPictureInPicture()
-      }
+      _media.load()
 
       // play
-      _media.play()
+      _media
+        .play()
+        .then(() => {
+          // if type equals video, use play in pip mode
+          if (media.type.split('/')[0] === 'video') {
+            ;(_media as any).requestPictureInPicture()
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
 
       // register EventListener
       _media.addEventListener('leavepictureinpicture', () => {
-        // do something
+        setMedia({ url: '', type: '' })
       })
     }
   })
 
   // if media not defined, do nothing
   if (!media.type) {
-    return <></>
+    return null
   }
 
   return (
     <Player>
-      {media.type.split('/')[0] === 'video' ? (
-        <video id="media" src={media.url} />
-      ) : (
-        <audio id="media" src={media.url} />
-      )}
+      <MediaContainer>
+        {media.type.split('/')[0] === 'video' ? (
+          <video id="media" preload="none" src={media.url} />
+        ) : (
+          <audio id="media" preload="none" src={media.url} />
+        )}
+      </MediaContainer>
 
       <Controls>
         <Play className="play" />
@@ -53,13 +63,25 @@ const Media = React.memo(({ media }: Props) => {
 
 export default Media
 
-const Player = styled.div`
+const Player = styled.div``
+const MediaContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: hidden;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
+  z-index: -1;
 `
 
 const Controls = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 80vw;
+  height: 90px;
 `
 
 const Play = styled.button``
