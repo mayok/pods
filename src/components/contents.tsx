@@ -48,7 +48,6 @@ const Contents = React.memo(
                     const video = document.querySelector(
                       '#video'
                     ) as HTMLVideoElement
-                    video.load()
 
                     await new Promise(resolve => setTimeout(resolve, 5000))
 
