@@ -4,6 +4,7 @@ import { IChannelItem, IChannels, IMedia, IPods } from '../interfaces'
 import { fetchContents } from '../provider/api'
 import Storage from '../provider/storage'
 import Loading from './loading'
+import { pipeline } from 'stream'
 
 interface Props {
   pod: IPods
@@ -32,38 +33,41 @@ const Contents = React.memo(
 
       console.log(document.querySelectorAll('.btn'))
       document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener('click', e => {
-          console.log(e)
-          const url = (e.currentTarget as HTMLElement).dataset.url as string
-          const type = (e.currentTarget as HTMLElement).dataset.type as string
+        elm.addEventListener(
+          'click',
+          function(e) {
+            console.log(e)
+            const url = (e.currentTarget as HTMLElement).dataset.url as string
+            const type = (e.currentTarget as HTMLElement).dataset.type as string
 
-          const media = document.querySelector(`#${type}`) as HTMLMediaElement
-          media.load()
+            const media = document.querySelector(`#${type}`) as HTMLMediaElement
+            media.load()
 
-          media.src = url
-          media.load()
-          media
-            .play()
-            .then(_ => {
-              if (type === 'video') {
-                // @ts-ignore
-                media.requestPictureInPicture().catch(e => {
-                  console.log(e)
-                  console.log(e.name)
-                  console.log(e.message)
-                  console.log(e.code)
-                })
-              }
-            })
-            .catch(e => {
-              console.log(e)
-              console.log(e.name)
-              console.log(e.message)
-              console.log(e.code)
-            })
+            media.src = url
+            media
+              .play()
+              .then(_ => {
+                if (type === 'video') {
+                  // @ts-ignore
+                  media.requestPictureInPicture().catch(e => {
+                    console.log(e)
+                    console.log(e.name)
+                    console.log(e.message)
+                    console.log(e.code)
+                  })
+                }
+              })
+              .catch(e => {
+                console.log(e)
+                console.log(e.name)
+                console.log(e.message)
+                console.log(e.code)
+              })
 
-          // setMedia({ url, type })
-        })
+            // setMedia({ url, type })
+          },
+          false
+        )
       })
     }, [pod])
 
