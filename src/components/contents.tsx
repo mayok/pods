@@ -40,12 +40,10 @@ const Contents = React.memo(
           const media = document.querySelector(`#${type}`) as HTMLMediaElement
           media.load()
 
-          fetch(url, { mode: 'no-cors' })
-            .then(response => response.blob())
-            .then(blob => {
-              media.srcObject = blob
-              return media.play()
-            })
+          media.src = url
+          media.load()
+          media
+            .play()
             .then(_ => {
               if (type === 'video') {
                 // @ts-ignore
