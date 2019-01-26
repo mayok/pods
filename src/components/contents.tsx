@@ -31,44 +31,44 @@ const Contents = React.memo(
         })
       }
 
-      console.log(document.querySelectorAll('.btn'))
-      document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener(
-          'click',
-          function(e) {
-            console.log(e)
-            const url = (e.currentTarget as HTMLElement).dataset.url as string
-            const type = (e.currentTarget as HTMLElement).dataset.type as string
+      // console.log(document.querySelectorAll('.btn'))
+      // document.querySelectorAll('.btn').forEach(elm => {
+      //   elm.addEventListener(
+      //     'click',
+      //     function(e) {
+      //       console.log(e)
+      //       const url = (e.currentTarget as HTMLElement).dataset.url as string
+      //       const type = (e.currentTarget as HTMLElement).dataset.type as string
 
-            const media = document.querySelector(`#${type}`) as HTMLMediaElement
-            media.load()
+      //       const media = document.querySelector(`#${type}`) as HTMLMediaElement
+      //       media.load()
 
-            media.src = url
-            media
-              .play()
-              .then(_ => {
-                if (type === 'video') {
-                  // @ts-ignore
-                  media.requestPictureInPicture().catch(e => {
-                    console.log(e)
-                    console.log(e.name)
-                    console.log(e.message)
-                    console.log(e.code)
-                  })
-                }
-              })
-              .catch(e => {
-                console.log(e)
-                console.log(e.name)
-                console.log(e.message)
-                console.log(e.code)
-              })
+      //       media.src = url
+      //       media
+      //         .play()
+      //         .then(_ => {
+      //           if (type === 'video') {
+      //             // @ts-ignore
+      //             media.requestPictureInPicture().catch(e => {
+      //               console.log(e)
+      //               console.log(e.name)
+      //               console.log(e.message)
+      //               console.log(e.code)
+      //             })
+      //           }
+      //         })
+      //         .catch(e => {
+      //           console.log(e)
+      //           console.log(e.name)
+      //           console.log(e.message)
+      //           console.log(e.code)
+      //         })
 
-            // setMedia({ url, type })
-          },
-          false
-        )
-      })
+      //       // setMedia({ url, type })
+      //     },
+      //     false
+      //   )
+      // })
     }, [pod])
 
     if (pod.name && channels.hasOwnProperty(pod.name)) {
@@ -80,6 +80,21 @@ const Contents = React.memo(
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
                 <Button
+                  onMouseEnter={() =>
+                    setMedia({ url: c.url, type: c.type.split('/')[0] })
+                  }
+                  onClick={() => {
+                    if (c.type.split('/')[0] === 'video') {
+                      const video = document.querySelector('#video')
+                      // @ts-ignore
+                      video.requestPictureInPicture().catch(e => {
+                        console.log(e)
+                        console.log(e.name)
+                        console.log(e.message)
+                        console.log(e.code)
+                      })
+                    }
+                  }}
                   className="btn"
                   data-url={c.url}
                   data-type={c.type.split('/')[0]}
