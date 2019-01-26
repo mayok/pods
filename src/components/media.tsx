@@ -19,7 +19,6 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         ;(document.querySelector('#player') as HTMLElement).classList.remove(
           'active'
         )
-        video.style.display = 'none'
       })
       video.addEventListener('leavepictureinpicture ', () => {
         video.style.display = 'initial'
