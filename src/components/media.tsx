@@ -21,10 +21,6 @@ const Media = React.memo(({ media }: Props) => {
       _media.addEventListener('timeupdate', () => {
         progress.value = `${_media.currentTime / _media.duration}`
       })
-
-      // progress.addEventListener('oninput', function(e) {
-      //   _media.currentTime = e.currentTarget.value * _media.duration
-      // })
     }
     return function cleanup() {
       ;(document.querySelector('#player') as HTMLElement).classList.remove(

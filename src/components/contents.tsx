@@ -45,6 +45,8 @@ const Contents = React.memo(
                     const _media = document.querySelector(
                       `#${type}`
                     ) as HTMLMediaElement
+                    console.log(_media)
+                    console.log(c.url)
                     _media.src = c.url
                     _media.load()
                     _media.play().then(() => {
