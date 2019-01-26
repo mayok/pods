@@ -12,6 +12,7 @@ const Media = React.memo(({ media, setMedia }: Props) => {
   let p2 = 0
   let p3 = 0
   let p4 = 0
+  let dragging = false
 
   useEffect(() => {
     if (!!media.type) {
@@ -46,10 +47,11 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         preload="none"
         controls={true}
         onMouseDown={e => {
+          dragging = true
           p3 = e.clientX
           p4 = e.clientY
         }}
-        onDrag={e => {
+        onMouseMove={e => {
           // use ref
           const element = document.querySelector(`#player`) as HTMLElement
           p1 = p3 - e.clientX
@@ -58,6 +60,9 @@ const Media = React.memo(({ media, setMedia }: Props) => {
           p4 = e.clientY
           element.style.top = element.offsetTop - p2 + 'px'
           element.style.left = element.offsetLeft - p1 + 'px'
+        }}
+        onMouseUp={e => {
+          dragging = false
         }}
       />
       <audio id="audio" preload="none" />
