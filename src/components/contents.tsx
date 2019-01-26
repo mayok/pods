@@ -63,7 +63,10 @@ const Contents = React.memo(
             {channels[pod.name].contents.map((c: IChannelItem) => (
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
-                <Button>Play</Button>>
+                <Button className="btn" data-url={c.url} data-type={c.type}>
+                  Play
+                </Button>
+                >
               </Channel>
             ))}
           </Channels>
