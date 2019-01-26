@@ -4,67 +4,63 @@ import { IMedia } from '../interfaces'
 
 interface Props {
   media: IMedia
+  setMedia: (media: IMedia) => void
 }
 
-const Media = React.memo(({ media }: Props) => {
+const Media = React.memo(({ media, setMedia }: Props) => {
+  let p1 = 0
+  let p2 = 0
+  let p3 = 0
+  let p4 = 0
+
   useEffect(() => {
     if (!!media.type) {
       ;(document.querySelector('#player') as HTMLElement).classList.add(
         'active'
       )
-      const _media = document.querySelector(
-        `#${media.type}`
-      ) as HTMLMediaElement
-      const progress = document.querySelector('#progress') as HTMLInputElement
-      // progress.value = `${_media.currentTime / _media.duration}`
-
-      _media.addEventListener('timeupdate', () => {
-        progress.value = `${_media.currentTime / _media.duration}`
-      })
-    }
-    return function cleanup() {
-      ;(document.querySelector('#player') as HTMLElement).classList.remove(
-        'active'
-      )
     }
   }, [media])
 
+  const handleClick = () => {
+    ;(document.querySelector('#player') as HTMLElement).classList.remove(
+      'active'
+    )
+    ;(document.querySelector(`#${media.type}`) as HTMLMediaElement).src = ''
+    setMedia({ url: '', type: '' })
+  }
+
   return (
     <Player id="player">
-      <video id="video" preload="none" />
+      <Video
+        id="video"
+        preload="none"
+        onDragStart={e => {
+          p3 = e.clientX
+          p4 = e.clientY
+        }}
+        onDrag={e => {
+          // use ref
+          const element = document.querySelector(`#player`) as HTMLElement
+          p1 = p3 - e.clientX
+          p2 = p4 - e.clientY
+          p3 = e.clientX
+          p4 = e.clientY
+          element.style.top = element.offsetTop - p2 + 'px'
+          element.style.left = element.offsetLeft - p1 + 'px'
+        }}
+        onMouseEnter={() => {
+          const btn = document.querySelector('#close') as HTMLElement
+          btn.classList.add('active')
+        }}
+        onMouseLeave={() => {
+          const btn = document.querySelector('#close') as HTMLElement
+          btn.classList.remove('active')
+        }}
+      />
       <audio id="audio" preload="none" />
-      <Controls id="controls">
-        <ControlsTimeButtons>
-          <Play
-            id="play"
-            className="playing"
-            onClick={() => {
-              ;(document.querySelector(
-                '#play'
-              ) as HTMLElement).classList.toggle('playing')
-            }}
-          />
-          <Rewind id="rewind" />
-          <Forward id="forward" />
-        </ControlsTimeButtons>
-        <Progress
-          id="progress"
-          type="range"
-          min="0"
-          max="100"
-          step="0.01"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            const _media = document.querySelector(
-              `#${media.type}`
-            ) as HTMLMediaElement
-            _media.currentTime =
-              parseInt(e.currentTarget.value) * _media.duration
-          }}
-        />
-        <ControlsWindowButtons>
-          <Pip />
-        </ControlsWindowButtons>
-      </Controls>
+      <CloseButton id="close" onClick={handleClick}>
+        x
+      </CloseButton>
     </Player>
   )
 })
@@ -91,70 +87,18 @@ const Player = styled.div`
   }
 `
 
-const Controls = styled.div`
-  position: relative;
-  display: none;
+const Video = styled.video`
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
 `
 
-const ControlsTimeButtons = styled.div`
+const CloseButton = styled.button`
   position: absolute;
   top: 0;
-  bottom: 0;
-  left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  width: 220px;
-  height: 62px;
-`
-const ControlsWindowButtons = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  margin: 0;
-  width: 62px;
-  height: 40px;
-`
+  display: none;
 
-const Play = styled.button`
-  position: relative;
-  width: 62px;
-  height: 62px;
-
-  &:after {
-    content: |>;
-    letter-spacing: 0;
-    font-weight: bold;
+  &.active {
+    display: block;
   }
-  &.playing:after {
-    content: '||';
-    font-weight: bold;
-  }
-`
-const Rewind = styled.button`
-  position: relative;
-  width: 62px;
-  height: 62px;
-`
-const Forward = styled.button`
-  position: relative;
-  width: 62px;
-  height: 62px;
-`
-
-const Progress = styled.input`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 80%;
-`
-const Pip = styled.button`
-  width: 62px;
-  height: 30px;
 `

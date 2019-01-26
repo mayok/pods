@@ -42,17 +42,13 @@ const Contents = React.memo(
                 <Button
                   onClick={() => {
                     const type = c.type.split('/')[0]
+                    setMedia({ url: c.url, type })
                     const _media = document.querySelector(
                       `#${type}`
                     ) as HTMLMediaElement
-                    console.log(type)
-                    console.log(_media)
-                    console.log(c.url)
                     _media.src = c.url
                     _media.load()
-                    _media.play().then(() => {
-                      setMedia({ url: c.url, type })
-                    })
+                    _media.play()
                   }}
                 >
                   Play

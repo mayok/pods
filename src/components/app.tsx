@@ -20,7 +20,7 @@ const App = () => {
       <Container>
         <List {...{ list, setList, setPod }} />
         <Contents {...{ pod, channels, setChannels, setMedia }} />
-        <Media {...{ media }} />
+        <Media {...{ media, setMedia }} />
       </Container>
     </>
   )
