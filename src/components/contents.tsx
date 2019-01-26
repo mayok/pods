@@ -40,7 +40,7 @@ const Contents = React.memo(
           const media = document.querySelector(`#${type}`) as HTMLMediaElement
           media.load()
 
-          fetch(url)
+          fetch(url, { mode: 'no-cors' })
             .then(response => response.blob())
             .then(blob => {
               media.srcObject = blob
