@@ -10,58 +10,163 @@ interface Props {
 const Media = React.memo(({ media, setMedia }: Props) => {
   useEffect(() => {
     if (!!media.type) {
+      ;(document.querySelector('#player') as HTMLElement).classList.add(
+        'active'
+      )
       const _media = document.querySelector(
         `#${media.type}`
       ) as HTMLMediaElement
-      _media.src = media.url
-      _media.load()
+      const progress = document.querySelector('#progress') as HTMLInputElement
+      // progress.value = `${_media.currentTime / _media.duration}`
+
+      _media.addEventListener('timeupdate', () => {
+        progress.value = `${_media.currentTime / _media.duration}`
+      })
+
+      // progress.addEventListener('oninput', function(e) {
+      //   _media.currentTime = e.currentTarget.value * _media.duration
+      // })
+    }
+    return function cleanup() {
+      ;(document.querySelector('#player') as HTMLElement).classList.remove(
+        'active'
+      )
     }
   }, [media])
 
-  return (
-    <Player>
-      <MediaContainer>
-        <video id="video" preload="none" src="" />
-        <audio id="audio" preload="none" src="" />
-      </MediaContainer>
+  if (!media.type) {
+    return null
+  }
 
-      {media.type ? (
-        <Controls>
-          <Play className="play" />
-          <Rewind className="rewind" />
-          <Forward className="rewind" />
-        </Controls>
-      ) : null}
+  return (
+    <Player id="player">
+      {media.type === 'video' ? (
+        <video id="player" preload="none" />
+      ) : (
+        <audio id="player" preload="none" />
+      )}
+      <Controls id="controls">
+        <ControlsTimeButtons>
+          <Play
+            id="play"
+            className="playing"
+            onClick={() => {
+              ;(document.querySelector(
+                '#play'
+              ) as HTMLElement).classList.toggle('playing')
+            }}
+          />
+          <Rewind id="rewind" />
+          <Forward id="forward" />
+        </ControlsTimeButtons>
+        <Progress
+          id="progress"
+          type="range"
+          min="0"
+          max="100"
+          step="0.01"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const _media = document.querySelector(
+              `#${media.type}`
+            ) as HTMLMediaElement
+            _media.currentTime =
+              parseInt(e.currentTarget.value) * _media.duration
+          }}
+        />
+        <ControlsWindowButtons>
+          <Pip />
+        </ControlsWindowButtons>
+      </Controls>
     </Player>
   )
 })
 
 export default Media
 
-const Player = styled.div``
-const MediaContainer = styled.div`
-  /*
+const Player = styled.div`
   position: absolute;
   top: 0;
-  left: 0;
-  display: block;
-  visibility: hidden;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  */
-`
-
-const Controls = styled.div`
-  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 auto;
-  width: 80vw;
-  height: 90px;
+  margin: auto;
+  width: 320px;
+  height: 180px;
+  min-width: 320px;
+  min-height: 180px;
+  max-width: 640px;
+  max-height: 360px;
+  z-index: -1;
+
+  &.active {
+    z-index: 10;
+  }
 `
 
-const Play = styled.button``
-const Rewind = styled.button``
-const Forward = styled.button``
+const Controls = styled.div`
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+`
+
+const ControlsTimeButtons = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 220px;
+  height: 62px;
+`
+const ControlsWindowButtons = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  width: 62px;
+  height: 40px;
+`
+
+const Play = styled.button`
+  position: relative;
+  width: 62px;
+  height: 62px;
+
+  &:after {
+    content: |>;
+    letter-spacing: 0;
+    font-weight: bold;
+  }
+  &.playing:after {
+    content: '||';
+    font-weight: bold;
+  }
+`
+const Rewind = styled.button`
+  position: relative;
+  width: 62px;
+  height: 62px;
+`
+const Forward = styled.button`
+  position: relative;
+  width: 62px;
+  height: 62px;
+`
+
+const Progress = styled.input`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+`
+const Pip = styled.button`
+  width: 62px;
+  height: 30px;
+`

@@ -4,7 +4,6 @@ import { IChannelItem, IChannels, IMedia, IPods } from '../interfaces'
 import { fetchContents } from '../provider/api'
 import Storage from '../provider/storage'
 import Loading from './loading'
-import { pipeline } from 'stream'
 
 interface Props {
   pod: IPods
@@ -30,45 +29,6 @@ const Contents = React.memo(
           Storage._set(pod.name, JSON.stringify(v))
         })
       }
-
-      // console.log(document.querySelectorAll('.btn'))
-      // document.querySelectorAll('.btn').forEach(elm => {
-      //   elm.addEventListener(
-      //     'click',
-      //     function(e) {
-      //       console.log(e)
-      //       const url = (e.currentTarget as HTMLElement).dataset.url as string
-      //       const type = (e.currentTarget as HTMLElement).dataset.type as string
-
-      //       const media = document.querySelector(`#${type}`) as HTMLMediaElement
-      //       media.load()
-
-      //       media.src = url
-      //       media
-      //         .play()
-      //         .then(_ => {
-      //           if (type === 'video') {
-      //             // @ts-ignore
-      //             media.requestPictureInPicture().catch(e => {
-      //               console.log(e)
-      //               console.log(e.name)
-      //               console.log(e.message)
-      //               console.log(e.code)
-      //             })
-      //           }
-      //         })
-      //         .catch(e => {
-      //           console.log(e)
-      //           console.log(e.name)
-      //           console.log(e.message)
-      //           console.log(e.code)
-      //         })
-
-      //       // setMedia({ url, type })
-      //     },
-      //     false
-      //   )
-      // })
     }, [pod])
 
     if (pod.name && channels.hasOwnProperty(pod.name)) {
@@ -80,28 +40,20 @@ const Contents = React.memo(
               <Channel key={c.title}>
                 <ChannelName>{c.title}</ChannelName>
                 <Button
-                  onMouseEnter={() =>
-                    setMedia({ url: c.url, type: c.type.split('/')[0] })
-                  }
                   onClick={() => {
-                    if (c.type.split('/')[0] === 'video') {
-                      const video = document.querySelector('#video')
-                      // @ts-ignore
-                      video.requestPictureInPicture().catch(e => {
-                        console.log(e)
-                        console.log(e.name)
-                        console.log(e.message)
-                        console.log(e.code)
-                      })
-                    }
+                    const type = c.type.split('/')[0]
+                    const _media = document.querySelector(
+                      `#${type}`
+                    ) as HTMLMediaElement
+                    _media.src = c.url
+                    _media.load()
+                    _media.play().then(() => {
+                      setMedia({ url: c.url, type })
+                    })
                   }}
-                  className="btn"
-                  data-url={c.url}
-                  data-type={c.type.split('/')[0]}
                 >
                   Play
                 </Button>
-                >
               </Channel>
             ))}
           </Channels>
@@ -127,55 +79,6 @@ const Contents = React.memo(
 )
 
 export default Contents
-
-// const handleClick = async (e: Event, setMedia: Function) => {
-//   const url = (e.currentTarget as HTMLElement).dataset.url as string
-//   let type = (e.currentTarget as HTMLElement).dataset.type as string
-//   type = type.split('/')[0]
-
-//   setMedia({ url, type })
-
-//   if (type === 'video') {
-//     const video = document.querySelector('#video') as HTMLVideoElement
-//     await new Promise(resolve => setTimeout(resolve, 5000))
-
-//     // @ts-ignore
-//     await video.requestPictureInPicture()
-//   }
-// }
-
-// const PlayButton = ({
-//   url,
-//   type,
-//   setMedia,
-// }: {
-//   url: string
-//   type: string
-//   setMedia: Function
-// }) => {
-//   useEffect(() => {
-//     console.log(document.querySelectorAll('.btn'))
-//     document.querySelectorAll('.btn').forEach(elm => {
-//       elm.addEventListener('click', handleClick.bind(null, setMedia), false)
-//     })
-
-//     return function cleanup() {
-//       document.querySelectorAll('.btn').forEach(elm => {
-//         elm.removeEventListener(
-//           'click',
-//           handleClick.bind(null, setMedia),
-//           false
-//         )
-//       })
-//     }
-//   })
-
-//   return (
-//     <Button data-url={url} data-type={type}>
-//       Play
-//     </Button>
-//   )
-// }
 
 const Container = styled.div`
   position: relative;
@@ -220,16 +123,6 @@ const Channel = styled.li`
 const ChannelName = styled.h2`
   margin: 0;
   font-size: 1.3em;
-`
-
-const Link = styled.a`
-  color: var(--text);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--text-active);
-    text-decoration: underline;
-  }
 `
 
 const Button = styled.span`
