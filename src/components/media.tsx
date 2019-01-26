@@ -31,8 +31,8 @@ const Media = React.memo(({ media }: Props) => {
 
   return (
     <Player id="player">
-      <video id="player" preload="none" />
-      <audio id="player" preload="none" />
+      <video id="video" preload="none" />
+      <audio id="audio" preload="none" />
       <Controls id="controls">
         <ControlsTimeButtons>
           <Play
