@@ -57,6 +57,8 @@ const Media = React.memo(({ media, setMedia }: Props) => {
           const element = document.querySelector(`#player`) as HTMLElement
           p1 = p3 - e.clientX
           p2 = p4 - e.clientY
+          p3 = e.clientX
+          p4 = e.clientY
           element.style.top =
             parseInt((element.style.top || '0px').slice(0, -2)) - p1 + 'px'
           element.style.left =
