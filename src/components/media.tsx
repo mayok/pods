@@ -34,7 +34,8 @@ const Media = React.memo(({ media, setMedia }: Props) => {
       <Video
         id="video"
         preload="none"
-        onDragStart={e => {
+        controls={true}
+        onMouseDown={e => {
           p3 = e.clientX
           p4 = e.clientY
         }}
