@@ -16,10 +16,14 @@ const Media = React.memo(({ media, setMedia }: Props) => {
 
       const video = document.querySelector('#video') as HTMLVideoElement
       video.addEventListener('enterpictureinpicture', () => {
+        ;(document.querySelector('#player') as HTMLElement).classList.remove(
+          'active'
+        )
         video.style.display = 'none'
       })
       video.addEventListener('leavepictureinpicture ', () => {
-        close()
+        video.style.display = 'initial'
+        setMedia({ url: '', type: '' })
       })
     }
   }, [media])
