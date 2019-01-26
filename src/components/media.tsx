@@ -46,27 +46,27 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         id="video"
         preload="none"
         controls={true}
-        onMouseDown={e => {
-          dragging = true
-          p3 = e.clientX
-          p4 = e.clientY
-        }}
-        onMouseMove={e => {
-          // use ref
-          if (!dragging) return
-          const element = document.querySelector(`#player`) as HTMLElement
-          p1 = p3 - e.clientX
-          p2 = p4 - e.clientY
-          p3 = e.clientX
-          p4 = e.clientY
-          element.style.left =
-            parseInt((element.style.left || '0px').slice(0, -2)) - p1 + 'px'
-          element.style.top =
-            parseInt((element.style.top || '0px').slice(0, -2)) - p2 + 'px'
-        }}
-        onMouseUp={e => {
-          dragging = false
-        }}
+        // onMouseDown={e => {
+        //   dragging = true
+        //   p3 = e.clientX
+        //   p4 = e.clientY
+        // }}
+        // onMouseMove={e => {
+        //   // use ref
+        //   if (!dragging) return
+        //   const element = document.querySelector(`#player`) as HTMLElement
+        //   p1 = p3 - e.clientX
+        //   p2 = p4 - e.clientY
+        //   p3 = e.clientX
+        //   p4 = e.clientY
+        //   element.style.left =
+        //     parseInt((element.style.left || '0px').slice(0, -2)) - p1 + 'px'
+        //   element.style.top =
+        //     parseInt((element.style.top || '0px').slice(0, -2)) - p2 + 'px'
+        // }}
+        // onMouseUp={e => {
+        //   dragging = false
+        // }}
       />
       <audio id="audio" preload="none" />
       <CloseButton id="close" onClick={handleClick}>
