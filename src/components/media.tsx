@@ -30,7 +30,17 @@ const Media = React.memo(({ media, setMedia }: Props) => {
   }
 
   return (
-    <Player id="player">
+    <Player
+      id="player"
+      onMouseEnter={() => {
+        const btn = document.querySelector('#close') as HTMLElement
+        btn.classList.add('active')
+      }}
+      onMouseLeave={() => {
+        const btn = document.querySelector('#close') as HTMLElement
+        btn.classList.remove('active')
+      }}
+    >
       <Video
         id="video"
         preload="none"
@@ -48,14 +58,6 @@ const Media = React.memo(({ media, setMedia }: Props) => {
           p4 = e.clientY
           element.style.top = element.offsetTop - p2 + 'px'
           element.style.left = element.offsetLeft - p1 + 'px'
-        }}
-        onMouseEnter={() => {
-          const btn = document.querySelector('#close') as HTMLElement
-          btn.classList.add('active')
-        }}
-        onMouseLeave={() => {
-          const btn = document.querySelector('#close') as HTMLElement
-          btn.classList.remove('active')
         }}
       />
       <audio id="audio" preload="none" />
