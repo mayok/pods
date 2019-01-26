@@ -37,10 +37,9 @@ const Contents = React.memo(
           const url = (e.currentTarget as HTMLElement).dataset.url as string
           const type = (e.currentTarget as HTMLElement).dataset.type as string
 
-          setMedia({ url, type })
-
           if (type === 'video') {
             const video = document.querySelector('#video') as HTMLVideoElement
+            video.load()
             await new Promise(resolve => setTimeout(resolve, 5000))
 
             // @ts-ignore
@@ -51,6 +50,8 @@ const Contents = React.memo(
               console.log(e.code)
             })
           }
+
+          setMedia({ url, type })
         })
       })
     }, [pod])
