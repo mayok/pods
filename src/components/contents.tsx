@@ -32,26 +32,34 @@ const Contents = React.memo(
 
       console.log(document.querySelectorAll('.btn'))
       document.querySelectorAll('.btn').forEach(elm => {
-        elm.addEventListener('click', async e => {
+        elm.addEventListener('click', e => {
           console.log(e)
           const url = (e.currentTarget as HTMLElement).dataset.url as string
           const type = (e.currentTarget as HTMLElement).dataset.type as string
 
-          if (type === 'video') {
-            const video = document.querySelector('#video') as HTMLVideoElement
-            video.load()
-            await new Promise(resolve => setTimeout(resolve, 5000))
+          const media = document.querySelector(`#${type}`) as HTMLMediaElement
+          media.load()
 
-            // @ts-ignore
-            await video.requestPictureInPicture().catch((e: any) => {
+          fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+              media.srcObject = blob
+              return media.play()
+            })
+            .then(_ => {
+              if (type === 'video') {
+                // @ts-ignore
+                media.requestPictureInPicture()
+              }
+            })
+            .catch(e => {
               console.log(e)
               console.log(e.name)
               console.log(e.message)
               console.log(e.code)
             })
-          }
 
-          setMedia({ url, type })
+          // setMedia({ url, type })
         })
       })
     }, [pod])

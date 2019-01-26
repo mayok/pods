@@ -8,17 +8,17 @@ interface Props {
 }
 
 const Media = React.memo(({ media, setMedia }: Props) => {
-  useEffect(() => {
-    if (media.type) {
-      const _media = document.querySelector(
-        `#${media.type}`
-      ) as HTMLMediaElement
-      _media.src = media.url
-      _media.load()
+  // useEffect(() => {
+  //   if (media.type) {
+  //     const _media = document.querySelector(
+  //       `#${media.type}`
+  //     ) as HTMLMediaElement
+  //     _media.src = media.url
+  //     _media.load()
 
-      // _media.play()
-    }
-  }, [media])
+  //     // _media.play()
+  //   }
+  // }, [media])
 
   return (
     <Player>
