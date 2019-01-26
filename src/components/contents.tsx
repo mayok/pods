@@ -47,7 +47,12 @@ const Contents = React.memo(
             .then(_ => {
               if (type === 'video') {
                 // @ts-ignore
-                media.requestPictureInPicture()
+                media.requestPictureInPicture().catch(e => {
+                  console.log(e)
+                  console.log(e.name)
+                  console.log(e.message)
+                  console.log(e.code)
+                })
               }
             })
             .catch(e => {
