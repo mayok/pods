@@ -4,10 +4,9 @@ import { IMedia } from '../interfaces'
 
 interface Props {
   media: IMedia
-  setMedia: (media: IMedia) => void
 }
 
-const Media = React.memo(({ media, setMedia }: Props) => {
+const Media = React.memo(({ media }: Props) => {
   useEffect(() => {
     if (!!media.type) {
       ;(document.querySelector('#player') as HTMLElement).classList.add(
@@ -34,17 +33,10 @@ const Media = React.memo(({ media, setMedia }: Props) => {
     }
   }, [media])
 
-  if (!media.type) {
-    return null
-  }
-
   return (
     <Player id="player">
-      {media.type === 'video' ? (
-        <video id="player" preload="none" />
-      ) : (
-        <audio id="player" preload="none" />
-      )}
+      <video id="player" preload="none" />
+      <audio id="player" preload="none" />
       <Controls id="controls">
         <ControlsTimeButtons>
           <Play
