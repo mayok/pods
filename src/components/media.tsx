@@ -55,12 +55,12 @@ const Media = React.memo(({ media, setMedia }: Props) => {
           // use ref
           if (!dragging) return
           const element = document.querySelector(`#player`) as HTMLElement
-          p1 = p3 - e.clientX
-          p2 = p4 - e.clientY
+          p1 = p3 + e.clientX
+          p2 = p4 + e.clientY
           p3 = e.clientX
           p4 = e.clientY
-          element.style.top = element.offsetTop - p2 + 'px'
-          element.style.left = element.offsetLeft - p1 + 'px'
+          element.style.top = p1 + 'px'
+          element.style.left = p2 + 'px'
         }}
         onMouseUp={e => {
           dragging = false
