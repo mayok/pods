@@ -8,21 +8,23 @@ interface Props {
 }
 
 const Media = React.memo(({ media, setMedia }: Props) => {
-  let p1 = 0
-  let p2 = 0
-  let p3 = 0
-  let p4 = 0
-  let dragging = false
-
   useEffect(() => {
     if (!!media.type) {
       ;(document.querySelector('#player') as HTMLElement).classList.add(
         'active'
       )
+
+      const video = document.querySelector('#video') as HTMLVideoElement
+      video.addEventListener('enterpictureinpicture', () => {
+        video.style.display = 'none'
+      })
+      video.addEventListener('leavepictureinpicture ', () => {
+        close()
+      })
     }
   }, [media])
 
-  const handleClick = () => {
+  const close = () => {
     ;(document.querySelector('#player') as HTMLElement).classList.remove(
       'active'
     )
@@ -42,34 +44,9 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         btn.classList.remove('active')
       }}
     >
-      <Video
-        id="video"
-        preload="none"
-        controls={true}
-        // onMouseDown={e => {
-        //   dragging = true
-        //   p3 = e.clientX
-        //   p4 = e.clientY
-        // }}
-        // onMouseMove={e => {
-        //   // use ref
-        //   if (!dragging) return
-        //   const element = document.querySelector(`#player`) as HTMLElement
-        //   p1 = p3 - e.clientX
-        //   p2 = p4 - e.clientY
-        //   p3 = e.clientX
-        //   p4 = e.clientY
-        //   element.style.left =
-        //     parseInt((element.style.left || '0px').slice(0, -2)) - p1 + 'px'
-        //   element.style.top =
-        //     parseInt((element.style.top || '0px').slice(0, -2)) - p2 + 'px'
-        // }}
-        // onMouseUp={e => {
-        //   dragging = false
-        // }}
-      />
+      <Video id="video" preload="none" controls={true} />
       <audio id="audio" preload="none" />
-      <CloseButton id="close" onClick={handleClick}>
+      <CloseButton id="close" onClick={close}>
         x
       </CloseButton>
     </Player>
