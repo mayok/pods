@@ -55,8 +55,8 @@ const Media = React.memo(({ media, setMedia }: Props) => {
           // use ref
           if (!dragging) return
           const element = document.querySelector(`#player`) as HTMLElement
-          p1 = p3 + e.clientX
-          p2 = p4 + e.clientY
+          p1 = e.clientX - p3
+          p2 = e.clientY - p4
           p3 = e.clientX
           p4 = e.clientY
           element.style.top = p1 + 'px'
