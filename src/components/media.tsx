@@ -53,6 +53,7 @@ const Media = React.memo(({ media, setMedia }: Props) => {
         }}
         onMouseMove={e => {
           // use ref
+          if (!dragging) return
           const element = document.querySelector(`#player`) as HTMLElement
           p1 = p3 - e.clientX
           p2 = p4 - e.clientY
