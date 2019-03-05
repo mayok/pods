@@ -1,73 +1,38 @@
-import React, { useState } from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
-import { IChannels, IList, IMedia, IPods } from '../interfaces'
-import Contents from './contents'
-import List from './list'
-import Media from './media'
+import React, { useReducer, Dispatch, useContext } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Home from './home';
+import Channel from './channel';
+import Filter from './filter';
+import { reducer, RootState, Action } from '../reducers';
 
-const App = () => {
-  const [list, setList] = useState<IList>({})
-  const [channels, setChannels] = useState<IChannels>({})
+const RootContext = React.createContext<RootState>(null as any);
+const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
 
-  // todo: set last seen as initial value
-  const [pod, setPod] = useState<IPods>({ group: '', name: '' })
-
-  const [media, setMedia] = useState<IMedia>({ url: '', type: '' })
-
-  return (
-    <>
-      <GlobalStyle />
-      <Container>
-        <List {...{ list, setList, setPod }} />
-        <Contents {...{ pod, channels, setChannels, setMedia }} />
-        <Media {...{ media, setMedia }} />
-      </Container>
-    </>
-  )
+export function useRootState(): RootState {
+  return useContext(RootContext);
 }
 
-export default App
+export function useDispatch() {
+  return useContext(DispatchContext);
+}
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 30px 0;
-    width: 100vw;
-    height: 100vh;
-    background: var(--black);
-  }
+const App = (props: RootState) => {
+  const [rootState, dispatch] = useReducer(reducer, props);
 
-  :root {
-    --text: #99aab5;
-    --text-hover: #A3B2BC;
-    --text-active: #fefefe;
-    --text-active-hover: #fff;
-    --black: #23272a;
-    --dark: #2c2f33;
-    --dark-hover: #3e424f;
-    --daight: #353840
-  }
+  return (
+    <BrowserRouter>
+      <RootContext.Provider value={rootState}>
+        <DispatchContext.Provider value={dispatch}>
+          <div>
+            <Filter />
 
-  * {
-    box-sizing: border-box;
-  }
+            <Route exact path="/" component={Home} />
+            <Route path="/:channel" component={Channel} />
+          </div>
+        </DispatchContext.Provider>
+      </RootContext.Provider>
+    </BrowserRouter>
+  );
+};
 
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(128, 128, 128, 0.5);
-  }
-`
-
-const Container = styled.div`
-  display: flex;
-  position: relative;
-  margin: auto;
-  width: 960px;
-  height: calc(100vh - 60px);
-  min-height: 50vh;
-  overflow-y: hidden;
-  background: var(--dark);
-`
+export default App;

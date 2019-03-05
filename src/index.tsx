@@ -1,5 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './components/app'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/app';
+import { getInitialState } from './reducers';
 
-ReactDOM.render(<App />, document.querySelector('.app'))
+// get data from storage
+ReactDOM.render(<App {...getInitialState()} />, document.querySelector('.app'));
