@@ -1,4 +1,4 @@
-import React, { useReducer, Dispatch, useContext } from 'react';
+import React, { useReducer, Dispatch, useContext, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './home';
 import Channel from './channel';
@@ -18,6 +18,11 @@ export function useDispatch() {
 
 const App = (props: RootState) => {
   const [rootState, dispatch] = useReducer(reducer, props);
+
+  useEffect(() => {
+    // fetch channel list
+    // fetch conents if it is outdated
+  }, []);
 
   return (
     <BrowserRouter>

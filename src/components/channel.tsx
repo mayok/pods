@@ -1,9 +1,30 @@
-import React from 'react'
+import React from 'react';
+import { useRootState, useDispatch } from './app';
 
-const Channel = () => (
-  <div>
-    <h1>Channel</h1>
-  </div>
-)
+const Channel = () => {
+  const rootState = useRootState();
+  const dispatch = useDispatch();
 
-export default Channel
+  if (rootState.channel === null) {
+    return;
+  }
+
+  return (
+    <div>
+      {rootState.channels
+        .filter(channel => channel.shortname === rootState.channel)
+        .map(channel => (
+          <div>
+            <h1>{channel.title}</h1>
+            <ul>
+              {channel.contents.map(content => (
+                <li>{content.url}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
+  );
+};
+
+export default Channel;
