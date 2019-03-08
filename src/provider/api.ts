@@ -1,16 +1,16 @@
 import * as convert from 'xml-js';
-import config = require('../config.json');
+import config from '../config.json';
+
+export const fetchGroups = (): string[] => {
+  return config.paths;
+};
 
 // fetch channel list
-export const fetchList = async (path: string): Promise<IList> => {
+export const fetchList = async (): Promise<string[]> => {
   const response = await fetch(`${config.host}/${path}/`);
   const list = await response.json();
 
-  return {
-    [path]: {
-      channels: list.channels,
-    },
-  };
+  return list.channels;
 };
 
 // fetch channel contents
