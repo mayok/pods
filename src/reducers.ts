@@ -1,3 +1,5 @@
+import config from './config.json';
+
 export type RootState = {
   // application state
   filter: string;
@@ -27,6 +29,13 @@ export type RootState = {
     | [];
 };
 
+export type UpdateGroups = {
+  type: 'update:groups';
+  payload: {
+    groups: string[];
+  };
+};
+
 export type Filtering = {
   type: 'filtering';
   payload: {
@@ -41,7 +50,16 @@ export type Select = {
   };
 };
 
-export type Action = Filtering | Select;
+export type Action = UpdateGroups | Filtering | Select;
+
+export function updateGroups(groups: string[]) {
+  return {
+    type: 'update:groups',
+    payload: {
+      groups,
+    },
+  };
+}
 
 export function filtering(group: string): Filtering {
   return {
@@ -63,6 +81,12 @@ export function select(name: string | null): Select {
 
 export function reducer(state: RootState, action: Action): RootState {
   switch (action.type) {
+    case 'update:groups': {
+      return {
+        ...state,
+        groups: [...new Set([...state.groups, ...action.payload.groups])],
+      };
+    }
     case 'filtering': {
       return {
         ...state,
@@ -86,7 +110,7 @@ export function getInitialState(): RootState {
     filter: 'all',
     created: new Date().toISOString(),
     channel: null,
-    groups: ['all'],
+    groups: config.paths,
     channels: [],
   };
 }
