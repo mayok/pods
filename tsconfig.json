@@ -1,0 +1,15 @@
+{
+  "exclude": ["node_modules", "jest.config.js", "dist"],
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
+}
