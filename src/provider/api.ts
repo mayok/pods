@@ -1,12 +1,8 @@
 import * as convert from 'xml-js';
 import config from '../config.json';
 
-export const fetchGroups = (): string[] => {
-  return config.paths;
-};
-
 // fetch channel list
-export const fetchList = async (): Promise<string[]> => {
+export const fetchList = async (path: string): Promise<string[]> => {
   const response = await fetch(`${config.host}/${path}/`);
   const list = await response.json();
 
@@ -14,7 +10,7 @@ export const fetchList = async (): Promise<string[]> => {
 };
 
 // fetch channel contents
-export const fetchContents = async (path: string, channel: string): Promise<IContents> => {
+export const fetchContents = async (path: string, channel: string) => {
   // todo: think when server returns error
   const response = await fetch(`${config.host}/${path}/${channel}/`);
   const xml = await response.text();

@@ -1,5 +1,9 @@
 import config from './config.json';
 
+type Groups = {
+  [key: string]: string[];
+};
+
 export type RootState = {
   // application state
   filter: string;
@@ -7,31 +11,30 @@ export type RootState = {
   channel: string | null;
 
   // application data
-  groups: string[];
-  channels:
-    | [
+  groups: { [key: string]: string[] };
+  channels: {
+    [key: string]: {
+      title: string;
+      shortname: string;
+      group: string;
+      expires: number;
+      updated: string;
+      contents: [
         {
-          title: string;
-          shortname: string;
-          group: string;
-          expires: number;
-          updated: string;
-          contents: [
-            {
-              name: string;
-              url: string;
-              type: string;
-              date: string;
-            }
-          ];
+          name: string;
+          url: string;
+          type: string;
+          date: string;
         }
-      ]
-    | [];
+      ];
+    };
+  };
 };
 
 export type UpdateGroups = {
   type: 'update:groups';
   payload: {
+    name: string;
     groups: string[];
   };
 };
@@ -52,10 +55,11 @@ export type Select = {
 
 export type Action = UpdateGroups | Filtering | Select;
 
-export function updateGroups(groups: string[]) {
+export function updateGroups(name: string, groups: string[]): UpdateGroups {
   return {
     type: 'update:groups',
     payload: {
+      name,
       groups,
     },
   };
@@ -84,7 +88,10 @@ export function reducer(state: RootState, action: Action): RootState {
     case 'update:groups': {
       return {
         ...state,
-        groups: [...new Set([...state.groups, ...action.payload.groups])],
+        groups: {
+          ...state.groups,
+          [action.payload.name]: action.payload.groups,
+        },
       };
     }
     case 'filtering': {
@@ -106,11 +113,14 @@ export function reducer(state: RootState, action: Action): RootState {
 }
 
 export function getInitialState(): RootState {
+  const groups: Groups = {};
+  config.paths.map((path: string) => (groups[path] = []));
+
   return {
     filter: 'all',
     created: new Date().toISOString(),
     channel: null,
-    groups: config.paths,
-    channels: [],
+    groups: groups,
+    channels: {},
   };
 }
