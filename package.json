@@ -6,7 +6,6 @@
   "author": "Naohiro Iwamoto",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint src/**/*",
     "dev": "parcel src/index.html --open",
     "build": "parcel build src/index.html --public-url ./",
     "build:dev": "cross-env NODE_ENV=development parcel build src/index.html --public-url ./"

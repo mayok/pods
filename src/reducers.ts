@@ -4,30 +4,46 @@ type Groups = {
   [key: string]: string[];
 };
 
+export type Channel = {
+  title: string;
+  last_updated: string;
+  contents: [
+    {
+      name: string;
+      url: string;
+      type: string;
+      date: string;
+    }
+  ];
+};
+
 export type RootState = {
   // application state
   filter: string;
-  created: string;
   channel: string | null;
+  running_process: number;
+  queue: string[];
 
   // application data
-  groups: { [key: string]: string[] };
+  groups: Groups;
   channels: {
-    [key: string]: {
-      title: string;
-      shortname: string;
-      group: string;
-      expires: number;
-      updated: string;
-      contents: [
-        {
-          name: string;
-          url: string;
-          type: string;
-          date: string;
-        }
-      ];
-    };
+    [key: string]: Channel;
+  };
+};
+
+export type IncrementRunningProcess = {
+  type: 'increment';
+};
+
+export type DecrementRunningProcess = {
+  type: 'decrement';
+};
+
+export type UpdateChannels = {
+  type: 'update:channels';
+  payload: {
+    name: string;
+    channel: Channel;
   };
 };
 
@@ -53,7 +69,35 @@ export type Select = {
   };
 };
 
-export type Action = UpdateGroups | Filtering | Select;
+export type Action =
+  | UpdateGroups
+  | Filtering
+  | Select
+  | UpdateChannels
+  | IncrementRunningProcess
+  | DecrementRunningProcess;
+
+export function incrementRunningProcess(): IncrementRunningProcess {
+  return {
+    type: 'increment',
+  };
+}
+
+export function decrementRunningProcess(): DecrementRunningProcess {
+  return {
+    type: 'decrement',
+  };
+}
+
+export function updateChannels(name: string, channel: Channel): UpdateChannels {
+  return {
+    type: 'update:channels',
+    payload: {
+      name,
+      channel,
+    },
+  };
+}
 
 export function updateGroups(name: string, groups: string[]): UpdateGroups {
   return {
@@ -85,6 +129,27 @@ export function select(name: string | null): Select {
 
 export function reducer(state: RootState, action: Action): RootState {
   switch (action.type) {
+    case 'increment': {
+      return {
+        ...state,
+        running_process: state.running_process + 1,
+      };
+    }
+    case 'decrement': {
+      return {
+        ...state,
+        running_process: state.running_process - 1,
+      };
+    }
+    case 'update:channels': {
+      return {
+        ...state,
+        channels: {
+          ...state.channels,
+          [action.payload.name]: action.payload.channel,
+        },
+      };
+    }
     case 'update:groups': {
       return {
         ...state,
@@ -113,14 +178,15 @@ export function reducer(state: RootState, action: Action): RootState {
 }
 
 export function getInitialState(): RootState {
-  const groups: Groups = {};
+  const groups: { [key: string]: string[] } = {};
   config.paths.map((path: string) => (groups[path] = []));
 
   return {
+    running_process: 0,
+    queue: [],
     filter: 'all',
-    created: new Date().toISOString(),
     channel: null,
-    groups: groups,
+    groups,
     channels: {},
   };
 }

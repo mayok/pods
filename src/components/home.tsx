@@ -9,10 +9,10 @@ const Home = () => {
 
   return (
     <div>
-      {rootState.channels
-        .filter(channel => channel.group === rootState.filter || rootState.filter === 'all')
-        .map(c => {
-          <div onClick={() => onClickSelect(c.shortname)}>{c.title}</div>;
+      {Object.keys(rootState.channels)
+        .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
+        .map(key => {
+          <div onClick={() => onClickSelect(key.split('.').slice(-1)[0])}>{rootState.channels[key].title}</div>;
         })}
     </div>
   );

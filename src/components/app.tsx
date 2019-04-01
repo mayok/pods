@@ -1,12 +1,11 @@
-import React, { useReducer, Dispatch, useContext, useEffect } from 'react';
+import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Home from './home';
-import Channel from './channel';
-import Filter from './filter';
-import { reducer, RootState, Action, updateGroups } from '../reducers';
-import { fetchList, fetchContents } from '../provider/api';
 import config from '../config.json';
+import { fetchContents, fetchList } from '../provider/api';
 import * as actions from '../reducers';
+import { Action, Channel, reducer, RootState } from '../reducers';
+import Filter from './filter';
+import Home from './home';
 
 const RootContext = React.createContext<RootState>(null as any);
 const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
@@ -23,24 +22,43 @@ const App = (props: RootState) => {
   const [rootState, dispatch] = useReducer(reducer, props);
 
   useEffect(() => {
-    // fetch channel list
-    const lists: { [key: string]: string[] } = {};
+    // fetch channel group
+    const groups: { [key: string]: string[] } = {};
     config.paths.forEach(async path => {
-      const list = await fetchList(path);
-      dispatch(actions.updateGroups(path, list));
-      lists[path] = list;
+      const group = await fetchList(path);
+      dispatch(actions.updateGroups(path, group));
+      groups[path] = group;
     });
 
     // fetch conents if it is outdated
-    Object.keys(lists).forEach(path => {
-      lists[path].forEach(shortname => {
+    Object.keys(groups).forEach(group => {
+      groups[group].forEach(shortname => {
+        // todo: compare channels last_updated and todays date
+        // const last_updated = rootState.channels[`${group}.${shortname}`].last_updated;
+        // const today = new Date().toISOString();
+
         // if shortname not in rootState.channels OR, outdated
-        if (!Object.keys(rootState.channels).includes(shortname) || rootState.channels[shortname].expires) {
-          // fetchContents(path, shortname)
+        if (!Object.keys(rootState.channels).includes(`${group}.${shortname}`)) {
+          fetchContents(group, shortname).then((response: Channel) => {
+            dispatch(actions.updateChannels(`${group}.${shortname}`, response));
+          });
         }
       });
     });
   }, []);
+
+  // todo: use worker to fetch content limiging concurrency request
+  // useEffect(() => {
+  //   if (rootState.running_process <= config.concurrency && rootState.queue.length > 0) {
+  //     dispatch(actions.incrementRunningProcess());
+  //     worker.postMessage(queue.pop());
+
+  //     worker.onmessage = function(e) {
+  //       dispatch(actions.updateChannels(e.data));
+  //       dispatch(actions.decrementRunningProcess());
+  //     };
+  //   }
+  // }, [rootState.queue]);
 
   return (
     <BrowserRouter>
@@ -50,7 +68,7 @@ const App = (props: RootState) => {
             <Filter />
 
             <Route exact path="/" component={Home} />
-            <Route path="/:channel" component={Channel} />
+            {/* <Route path="/:channel" component={Channel} /> */}
           </div>
         </DispatchContext.Provider>
       </RootContext.Provider>

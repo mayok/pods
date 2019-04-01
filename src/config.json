@@ -1,4 +1,5 @@
 {
   "host": "https://mayok.github.io/podcast",
-  "paths": ["group1", "group2"]
+  "paths": ["group1", "group2"],
+  "concurrency": 3
 }
