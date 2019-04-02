@@ -61,7 +61,7 @@ const App = (props: RootState) => {
   // }, [rootState.queue]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={config.subdirectory}>
       <RootContext.Provider value={rootState}>
         <DispatchContext.Provider value={dispatch}>
           <div>
