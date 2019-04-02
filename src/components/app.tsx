@@ -6,6 +6,7 @@ import * as actions from '../reducers';
 import { Action, Channel, reducer, RootState } from '../reducers';
 import Filter from './filter';
 import Home from './home';
+import console = require('console');
 
 const RootContext = React.createContext<RootState>(null as any);
 const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
@@ -30,7 +31,9 @@ const App = (props: RootState) => {
       groups[path] = group;
     });
 
-    // fetch conents if it is outdated
+    console.log(groups)
+
+    // fetch contents if it is outdated
     Object.keys(groups).forEach(group => {
       groups[group].forEach(shortname => {
         // todo: compare channels last_updated and todays date
@@ -47,7 +50,7 @@ const App = (props: RootState) => {
     });
   }, []);
 
-  // todo: use worker to fetch content limiging concurrency request
+  // todo: use worker to fetch content limiting concurrency request
   // useEffect(() => {
   //   if (rootState.running_process <= config.concurrency && rootState.queue.length > 0) {
   //     dispatch(actions.incrementRunningProcess());
