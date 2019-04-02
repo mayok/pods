@@ -12,7 +12,7 @@ const Home = () => {
       {Object.keys(rootState.channels)
         .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
         .map(key => {
-          <div onClick={() => onClickSelect(key.split('.').slice(-1)[0])}>{rootState.channels[key].title}</div>;
+          <div key={key} onClick={() => onClickSelect(key.split('.').slice(-1)[0])}>{rootState.channels[key].title}</div>;
         })}
     </div>
   );
