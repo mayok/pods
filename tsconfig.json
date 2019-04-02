@@ -1,5 +1,5 @@
 {
-  "exclude": ["node_modules", "jest.config.js", "dist"],
+  "exclude": ["node_modules", "dist", "src/worker.js"],
   "compilerOptions": {
     "target": "ES2017",
     "module": "commonjs",
