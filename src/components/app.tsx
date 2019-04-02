@@ -6,7 +6,6 @@ import * as actions from '../reducers';
 import { Action, Channel, reducer, RootState } from '../reducers';
 import Filter from './filter';
 import Home from './home';
-import console = require('console');
 
 const RootContext = React.createContext<RootState>(null as any);
 const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
@@ -23,19 +22,24 @@ const App = (props: RootState) => {
   const [rootState, dispatch] = useReducer(reducer, props);
 
   useEffect(() => {
-    // fetch channel group
+    // fetch channel groups
     const groups: { [key: string]: string[] } = {};
-    config.paths.forEach(async path => {
-      const group = await fetchList(path);
-      dispatch(actions.updateGroups(path, group));
-      groups[path] = group;
-    });
+    Promise.all(
+      config.paths.map(async path => {
+        groups[path] = await fetchList(path);
+        return groups;
+      })
+    )
+      .then(groups => groups.reduce((acc, val) => Object.assign({}, acc, val), {}))
+      .then(groups => {
+        dispatch(actions.updateGroups(groups));
+      });
+  });
 
-    console.log(groups)
-
+  useEffect(() => {
     // fetch contents if it is outdated
-    Object.keys(groups).forEach(group => {
-      groups[group].forEach(shortname => {
+    Object.keys(rootState.groups).forEach(group => {
+      rootState.groups[group].forEach(shortname => {
         // todo: compare channels last_updated and todays date
         // const last_updated = rootState.channels[`${group}.${shortname}`].last_updated;
         // const today = new Date().toISOString();
@@ -48,7 +52,7 @@ const App = (props: RootState) => {
         }
       });
     });
-  }, []);
+  }, [rootState.groups]);
 
   // todo: use worker to fetch content limiting concurrency request
   // useEffect(() => {

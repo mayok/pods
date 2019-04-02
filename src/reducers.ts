@@ -50,8 +50,7 @@ export type UpdateChannels = {
 export type UpdateGroups = {
   type: 'update:groups';
   payload: {
-    name: string;
-    groups: string[];
+    groups: Groups
   };
 };
 
@@ -99,11 +98,10 @@ export function updateChannels(name: string, channel: Channel): UpdateChannels {
   };
 }
 
-export function updateGroups(name: string, groups: string[]): UpdateGroups {
+export function updateGroups(groups: Groups): UpdateGroups {
   return {
     type: 'update:groups',
     payload: {
-      name,
       groups,
     },
   };
@@ -155,7 +153,7 @@ export function reducer(state: RootState, action: Action): RootState {
         ...state,
         groups: {
           ...state.groups,
-          [action.payload.name]: action.payload.groups,
+          ...action.payload.groups,
         },
       };
     }
