@@ -1,11 +1,12 @@
 import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import config from '../config.json';
 import { fetchContents, fetchList } from '../provider/api';
 import * as actions from '../reducers';
 import { Action, Channel, reducer, RootState } from '../reducers';
 import Filter from './filter';
 import Home from './home';
+import console = require('console');
 
 const RootContext = React.createContext<RootState>(null as any);
 const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
@@ -37,16 +38,15 @@ const App = (props: RootState) => {
   }, []);
 
   useEffect(() => {
-    // fetch contents if it is outdated
     Object.keys(rootState.groups).forEach(group => {
       rootState.groups[group].forEach(shortname => {
         // todo: compare channels last_updated and todays date
         // const last_updated = rootState.channels[`${group}.${shortname}`].last_updated;
         // const today = new Date().toISOString();
 
-        // if shortname not in rootState.channels OR, outdated
         if (!Object.keys(rootState.channels).includes(`${group}.${shortname}`)) {
           fetchContents(group, shortname).then((response: Channel) => {
+            console.log(response)
             dispatch(actions.updateChannels(`${group}.${shortname}`, response));
           });
         }
@@ -74,8 +74,10 @@ const App = (props: RootState) => {
           <div>
             <Filter />
 
-            <Route exact path="/" component={Home} />
-            {/* <Route path="/:channel" component={Channel} /> */}
+            <Switch>
+              <Route exact path="/" component={Home} />
+              {/* <Route path="/:channel" component={Channel} /> */}
+            </Switch>
           </div>
         </DispatchContext.Provider>
       </RootContext.Provider>
