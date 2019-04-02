@@ -34,7 +34,7 @@ const App = (props: RootState) => {
       .then(groups => {
         dispatch(actions.updateGroups(groups));
       });
-  });
+  }, []);
 
   useEffect(() => {
     // fetch contents if it is outdated
