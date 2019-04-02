@@ -46,11 +46,11 @@ const App = (props: RootState) => {
 
         if (!Object.keys(rootState.channels).includes(`${group}.${shortname}`)) {
           fetchContents(group, shortname).then((response: Channel) => {
-            console.log(response)
             dispatch(actions.updateChannels(`${group}.${shortname}`, response));
           });
         }
       });
+      console.log(rootState.channels)
     });
   }, [rootState.groups]);
 
