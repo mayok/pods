@@ -8,16 +8,18 @@ const Home = () => {
   const onClickSelect = useCallback(name => dispatch(actions.select(name)), []);
 
   useEffect(() => {
-    console.log(rootState.channels)
-  }, [rootState.channels])
+    console.log(rootState.channels);
+  }, [rootState.channels]);
 
   return (
     <div>
       {Object.keys(rootState.channels)
         .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
-        .map(key => {
-          <div key={key} onClick={() => onClickSelect(key.split('.').slice(-1)[0])}>{rootState.channels[key].title}</div>;
-        })}
+        .map(key => (
+          <div key={key} onClick={() => onClickSelect(key.split('.')[1])}>
+            {rootState.channels[key].title}
+          </div>
+        ))}
     </div>
   );
 };
