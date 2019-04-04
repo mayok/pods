@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log(rootState.channels)
-  }, [])
+  }, [rootState.channels])
 
   return (
     <div>
