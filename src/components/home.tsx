@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
-import { useRootState, useDispatch } from './app';
-import * as actions from '../reducers';
+import React, { useEffect } from 'react';
+import { useRootState } from './app';
+import Thumbnail from './thumbnail';
 
 const Home = () => {
   const rootState = useRootState();
-  const dispatch = useDispatch();
-  const onClickSelect = useCallback(name => dispatch(actions.select(name)), []);
 
   useEffect(() => {
     console.log(rootState.channels);
@@ -16,9 +14,7 @@ const Home = () => {
       {Object.keys(rootState.channels)
         .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
         .map(key => (
-          <div key={key} onClick={() => onClickSelect(key.split('.')[1])}>
-            {rootState.channels[key].title}
-          </div>
+          <Thumbnail key={key} shortname={key} />
         ))}
     </div>
   );

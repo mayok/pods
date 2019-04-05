@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import { useRootState, useDispatch } from './app';
-import * as actions from '../reducers';
 import config from '../config.json';
+import * as actions from '../reducers';
+import { useDispatch } from './app';
 
 const Filter = () => {
-  const rootState = useRootState();
   const dispatch = useDispatch();
   const onClickFiltering = useCallback(group => dispatch(actions.filtering(group)), []);
 

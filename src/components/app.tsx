@@ -79,6 +79,8 @@ const App = (props: RootState) => {
               {/* <Route path="/:channel" component={Channel} /> */}
             </Switch>
           </div>
+
+          <canvas id="canvas" />
         </DispatchContext.Provider>
       </RootContext.Provider>
     </BrowserRouter>
