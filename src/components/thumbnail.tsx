@@ -1,12 +1,14 @@
+import * as H from 'history';
 import React, { useCallback, useEffect, useRef } from 'react';
 import * as actions from '../reducers';
 import { useDispatch } from './app';
 
 type Props = {
+  history: H.History;
   shortname: string;
 };
 
-const Thumbnail = ({ shortname }: Props) => {
+const Thumbnail = ({ shortname, history }: Props) => {
   const dispatch = useDispatch();
   const onClickSelect = useCallback(name => dispatch(actions.select(name)), []);
   const imgEl = useRef({} as HTMLImageElement);
@@ -16,7 +18,7 @@ const Thumbnail = ({ shortname }: Props) => {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     // set font
-    ctx.font = "15px Arial";
+    ctx.font = '15px Arial';
     ctx.fillText(shortname, canvas.height / 2, canvas.width / 2);
     const data = canvas.toDataURL('image/png');
 
@@ -25,7 +27,12 @@ const Thumbnail = ({ shortname }: Props) => {
   }, []);
 
   return (
-    <div onClick={() => onClickSelect(shortname)}>
+    <div
+      onClick={() => {
+        history.push(shortname);
+        onClickSelect(shortname);
+      }}
+    >
       <img ref={imgEl} />
     </div>
   );

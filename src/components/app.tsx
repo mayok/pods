@@ -4,9 +4,9 @@ import config from '../config.json';
 import { fetchContents, fetchList } from '../provider/api';
 import * as actions from '../reducers';
 import { Action, Channel, reducer, RootState } from '../reducers';
+import Content from './content';
 import Filter from './filter';
 import Home from './home';
-import console = require('console');
 
 const RootContext = React.createContext<RootState>(null as any);
 const DispatchContext = React.createContext<Dispatch<Action>>(null as any);
@@ -76,7 +76,7 @@ const App = (props: RootState) => {
 
             <Switch>
               <Route exact path="/" component={Home} />
-              {/* <Route path="/:channel" component={Channel} /> */}
+              <Route path="/:channel" component={Content} />
             </Switch>
           </div>
 

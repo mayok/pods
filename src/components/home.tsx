@@ -1,8 +1,13 @@
+import * as H from 'history';
 import React, { useEffect } from 'react';
 import { useRootState } from './app';
 import Thumbnail from './thumbnail';
 
-const Home = () => {
+type Props = {
+  history: H.History;
+};
+
+const Home = ({ history }: Props) => {
   const rootState = useRootState();
 
   useEffect(() => {
@@ -14,7 +19,7 @@ const Home = () => {
       {Object.keys(rootState.channels)
         .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
         .map(key => (
-          <Thumbnail key={key} shortname={key} />
+          <Thumbnail key={key} shortname={key} history={history} />
         ))}
     </div>
   );
