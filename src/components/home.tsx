@@ -1,19 +1,26 @@
-import React, { useCallback } from 'react';
-import { useRootState, useDispatch } from './app';
-import * as actions from '../reducers';
+import * as H from 'history';
+import React, { useEffect } from 'react';
+import { useRootState } from './app';
+import Thumbnail from './thumbnail';
 
-const Home = () => {
+type Props = {
+  history: H.History;
+};
+
+const Home = ({ history }: Props) => {
   const rootState = useRootState();
-  const dispatch = useDispatch();
-  const onClickSelect = useCallback(name => dispatch(actions.select(name)), []);
+
+  useEffect(() => {
+    console.log(rootState.channels);
+  }, [rootState.channels]);
 
   return (
     <div>
-      {rootState.channels
-        .filter(channel => channel.group === rootState.filter || rootState.filter === 'all')
-        .map(c => {
-          <div onClick={() => onClickSelect(c.shortname)}>{c.title}</div>;
-        })}
+      {Object.keys(rootState.channels)
+        .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
+        .map(key => (
+          <Thumbnail key={key} shortname={key} history={history} />
+        ))}
     </div>
   );
 };
