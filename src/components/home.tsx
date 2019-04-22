@@ -1,5 +1,5 @@
 import * as H from 'history';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRootState } from './app';
 import Thumbnail from './thumbnail';
 
@@ -9,11 +9,6 @@ type Props = {
 
 const Home = ({ history }: Props) => {
   const rootState = useRootState();
-
-  useEffect(() => {
-    console.log(rootState.channels);
-  }, [rootState.channels]);
-
   return (
     <div>
       {Object.keys(rootState.groups)

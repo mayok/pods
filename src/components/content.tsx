@@ -26,13 +26,17 @@ const Content = ({ history, location }: Props) => {
   return (
     <div>
       <h2>
-        {rootState.channel.group &&
-          rootState.channels[`${rootState.channel.group}.${rootState.channel.name}`] &&
+        {rootState.channels[`${rootState.channel.group}.${rootState.channel.name}`] &&
           rootState.channels[`${rootState.channel.group}.${rootState.channel.name}`].title}
       </h2>
-      {/* {rootState.channels[location.pathname.split('/')[1]].contents.map(c => (
-        <span>{c.name}</span>
-      ))} */}
+      {rootState.channels[`${rootState.channel.group}.${rootState.channel.name}`] &&
+        rootState.channels[`${rootState.channel.group}.${rootState.channel.name}`].contents.map(content => (
+          <div key={content.name}>
+            <span>{content.name}</span>
+            <span>{content.url}</span>
+            <span>{content.date}</span>
+          </div>
+        ))}
     </div>
   );
 };
