@@ -1,9 +1,9 @@
 import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import config from '../config.json';
-import { fetchContents, fetchList } from '../provider/api';
+import { fetchList } from '../provider/api';
 import * as actions from '../reducers';
-import { Action, Channel, reducer, RootState } from '../reducers';
+import { Action, reducer, RootState } from '../reducers';
 import Content from './content';
 import Filter from './filter';
 import Home from './home';
@@ -37,38 +37,8 @@ const App = (props: RootState) => {
       });
   }, []);
 
-  useEffect(() => {
-    Object.keys(rootState.groups).forEach(group => {
-      rootState.groups[group].forEach(shortname => {
-        // todo: compare channels last_updated and todays date
-        // const last_updated = rootState.channels[`${group}.${shortname}`].last_updated;
-        // const today = new Date().toISOString();
-
-        if (!Object.keys(rootState.channels).includes(`${group}.${shortname}`)) {
-          fetchContents(group, shortname).then((response: Channel) => {
-            dispatch(actions.updateChannels(`${group}.${shortname}`, response));
-            console.log(rootState.channels);
-          });
-        }
-      });
-    });
-  }, [rootState.groups]);
-
-  // todo: use worker to fetch content limiting concurrency request
-  // useEffect(() => {
-  //   if (rootState.running_process <= config.concurrency && rootState.queue.length > 0) {
-  //     dispatch(actions.incrementRunningProcess());
-  //     worker.postMessage(queue.pop());
-
-  //     worker.onmessage = function(e) {
-  //       dispatch(actions.updateChannels(e.data));
-  //       dispatch(actions.decrementRunningProcess());
-  //     };
-  //   }
-  // }, [rootState.queue]);
-
   return (
-    <BrowserRouter basename={config.subdirectory}>
+    <BrowserRouter>
       <RootContext.Provider value={rootState}>
         <DispatchContext.Provider value={dispatch}>
           <div>

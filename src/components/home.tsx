@@ -16,11 +16,14 @@ const Home = ({ history }: Props) => {
 
   return (
     <div>
-      {Object.keys(rootState.channels)
+      {Object.keys(rootState.groups)
         .filter(key => key.startsWith(rootState.filter) || rootState.filter === 'all')
-        .map(key => (
-          <Thumbnail key={key} shortname={key} history={history} />
-        ))}
+        .map(key =>
+          rootState.groups[key].map(shortname => (
+            <Thumbnail key={shortname} group={key} shortname={shortname} history={history} />
+          ))
+        )
+        .flat()}
     </div>
   );
 };

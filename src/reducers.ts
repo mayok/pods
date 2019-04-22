@@ -20,23 +20,16 @@ export type Channel = {
 export type RootState = {
   // application state
   filter: string;
-  channel: string | null;
-  running_process: number;
-  queue: string[];
+  channel: {
+    group?: string;
+    name?: string;
+  };
 
   // application data
   groups: Groups;
   channels: {
     [key: string]: Channel;
   };
-};
-
-export type IncrementRunningProcess = {
-  type: 'increment';
-};
-
-export type DecrementRunningProcess = {
-  type: 'decrement';
 };
 
 export type UpdateChannels = {
@@ -50,7 +43,7 @@ export type UpdateChannels = {
 export type UpdateGroups = {
   type: 'update:groups';
   payload: {
-    groups: Groups
+    groups: Groups;
   };
 };
 
@@ -64,29 +57,12 @@ export type Filtering = {
 export type Select = {
   type: 'select';
   payload: {
-    name: string | null;
+    group?: string;
+    name?: string;
   };
 };
 
-export type Action =
-  | UpdateGroups
-  | Filtering
-  | Select
-  | UpdateChannels
-  | IncrementRunningProcess
-  | DecrementRunningProcess;
-
-export function incrementRunningProcess(): IncrementRunningProcess {
-  return {
-    type: 'increment',
-  };
-}
-
-export function decrementRunningProcess(): DecrementRunningProcess {
-  return {
-    type: 'decrement',
-  };
-}
+export type Action = UpdateGroups | Filtering | Select | UpdateChannels;
 
 export function updateChannels(name: string, channel: Channel): UpdateChannels {
   return {
@@ -116,10 +92,11 @@ export function filtering(group: string): Filtering {
   };
 }
 
-export function select(name: string | null): Select {
+export function select(group?: string, name?: string): Select {
   return {
     type: 'select',
     payload: {
+      group,
       name,
     },
   };
@@ -127,18 +104,6 @@ export function select(name: string | null): Select {
 
 export function reducer(state: RootState, action: Action): RootState {
   switch (action.type) {
-    case 'increment': {
-      return {
-        ...state,
-        running_process: state.running_process + 1,
-      };
-    }
-    case 'decrement': {
-      return {
-        ...state,
-        running_process: state.running_process - 1,
-      };
-    }
     case 'update:channels': {
       return {
         ...state,
@@ -166,7 +131,11 @@ export function reducer(state: RootState, action: Action): RootState {
     case 'select': {
       return {
         ...state,
-        channel: action.payload.name,
+        channel: {
+          ...state.channel,
+          group: action.payload.group,
+          name: action.payload.name,
+        },
       };
     }
     default: {
@@ -180,10 +149,8 @@ export function getInitialState(): RootState {
   config.paths.map((path: string) => (groups[path] = []));
 
   return {
-    running_process: 0,
-    queue: [],
     filter: 'all',
-    channel: null,
+    channel: {},
     groups,
     channels: {},
   };

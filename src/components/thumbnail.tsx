@@ -5,12 +5,13 @@ import { useDispatch } from './app';
 
 type Props = {
   history: H.History;
+  group: string;
   shortname: string;
 };
 
-const Thumbnail = ({ shortname, history }: Props) => {
+const Thumbnail = ({ group, shortname, history }: Props) => {
   const dispatch = useDispatch();
-  const onClickSelect = useCallback(name => dispatch(actions.select(name)), []);
+  const onClickSelect = useCallback((group, name) => dispatch(actions.select(group, name)), []);
   const imgEl = useRef({} as HTMLImageElement);
 
   useEffect(() => {
@@ -18,8 +19,9 @@ const Thumbnail = ({ shortname, history }: Props) => {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     // set font
+    // todo: cute
     ctx.font = '15px Arial';
-    ctx.fillText(shortname, canvas.height / 2, canvas.width / 2);
+    ctx.fillText(shortname, canvas.width / 2, canvas.height / 2);
     const data = canvas.toDataURL('image/png');
 
     imgEl.current.src = data;
@@ -30,7 +32,7 @@ const Thumbnail = ({ shortname, history }: Props) => {
     <div
       onClick={() => {
         history.push(shortname);
-        onClickSelect(shortname);
+        onClickSelect(group, shortname);
       }}
     >
       <img ref={imgEl} />
