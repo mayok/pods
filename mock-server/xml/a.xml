@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>sample A</title>
+    <itunes:image href="https://example.com/sample.jpg" />
+<item>
+  <title>sample A - 2119/01/11</title>
+  <enclosure url="https://example.com/sample.mp3"
+    length="555"
+    type="audio/mp3" />
+  <guid isPermaLink="true">https://example.com/sample.mp3</guid>
+  <pubDate>Wed, 11 Jan 2119 00:00:00 +0900</pubDate>
+</item>
+<item>
+  <title>sample A - 2119/01/18</title>
+  <enclosure url="https://example.com/sample.mp3"
+    length="555"
+    type="audio/mp3" />
+  <guid isPermaLink="true">https://example.com/sample.mp3</guid>
+  <pubDate>Wed, 18 Jan 2019 00:00:00 +0900</pubDate>
+</item>
+  </channel>
+</rss>

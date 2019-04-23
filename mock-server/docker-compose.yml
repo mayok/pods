@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - ./json:/usr/share/nginx/json
+      - ./xml:/usr/share/nginx/xml
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_PORT=80

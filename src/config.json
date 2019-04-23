@@ -1,6 +1,4 @@
 {
-  "host": "https://mayok.github.io/podcast",
-  "paths": ["group1", "group2"],
-  "subdirectory": "/pods",
-  "concurrency": 3
+  "host": "http://localhost:8080",
+  "paths": ["a", "b"]
 }
