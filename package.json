@@ -7,10 +7,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.html --open",
+    "sb": "start-storybook",
     "build": "parcel build src/index.html --public-url ./",
     "build:dev": "cross-env NODE_ENV=development parcel build src/index.html --public-url ./"
   },
   "dependencies": {
+    "mobx": "^5.9.4",
+    "mobx-react": "^5.4.3",
+    "mobx-react-lite": "^1.2.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-router-dom": "^5.0.0",
@@ -18,11 +22,14 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@storybook/react": "^5.0.10",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "4.3.2",
     "@types/styled-components": "^4.1.14",
     "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
     "babel-plugin-transform-runtime": "^6.23.0",
     "cross-env": "^5.2.0",
     "parcel-bundler": "^1.12.3",
