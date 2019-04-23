@@ -5,7 +5,7 @@ module.exports = ({ config }) => {
       exclude: /node_modules/,
       use: [
         {
-          loader: require.resolve('awesome-typescript-loader'),
+          loader: require.resolve('ts-loader'),
         },
         {
           loader: require.resolve('react-docgen-typescript-loader'),
