@@ -21,6 +21,9 @@ module.exports = ({ config }) => {
         },
         {
           loader: 'css-loader',
+          options: {
+            modules: true,
+          },
         },
         {
           loader: 'sass-loader',
@@ -31,6 +34,6 @@ module.exports = ({ config }) => {
       ],
     }
   );
-  config.resolve.extensions.push('.ts', '.tsx');
+  config.resolve.extensions.push('.ts', '.tsx', '.scss', '.css');
   return config;
 };
