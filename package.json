@@ -9,6 +9,7 @@
     "dev": "parcel src/index.html --open",
     "sb": "start-storybook",
     "build": "parcel build src/index.html --public-url ./",
+    "build:sb": "build-storybook -c .storybook -o dist/docs",
     "build:dev": "cross-env NODE_ENV=development parcel build src/index.html --public-url ./"
   },
   "dependencies": {
