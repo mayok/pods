@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '../../atoms/Button/Button';
+import Button from '../../atoms/button/Button';
 
 const VerticalButtons = ({ text }: { text: string[] }) => {
   return (
