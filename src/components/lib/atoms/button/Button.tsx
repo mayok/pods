@@ -1,13 +1,13 @@
 import * as React from 'react';
-const buttonClassnames: ButtonClassNames = require('./button.scss');
+const buttonClassnames: ButtonClassNames = require('./_button.scss');
 
 export interface ButtonClassNames {
   button?: string;
 }
 
-const Button = ({ children }: { children: React.ReactNode }) => {
+const Button = ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => {
   return (
-    <button className={buttonClassnames.button} aria-pressed="false">
+    <button onClick={onClick} className={buttonClassnames.button} aria-pressed="false">
       {children}
     </button>
   );

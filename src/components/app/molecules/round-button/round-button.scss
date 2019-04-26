@@ -1,5 +1,5 @@
 .button {
-  composes: button from '../../../lib/atoms/button/button.scss';
+  composes: button from '../../../lib/atoms/button/_button.scss';
 
   width: 50px;
   height: 50px;
