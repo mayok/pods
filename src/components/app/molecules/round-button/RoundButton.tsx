@@ -1,15 +1,22 @@
 import * as React from 'react';
-const buttonClassnames: ButtonClassNames = require('./round-button.scss');
+import Button, { ButtonClassNames } from '../../../lib/atoms/button/Button';
 
-export interface ButtonClassNames {
-  button?: string;
+const roundButtonClassNames: ButtonClassNames = require('./round-button.scss');
+
+export interface RoundButtonProps {
+  children?: React.ReactNode;
+  classNames?: ButtonClassNames;
+  onClick?: () => void;
 }
 
-const RoundButton = ({ children }: { children: React.ReactNode }) => {
+const RoundButton = (props: RoundButtonProps) => {
+  const classNames = props.classNames || roundButtonClassNames;
+  const { children = undefined, ...rest } = props;
+
   return (
-    <button className={buttonClassnames.button} aria-pressed="false">
+    <Button classNames={classNames} {...rest}>
       {children}
-    </button>
+    </Button>
   );
 };
 
