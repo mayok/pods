@@ -12,7 +12,9 @@ const Filter = () => {
       <h1>Channels</h1>
       <ul>
         {[...config.paths, 'all'].map(path => (
-          <li key={path} onClick={() => onClickFiltering(path)}>{path}</li>
+          <li key={path} onClick={() => onClickFiltering(path)}>
+            {path}
+          </li>
         ))}
       </ul>
     </div>
