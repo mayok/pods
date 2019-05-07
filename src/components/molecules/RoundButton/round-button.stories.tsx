@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import RoundButton from './RoundButton';
+import RoundButton from '.';
 
-storiesOf('app/molecules/RoundButton', module)
+storiesOf('molecules/RoundButton', module)
   .add('with text', () => <RoundButton>Hello</RoundButton>)
   .add('with emoji', () => <RoundButton>😀 😎 👍 💯</RoundButton>);

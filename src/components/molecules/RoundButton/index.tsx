@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Button, { ButtonClassNames } from '../../../lib/atoms/button/Button';
+import Button from '../../atoms/Button';
+import { ButtonClassNames } from '../../atoms/Button';
 
 const roundButtonClassNames: ButtonClassNames = require('./round-button.scss');
 
