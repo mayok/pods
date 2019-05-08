@@ -1,0 +1,13 @@
+// button style: size, color, ...
+.button {
+  composes: button-base from '../../atoms/Button/button.scss';
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 0;
+
+  &:first-letter {
+    font-size: 20px;
+  }
+}

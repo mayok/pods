@@ -1,26 +1,35 @@
 import * as React from 'react';
-import RoundButton from '../../molecules/RoundButton';
-import { ButtonClassNames } from '../../atoms/button';
+import Button, { ButtonClassNames } from '../../atoms/Button';
+import { ElementProps } from '../../utils';
 
-const FilterButtonClass: FilterButtonClass = require('./filter-buttons.scss');
+const buttonClassNames: ButtonClassNames = require('./button.scss');
+const filterButtonClassNames: FilterButtonClassNames = require('./filter-buttons.scss');
 
-export interface FilterButtonClass extends ButtonClassNames {
-  filterButtons: string;
+export interface FilterButtonClassNames {
+  filterButtons?: string;
+  button?: string;
 }
 
-export interface Props {
-  children?: string;
+export interface Props extends ElementProps {
   childrens?: { label: string; onClick: () => void }[];
+  classNames?: FilterButtonClassNames;
 }
 
 const FilterButton = (props: Props) => {
+  const classNames = props.classNames || filterButtonClassNames;
+
   return (
-    <div className={FilterButtonClass.filterButtons}>
+    <div className={classNames.filterButtons}>
       {props.childrens &&
         props.childrens.map(child => (
-          <RoundButton classNames={FilterButtonClass} key={child.label} onClick={child.onClick}>
+          <Button
+            className={classNames.button} // button layout: position, margin
+            classNames={buttonClassNames} // button style: color, size
+            key={child.label}
+            onClick={child.onClick}
+          >
             {child.label}
-          </RoundButton>
+          </Button>
         ))}
     </div>
   );

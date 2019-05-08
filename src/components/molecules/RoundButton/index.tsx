@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Button from '../../atoms/Button';
 import { ButtonClassNames } from '../../atoms/Button';
+import { ElementProps } from '../../utils';
 
 const roundButtonClassNames: ButtonClassNames = require('./round-button.scss');
 
-export interface RoundButtonProps {
-  children?: React.ReactNode;
+export interface RoundButtonProps extends ElementProps {
   classNames?: ButtonClassNames;
   onClick?: () => void;
 }

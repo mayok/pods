@@ -7,5 +7,7 @@
 }
 
 .button {
-  composes: button from '../../molecules/RoundButton/round-button.scss';
+  & + & {
+    margin-top: 10px;
+  }
 }

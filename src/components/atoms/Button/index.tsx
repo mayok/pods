@@ -1,12 +1,12 @@
 import React from 'react';
+import { ElementProps, Element } from '../../utils';
 
 export interface ButtonClassNames {
   button?: string;
 }
 
-export interface ButtonProps {
+export interface ButtonProps extends ElementProps {
   classNames?: ButtonClassNames;
-  children?: React.ReactNode;
   onClick?: () => void;
 }
 
@@ -15,10 +15,17 @@ const Button = (props: ButtonProps) => {
   const { children = undefined, onClick = undefined, ...rest } = props;
 
   return (
-    <button onClick={onClick} className={classNames.button} aria-pressed="false">
+    <Element tagName="button" className={classNames.button} {...rest}>
       {children}
-    </button>
+    </Element>
   );
+
+  // const klassName = `${props.className} ${classNames.button}`;
+  // return (
+  //   <button onClick={onClick} className={klassName} aria-pressed="false" {...rest}>
+  //     {children}
+  //   </button>
+  // );
 };
 
 export default Button;
