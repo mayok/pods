@@ -3,16 +3,18 @@ import * as React from 'react';
 export interface Props {
   header: React.ReactNode;
   nav: React.ReactNode;
-  children: React.ReactNode;
+  content: React.ReactNode;
   props?: React.ReactNode;
 }
 
-const HomeTemplate = ({ header, nav, children, ...props }: Props) => {
+const HomeTemplate = ({ header, nav, content, ...props }: Props) => {
   return (
     <div>
       {header}
       {nav}
-      {children}
+      {content}
     </div>
   );
 };
+
+export default HomeTemplate;
