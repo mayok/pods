@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import Button, { ButtonClassNames } from '.';
 
-const style: ButtonClassNames = require('./_button.scss');
+const style: ButtonClassNames = require('./button.scss');
 
 storiesOf('atoms/Button', module)
   .addDecorator(withKnobs)

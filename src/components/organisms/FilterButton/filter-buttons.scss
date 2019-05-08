@@ -5,3 +5,7 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+.button {
+  composes: button from '../../molecules/RoundButton/round-button.scss';
+}

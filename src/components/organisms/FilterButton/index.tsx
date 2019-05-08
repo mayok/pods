@@ -18,7 +18,7 @@ const FilterButton = (props: Props) => {
     <div className={FilterButtonClass.filterButtons}>
       {props.childrens &&
         props.childrens.map(child => (
-          <RoundButton key={child.label} onClick={child.onClick}>
+          <RoundButton classNames={FilterButtonClass} key={child.label} onClick={child.onClick}>
             {child.label}
           </RoundButton>
         ))}
