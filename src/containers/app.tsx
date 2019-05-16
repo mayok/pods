@@ -1,11 +1,10 @@
 import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import config from '../config.json';
 import { fetchList } from '../provider/api';
 import * as actions from '../reducers';
 import { Action, reducer, RootState } from '../reducers';
 import Content from './content';
-import Filter from './filter';
 import Home from './home';
 
 const RootContext = React.createContext<RootState>(null as any);
@@ -38,22 +37,16 @@ const App = (props: RootState) => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <RootContext.Provider value={rootState}>
-        <DispatchContext.Provider value={dispatch}>
-          <div>
-            <Filter />
+    <RootContext.Provider value={rootState}>
+      <DispatchContext.Provider value={dispatch}>
+        <Switch>
+          <Route exact path="/" render={props => <Home {...props} />} />
+          <Route path="/:channel" render={props => <Content {...props} />} />
+        </Switch>
 
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/:channel" component={Content} />
-            </Switch>
-          </div>
-
-          <canvas id="canvas" />
-        </DispatchContext.Provider>
-      </RootContext.Provider>
-    </BrowserRouter>
+        <canvas id="canvas" />
+      </DispatchContext.Provider>
+    </RootContext.Provider>
   );
 };
 
