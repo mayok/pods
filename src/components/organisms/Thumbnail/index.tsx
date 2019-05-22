@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 const ThumbnailClass: ThumbnailClassNames = require('./thumbnail.scss');
 
@@ -9,17 +8,15 @@ export interface ThumbnailClassNames {
 }
 
 interface Props {
-  location: string;
-  imageSrc?: string;
+  src?: string;
+  onClick?: () => void;
 }
 
 const Thumbnail = (props: Props) => {
   return (
-    <Link to={props.location}>
-      <div className={ThumbnailClass.thumbnail}>
-        <img className={ThumbnailClass.image} src={props.imageSrc} />
-      </div>
-    </Link>
+    <div className={ThumbnailClass.thumbnail}>
+      <img onClick={props.onClick} className={ThumbnailClass.image} src={props.src} />
+    </div>
   );
 };
 

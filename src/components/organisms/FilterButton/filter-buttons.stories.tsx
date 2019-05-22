@@ -13,5 +13,5 @@ storiesOf('organisms/FilterButtons', module).add('with text', () => {
       onClick: () => {},
     },
   ];
-  return <FilterButtons childrens={data}>Hello</FilterButtons>;
+  return <FilterButtons children={data} />;
 });

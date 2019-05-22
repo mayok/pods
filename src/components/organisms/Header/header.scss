@@ -1,3 +1,13 @@
 .header {
-  width: 100vw;
+  width: 100%;
+  height: 60px;
+}
+
+.logo {
+  display: inline-block;
+  margin: 7.5px 0;
+  padding: 0 8px;
+  height: 45px;
+  line-height: 45px;
+  box-sizing: border-box;
 }

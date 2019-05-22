@@ -5,7 +5,7 @@ import Thumbnails from '../../organisms/Thubmnails';
 import HomeTemplate from '../../templates/HomeTemplate';
 
 export interface Props {
-  data: { location: string; imageSrc: string }[];
+  data: { src: string }[];
 }
 
 const Home = (props: Props) => {

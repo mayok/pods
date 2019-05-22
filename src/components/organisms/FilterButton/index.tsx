@@ -1,30 +1,26 @@
 import * as React from 'react';
-import Button, { ButtonClassNames } from '../../atoms/Button';
+import Button from '../../atoms/Button';
 import { ElementProps } from '../../utils';
 
-const buttonClassNames: ButtonClassNames = require('./button.scss');
-const filterButtonClassNames: FilterButtonClassNames = require('./filter-buttons.scss');
+// const buttonClassNames: ButtonClassName = require('./button.scss');
+const styles: FilterButtonClassName = require('./filter-buttons.scss');
 
-export interface FilterButtonClassNames {
+export interface FilterButtonClassName {
   filterButtons?: string;
   button?: string;
 }
 
-export interface Props extends ElementProps {
-  childrens?: { label: string; onClick: () => void }[];
-  classNames?: FilterButtonClassNames;
+export interface FilterButtonProps extends ElementProps {
+  children?: { label: string; onClick: () => void }[];
 }
 
-const FilterButton = (props: Props) => {
-  const classNames = props.classNames || filterButtonClassNames;
-
+const FilterButton = (props: FilterButtonProps) => {
   return (
-    <div className={classNames.filterButtons}>
-      {props.childrens &&
-        props.childrens.map(child => (
+    <div className={styles.filterButtons}>
+      {props.children &&
+        props.children.map(child => (
           <Button
-            className={classNames.button} // button layout: position, margin
-            classNames={buttonClassNames} // button style: color, size
+            className={styles.button} // FilterButton specific style
             key={child.label}
             onClick={child.onClick}
           >

@@ -1,23 +1,21 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import Heading, { HeadingClassName } from '../Heading';
 import { ElementProps } from '../../utils';
+const styles: LogoClassName = require('./logo.scss');
 
-const logoClassNames: LogoClassNames = require('./logo.scss');
-
-interface Props extends ElementProps {
-  classNames?: LogoClassNames;
-}
-
-export interface LogoClassNames {
+export interface LogoClassName extends HeadingClassName {
   logo?: string;
 }
 
-const Logo = (props: Props) => {
-  const classNames = props.classNames || {};
+const Logo = (props: ElementProps) => {
+  const { ...rest } = props;
 
   return (
-    <Link className={classNames.logo} to="/">
-      <span>logo</span>
+    <Link to="/">
+      <Heading level={1} className={styles.logo} {...rest}>
+        {props.children}
+      </Heading>
     </Link>
   );
 };

@@ -1,21 +1,15 @@
 import * as React from 'react';
 
 export interface ElementProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-export interface Props {
   tagName?: string;
-  role?: string;
-  children?: React.ReactNode;
   className?: string;
-  classNames?: any;
+  onClick?: () => void;
+  children?: React.ReactNode;
+  role?: string;
 }
 
-export function Element(props: Props) {
-  const { tagName = 'div', children = null, className = null, classNames = {}, ...rest } = props;
+export function Element(props: ElementProps) {
+  const { tagName = 'div', children = null, ...rest } = props;
 
-  const klassName = `${className} ${Object.values(classNames)[0]}`;
-  return React.createElement(tagName, { className: klassName, ...rest }, children);
+  return React.createElement(tagName, { className: [props.className, rest.className].join(' '), ...rest }, children);
 }

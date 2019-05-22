@@ -1,25 +1,22 @@
 import * as React from 'react';
 import { Element, ElementProps } from '../../utils';
+const styles: HeadingClassName = require('./heading.scss');
 
 export interface HeadingClassName {
-  [key: string]: string | undefined;
   heading?: string;
+  [key: string]: string | undefined;
 }
 
-interface Props extends ElementProps {
-  classNames?: HeadingClassName;
+export interface HeadingProps extends ElementProps {
   level?: number;
   visualLevel?: number;
 }
 
-const Heading = (props: Props) => {
-  const classNames = props.classNames || {};
+const Heading = (props: HeadingProps) => {
   const { children = undefined, level = 2, visualLevel = 2, ...rest } = props;
 
   const tagName = `h${level}`;
-  const vl = classNames[`h${visualLevel}`];
-  // const className = `${classNames.heading} ${vl}`;
-  const className = [classNames.heading, vl].filter(e => e).join(' ');
+  const className = [styles.heading, styles[`h${visualLevel}`]].join(' ');
 
   return (
     <Element tagName={tagName} className={className} {...rest}>
@@ -27,4 +24,5 @@ const Heading = (props: Props) => {
     </Element>
   );
 };
+
 export default Heading;

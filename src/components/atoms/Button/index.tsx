@@ -1,31 +1,17 @@
 import React from 'react';
-import { ElementProps, Element } from '../../utils';
+import { Element, ElementProps } from '../../utils';
+const styles: ButtonClassName = require('./button.scss');
 
-export interface ButtonClassNames {
+export interface ButtonClassName {
   button?: string;
 }
 
-export interface ButtonProps extends ElementProps {
-  classNames?: ButtonClassNames;
-  onClick?: () => void;
-}
-
-const Button = (props: ButtonProps) => {
-  const classNames = props.classNames || {};
-  const { children = undefined, onClick = undefined, ...rest } = props;
-
+const Button = (props: ElementProps) => {
   return (
-    <Element tagName="button" className={classNames.button} {...rest}>
-      {children}
+    <Element tagName="button" className={styles.button} {...props}>
+      {props.children}
     </Element>
   );
-
-  // const klassName = `${props.className} ${classNames.button}`;
-  // return (
-  //   <button onClick={onClick} className={klassName} aria-pressed="false" {...rest}>
-  //     {children}
-  //   </button>
-  // );
 };
 
 export default Button;

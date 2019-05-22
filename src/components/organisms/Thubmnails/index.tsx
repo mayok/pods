@@ -2,7 +2,7 @@ import * as React from 'react';
 import Thumbnail from '../Thumbnail';
 
 interface Props {
-  data: { location: string; imageSrc: string }[];
+  data: { src: string }[];
 }
 
 const Thumbnails = (props: Props) => {

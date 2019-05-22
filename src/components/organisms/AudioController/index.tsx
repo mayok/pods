@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RoundButton from '../../molecules/RoundButton';
+import Button from '../../atoms/Button';
 
 const classNames: AudioControllerClassNames = require('./audio-controller.scss');
 
@@ -15,7 +15,7 @@ export interface AudioControllerClassNames {
 const AudioController = (props: Props) => {
   return (
     <div>
-      <RoundButton>></RoundButton>
+      <Button>></Button>
     </div>
   );
 };
