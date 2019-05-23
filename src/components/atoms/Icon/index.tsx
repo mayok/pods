@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { Element, ElementProps } from '../../utils';
+import { ElementProps } from '../../utils';
+import Image from '../Image';
 const styles: IconClassName = require('./icon.scss');
 
 export interface IconClassName {
   icon?: string;
 }
 
-const Icon = (props: ElementProps) => {
-  const { children = undefined, ...rest } = props;
+export interface IconProps extends ElementProps {
+  src?: string;
+  width?: number;
+  height?: number;
+}
 
-  return (
-    <Element classNames={styles.icon} {...rest}>
-      {children}
-    </Element>
-  );
+const Icon = (props: IconProps) => {
+  const { src = '', width = 20, height = 20, ...rest } = props;
+
+  return <Image src={src} classNames={styles.icon} width={width} height={height} {...rest} />;
 };
 
 export default Icon;

@@ -1,0 +1,27 @@
+@import '../../variables';
+
+$height: 50px;
+
+.root {
+  position: relative;
+  width: 100%;
+  height: $height;
+  background: $white;
+}
+
+.icon {
+  padding: 4px;
+  line-height: $height;
+}
+
+.title {
+  display: inline-block;
+  line-height: $height;
+}
+
+.time {
+  display: inline-block;
+  position: absolute;
+  right: 30px;
+  line-height: $height;
+}

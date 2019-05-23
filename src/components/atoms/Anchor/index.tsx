@@ -7,8 +7,10 @@ export interface AnchorClassName {
   anchor?: string;
 }
 
-export interface AnchorProps extends ElementProps {
+export interface AnchorProps {
   to?: string;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 const Anchor = (props: AnchorProps) => {

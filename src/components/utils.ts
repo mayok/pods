@@ -4,6 +4,7 @@ export interface ElementProps {
   tagName?: string;
   className?: string;
   classNames?: string;
+  style?: { [key: string]: string };
   onClick?: () => void;
   children?: React.ReactNode;
   role?: string;

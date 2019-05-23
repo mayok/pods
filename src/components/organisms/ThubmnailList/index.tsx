@@ -15,7 +15,7 @@ const ThumbnailList = (props: Props) => {
   return (
     <div className={styles.root}>
       {props.data.map(e => (
-        <Thumbnail key={e.title} {...e} className={styles.thumbnail} />
+        <Thumbnail key={e.title} {...e} className={styles.thumbnail} width={192} height={192} />
       ))}
     </div>
   );

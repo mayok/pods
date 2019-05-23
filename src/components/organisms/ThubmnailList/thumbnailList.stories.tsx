@@ -22,6 +22,14 @@ const data = [
   },
 ];
 
+const data2 = [
+  {
+    src: '',
+    title: 'long long long long long long long long title',
+  },
+];
+
 storiesOf('organisms/ThumbnailList', module)
   .addDecorator(withKnobs)
-  .add('default', () => <ThumbnailList data={data} />);
+  .add('default', () => <ThumbnailList data={data} />)
+  .add('long title', () => <ThumbnailList data={data2} />);

@@ -8,10 +8,13 @@ export interface ImageClassName {
 
 export interface ImageProps extends ElementProps {
   src: string;
+  width?: number;
+  height?: number;
 }
 
 const Image = (props: ImageProps) => {
-  return <Element tagName="img" classNames={styles.image} {...props} />;
+  const { width = 72, height = 72 } = props;
+  return <Element tagName="img" classNames={styles.image} width={width} height={height} {...props} />;
 };
 
 export default Image;

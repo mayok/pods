@@ -17,3 +17,16 @@
   padding: 4px 8px;
   line-height: 1.6;
 }
+
+.round-button {
+  composes: button-base;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 0;
+
+  &::first-letter {
+    font-size: 20px;
+  }
+}
