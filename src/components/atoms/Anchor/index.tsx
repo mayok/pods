@@ -15,7 +15,7 @@ const Anchor = (props: AnchorProps) => {
   const { to = '/' } = props;
 
   return (
-    <Link to={to} classNames={styles.anchor} {...props}>
+    <Link to={to} className={styles.anchor} {...props}>
       {props.children}
     </Link>
   );
