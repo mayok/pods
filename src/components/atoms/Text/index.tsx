@@ -8,7 +8,7 @@ export interface TextClassName {
 
 const Text = (props: ElementProps) => {
   return (
-    <Element className={styles.text} {...props}>
+    <Element tagName="p" classNames={styles.text} {...props}>
       {props.children}
     </Element>
   );

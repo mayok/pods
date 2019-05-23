@@ -16,10 +16,10 @@ const Heading = (props: HeadingProps) => {
   const { children = undefined, level = 2, visualLevel = 2, ...rest } = props;
 
   const tagName = `h${level}`;
-  const className = [styles.heading, styles[`h${visualLevel}`]].join(' ');
+  const classNames = [styles.heading, styles[`h${visualLevel}`]].join(' ');
 
   return (
-    <Element tagName={tagName} className={className} {...rest}>
+    <Element tagName={tagName} classNames={classNames} {...rest}>
       {children}
     </Element>
   );

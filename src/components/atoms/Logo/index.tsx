@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import Heading, { HeadingClassName } from '../Heading';
 import { ElementProps } from '../../utils';
+import Heading, { HeadingClassName } from '../Heading';
 const styles: LogoClassName = require('./logo.scss');
 
 export interface LogoClassName extends HeadingClassName {
@@ -12,11 +11,9 @@ const Logo = (props: ElementProps) => {
   const { ...rest } = props;
 
   return (
-    <Link to="/">
-      <Heading level={1} className={styles.logo} {...rest}>
-        {props.children}
-      </Heading>
-    </Link>
+    <Heading level={1} classNames={styles.logo} {...rest}>
+      {props.children}
+    </Heading>
   );
 };
 

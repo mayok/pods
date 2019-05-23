@@ -3,13 +3,15 @@ import * as React from 'react';
 export interface ElementProps {
   tagName?: string;
   className?: string;
+  classNames?: string;
   onClick?: () => void;
   children?: React.ReactNode;
   role?: string;
 }
 
 export function Element(props: ElementProps) {
-  const { tagName = 'div', children = null, ...rest } = props;
+  const { tagName = 'div', children = null, className = undefined, classNames = undefined, ...rest } = props;
+  const _className = [className, classNames].join(' ');
 
-  return React.createElement(tagName, { className: [props.className, rest.className].join(' '), ...rest }, children);
+  return React.createElement(tagName, { className: _className, ...rest }, children);
 }

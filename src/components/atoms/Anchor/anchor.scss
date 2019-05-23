@@ -1,0 +1,7 @@
+.anchor-base {
+  text-decoration: none;
+}
+
+.anchor {
+  composes: anchor-base;
+}

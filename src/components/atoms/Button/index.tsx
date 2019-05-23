@@ -8,7 +8,7 @@ export interface ButtonClassName {
 
 const Button = (props: ElementProps) => {
   return (
-    <Element tagName="button" className={styles.button} {...props}>
+    <Element tagName="button" classNames={styles.button} {...props}>
       {props.children}
     </Element>
   );

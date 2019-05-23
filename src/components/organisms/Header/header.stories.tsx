@@ -5,4 +5,4 @@ import Header from '.';
 
 storiesOf('organisms/Header', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>)
-  .add('header', () => <Header />);
+  .add('header', () => <Header title="Title" />);

@@ -1,13 +1,19 @@
+@import '../../variables.scss';
+
+$height: 60px;
+
 .header {
   width: 100%;
-  height: 60px;
+  height: $height;
+  background: $white;
 }
 
 .logo {
   display: inline-block;
-  margin: 7.5px 0;
+  margin-right: 16px;
+  margin-left: 12px;
   padding: 0 8px;
-  height: 45px;
-  line-height: 45px;
+  height: $height;
+  line-height: $height;
   box-sizing: border-box;
 }

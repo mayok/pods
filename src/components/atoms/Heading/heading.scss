@@ -1,22 +1,30 @@
-.heading-base {
+// .heading-base {
+//   margin: 0;
+// }
+
+.heading {
   margin: 0;
 }
 
-.h1-base {
+.h1 {
   font-size: 2em;
 }
-.h2-base {
+.h2 {
   font-size: 1.8em;
 }
-.h3-base {
-  font-size: 1.5em;
+.h3 {
+  font-size: 1.6em;
 }
-.h4-base {
-  font-size: 1.3em;
+.h4 {
+  font-size: 1.4em;
 }
-.h5-base {
+.h5 {
+  font-size: 1.2em;
+}
+.h6 {
   font-size: 1em;
 }
-.h6-base {
-  font-size: 0.8em;
-}
+
+// .heading {
+//   composes: heading-base;
+// }

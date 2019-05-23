@@ -1,19 +1,29 @@
 import * as React from 'react';
-import Logo, { LogoClassName } from '../../atoms/Logo';
+import Heading from '../../atoms/Heading';
 import { ElementProps } from '../../utils';
+import Anchor from '../../atoms/Anchor';
 
-const styles: HeaderClassNames = require('./header.scss');
+const styles: HeaderClassName = require('./header.scss');
 
-export interface HeaderClassNames extends LogoClassName {
+export interface HeaderClassName {
   header?: string;
+  logo?: string;
 }
 
-const Header = (props: ElementProps) => {
+export interface HeaderProps extends ElementProps {
+  title?: string;
+}
+
+const Header = (props: HeaderProps) => {
+  const { title = 'Pods ' } = props;
+
   return (
     <div className={styles.header}>
-      <Logo className={styles.logo} {...props}>
-        {props.children}
-      </Logo>
+      <Anchor to="/">
+        <Heading level={1} visualLevel={4} className={styles.logo} {...props}>
+          {title}
+        </Heading>
+      </Anchor>
     </div>
   );
 };
