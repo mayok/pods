@@ -11,7 +11,7 @@ export interface ElementProps {
 
 export function Element(props: ElementProps) {
   const { tagName = 'div', children = null, className = undefined, classNames = undefined, ...rest } = props;
-  const _className = [className, classNames].join(' ');
+  const _className = [classNames, className].join(' ');
 
   return React.createElement(tagName, { className: _className, ...rest }, children);
 }

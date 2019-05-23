@@ -1,22 +1,27 @@
 import * as React from 'react';
+import Image from '../../atoms/Image';
+import Text from '../../atoms/Text';
+import { Element } from '../../utils';
 
-const ThumbnailClass: ThumbnailClassNames = require('./thumbnail.scss');
+const thumbnailClass: ThumbnailClassNames = require('./thumbnail.scss');
 
 export interface ThumbnailClassNames {
   thumbnail: string;
   image: string;
 }
 
-interface Props {
-  src?: string;
-  onClick?: () => void;
+export interface ThumbnailProps {
+  src: string;
+  title?: string;
+  className?: string;
 }
 
-const Thumbnail = (props: Props) => {
+const Thumbnail = (props: ThumbnailProps) => {
   return (
-    <div className={ThumbnailClass.thumbnail}>
-      <img onClick={props.onClick} className={ThumbnailClass.image} src={props.src} />
-    </div>
+    <Element classNames={thumbnailClass.thumbnail} className={props.className}>
+      <Image src={props.src} />
+      <Text>{props.title}</Text>
+    </Element>
   );
 };
 

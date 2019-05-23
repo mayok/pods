@@ -1,0 +1,11 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 192px);
+  gap: 24px;
+}
+
+// .thumbnail {
+// & + & {
+//   margin-left: 24px;
+// }
+// }
