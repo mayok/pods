@@ -9,7 +9,7 @@ export interface Props {
 
 const ChannelList = (props: Props) => {
   return (
-    <Element className={styles.root} {...props}>
+    <Element styles={styles.root} {...props}>
       {props.data.map(e => (
         <ChannelItem key={e.title} className={styles.item} {...e} />
       ))}
