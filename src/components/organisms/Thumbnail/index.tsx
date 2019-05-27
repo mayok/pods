@@ -3,7 +3,7 @@ import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
 import { Element } from '../../utils';
 
-const thumbnailClass: ThumbnailClassNames = require('./thumbnail.scss');
+const styles: ThumbnailClassNames = require('./thumbnail.scss');
 
 export interface ThumbnailClassNames {
   thumbnail?: string;
@@ -23,9 +23,9 @@ const Thumbnail = (props: ThumbnailProps) => {
   const { width = 192, height = 192 } = props;
 
   return (
-    <Element classNames={thumbnailClass.thumbnail} className={props.className}>
-      <Image classNames={thumbnailClass.image} src={props.src} width={width} height={height} />
-      <Text classNames={thumbnailClass.text}>{props.title}</Text>
+    <Element styles={styles.thumbnail} className={props.className}>
+      <Image className={styles.image} src={props.src} width={width} height={height} />
+      <Text className={styles.text}>{props.title}</Text>
     </Element>
   );
 };

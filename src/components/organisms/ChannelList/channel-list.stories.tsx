@@ -28,4 +28,4 @@ const data = [
 
 storiesOf('organisms/ChannelList', module)
   .addDecorator(withKnobs)
-  .add('default', () => <ChannelList data={data} style={{ width: '720px' }} />);
+  .add('default', () => <ChannelList data={data} />);

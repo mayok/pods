@@ -16,7 +16,7 @@ export interface IconProps extends ElementProps {
 const Icon = (props: IconProps) => {
   const { src = '', width = 20, height = 20, ...rest } = props;
 
-  return <Image src={src} classNames={styles.icon} width={width} height={height} {...rest} />;
+  return <Image src={src} styles={styles.icon} width={width} height={height} {...rest} />;
 };
 
 export default Icon;

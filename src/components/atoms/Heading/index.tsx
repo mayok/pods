@@ -19,7 +19,7 @@ const Heading = (props: HeadingProps) => {
   const classNames = [styles.heading, styles[`h${visualLevel}`]].join(' ');
 
   return (
-    <Element tagName={tagName} classNames={classNames} {...rest}>
+    <Element tagName={tagName} styles={classNames} {...rest}>
       {children}
     </Element>
   );

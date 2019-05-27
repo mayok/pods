@@ -11,7 +11,7 @@ const Logo = (props: ElementProps) => {
   const { ...rest } = props;
 
   return (
-    <Heading level={1} classNames={styles.logo} {...rest}>
+    <Heading level={1} styles={styles.logo} {...rest}>
       {props.children}
     </Heading>
   );

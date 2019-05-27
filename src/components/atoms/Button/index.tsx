@@ -9,7 +9,7 @@ export interface ButtonClassName {
 
 const Button = (props: ElementProps) => {
   return (
-    <Element tagName="button" classNames={styles.button} {...props}>
+    <Element tagName="button" styles={styles.button} {...props}>
       {props.children}
     </Element>
   );
@@ -17,7 +17,7 @@ const Button = (props: ElementProps) => {
 
 export const RoundButton = (props: ElementProps) => {
   return (
-    <Button classNames={styles.roundButton} {...props}>
+    <Button styles={styles.roundButton} {...props}>
       {props.children}
     </Button>
   );

@@ -14,7 +14,7 @@ export interface ImageProps extends ElementProps {
 
 const Image = (props: ImageProps) => {
   const { width = 72, height = 72 } = props;
-  return <Element tagName="img" classNames={styles.image} width={width} height={height} {...props} />;
+  return <Element tagName="img" styles={styles.image} width={width} height={height} {...props} />;
 };
 
 export default Image;

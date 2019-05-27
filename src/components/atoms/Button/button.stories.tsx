@@ -1,7 +1,7 @@
 import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
-import Button from '.';
+import Button, { RoundButton } from '.';
 
 storiesOf('atoms/Button', module)
   .addDecorator(withKnobs)
@@ -15,4 +15,5 @@ storiesOf('atoms/Button', module)
     >
       Click me
     </Button>
-  ));
+  ))
+  .add('round button', () => <RoundButton>Hello</RoundButton>);

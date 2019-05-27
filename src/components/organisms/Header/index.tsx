@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Heading from '../../atoms/Heading';
-import { ElementProps } from '../../utils';
 import Anchor from '../../atoms/Anchor';
+import Heading from '../../atoms/Heading';
+import { Element, ElementProps } from '../../utils';
 
 const styles: HeaderClassName = require('./header.scss');
 
@@ -18,13 +18,13 @@ const Header = (props: HeaderProps) => {
   const { title = 'Pods ' } = props;
 
   return (
-    <div className={styles.header}>
+    <Element styles={styles.header} {...props}>
       <Anchor to="/">
         <Heading level={1} visualLevel={4} className={styles.logo} {...props}>
           {title}
         </Heading>
       </Anchor>
-    </div>
+    </Element>
   );
 };
 

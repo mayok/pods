@@ -14,7 +14,7 @@ export interface Props extends ElementProps {
 
 const MediaObjectLayout = (props: Props) => {
   return (
-    <Element classNames={styles.root} {...props}>
+    <Element styles={styles.root} {...props}>
       <div className={styles.media}>{props.children[0]}</div>
       <div className={styles.body}>{props.children.slice(1)}</div>
     </Element>

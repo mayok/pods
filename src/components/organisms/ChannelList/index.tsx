@@ -5,7 +5,6 @@ const styles = require('./channel-list.scss');
 
 export interface Props {
   data: ChannelItemProps[];
-  style?: { [key: string]: string };
 }
 
 const ChannelList = (props: Props) => {
