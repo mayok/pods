@@ -1,19 +1,20 @@
 import * as React from 'react';
+import Header from '../../organisms/Header';
+import Navigationbar from '../../organisms/NavigationBar';
+import ThumbnailList from '../../organisms/ThubmnailList';
+import TLayout from '../../atoms/TLayout';
 
 export interface Props {
-  header: React.ReactNode;
-  nav: React.ReactNode;
-  content: React.ReactNode;
-  props?: React.ReactNode;
+  data?: any;
 }
 
-const HomeTemplate = ({ header, nav, content, ...props }: Props) => {
+const HomeTemplate = ({ data }: Props) => {
   return (
-    <div>
-      {header}
-      {nav}
-      {content}
-    </div>
+    <TLayout>
+      <Header />
+      <Navigationbar />
+      <ThumbnailList data={[]} />
+    </TLayout>
   );
 };
 

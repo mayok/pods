@@ -7,13 +7,13 @@ export interface verticalLayoutClassName {
 }
 
 export interface Props extends ElementProps {
-  children: React.ReactNodeArray;
+  children: React.ReactNode;
 }
 
 const VerticalLayout = (props: Props) => {
   return (
     <Element styles={styles.root} {...props}>
-      {props.children.map(e => e)}
+      {React.Children.map(props.children, child => child)}
     </Element>
   );
 };

@@ -1,21 +1,20 @@
 import * as React from 'react';
+import Header from '../../organisms/Header';
+import NavigationBar from '../../organisms/NavigationBar';
+import ChannelList from '../../organisms/ChannelList';
+import TLayout from '../../atoms/TLayout';
 
 export interface Props {
-  header: React.ReactNode;
-  nav: React.ReactNode;
-  content: React.ReactNode;
-  footer: React.ReactNode;
-  props?: React.ReactNode;
+  data?: any;
 }
 
-const ChannelTemplate = ({ header, nav, content, footer, ...props }: Props) => {
+const ChannelTemplate = ({ data }: Props) => {
   return (
-    <div>
-      {header}
-      {nav}
-      {content}
-      {footer}
-    </div>
+    <TLayout>
+      <Header />
+      <NavigationBar />
+      <ChannelList data={[]} />
+    </TLayout>
   );
 };
 

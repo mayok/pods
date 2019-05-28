@@ -1,16 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import config from './config.json';
-import App from './containers/app';
-import { getInitialState } from './reducers';
+import Home from './components/pages/Home';
+import Channel from './components/pages/Channel';
 
-// leading slash, but no trailing slash
-const basename = '/' + config.basename.split('/').filter((e: string) => e)[0];
+const App = () => {
+  // leading slash, but no trailing slash
+  const basename = '/' + config.basename.split('/').filter((e: string) => e)[0];
 
-ReactDOM.render(
-  <BrowserRouter basename={basename}>
-    <App {...getInitialState()} />
-  </BrowserRouter>,
-  document.querySelector('.app')
-);
+  return (
+    <BrowserRouter basename={basename}>
+      <Switch>
+        <Route exact path="/" render={() => <Home />} />
+        <Route path="/:channel" render={() => <Channel />} />
+      </Switch>
+    </BrowserRouter>
+  );
+};
+
+ReactDOM.render(<App />, document.querySelector('.app'));

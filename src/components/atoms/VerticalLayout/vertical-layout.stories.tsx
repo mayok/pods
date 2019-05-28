@@ -2,7 +2,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import VerticalLayout from '.';
-import { RoundButton } from '../Button';
+import Button, { RoundButton } from '../Button';
 
 storiesOf('atoms/VerticalLayout', module)
   .addDecorator(withKnobs)
@@ -11,5 +11,10 @@ storiesOf('atoms/VerticalLayout', module)
       <RoundButton>Sushi</RoundButton>
       <RoundButton>Tenpura</RoundButton>
       <RoundButton>Fujiyama</RoundButton>
+    </VerticalLayout>
+  ))
+  .add('only a child', () => (
+    <VerticalLayout style={{ width: '192px' }}>
+      <Button>Hi</Button>
     </VerticalLayout>
   ));

@@ -1,0 +1,23 @@
+.root {
+  // display: flex;
+  // flex-flow: row wrap;
+}
+
+.header {
+  // flex: 1 100%;
+}
+
+.nav {
+  // flex: 1 auto;
+  float: left;
+}
+
+.body {
+  // flex: 7 0px;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
