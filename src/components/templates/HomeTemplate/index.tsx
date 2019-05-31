@@ -1,21 +1,14 @@
 import * as React from 'react';
-import Header from '../../organisms/Header';
-import Navigationbar from '../../organisms/NavigationBar';
 import ThumbnailList from '../../organisms/ThubmnailList';
-import TLayout from '../../atoms/TLayout';
 
 export interface Props {
   data?: any;
+  filter?: string;
+  onClick?: (key: string) => void;
 }
 
-const HomeTemplate = ({ data }: Props) => {
-  return (
-    <TLayout>
-      <Header />
-      <Navigationbar />
-      <ThumbnailList data={[]} />
-    </TLayout>
-  );
+const HomeTemplate = (props: Props) => {
+  return <ThumbnailList data={props.data} filter={props.filter} onClick={props.onClick} />;
 };
 
 export default HomeTemplate;

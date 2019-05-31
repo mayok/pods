@@ -10,13 +10,26 @@ export interface ThumbnailListClassName {
 
 interface Props {
   data: ThumbnailProps[];
+  filter?: string;
+  onClick?: (title: string) => void;
 }
 
 const ThumbnailList = (props: Props) => {
   return (
-    <Element styles={styles.root} {...props}>
+    <Element styles={styles.root}>
+      {/* props.data.filter(props.filter).map */}
       {props.data.map(e => (
-        <Thumbnail key={e.title} {...e} className={styles.thumbnail} width={192} height={192} />
+        // onClick
+        <Thumbnail
+          key={e.title}
+          className={styles.thumbnail}
+          src={e.src}
+          onClick={() => {
+            props.onClick!(e.title!);
+          }}
+          width={192}
+          height={192}
+        />
       ))}
     </Element>
   );

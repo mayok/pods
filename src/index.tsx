@@ -1,9 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import config from './config.json';
-import Home from './components/pages/Home';
 import Channel from './components/pages/Channel';
+import Home from './components/pages/Home';
+import config from './config.json';
+import { provider } from './provider';
+import { repository } from './repository';
+import appStore from './store/app';
+import homeStore from './store/home';
+import channelStore from './store/channel';
+
+const stores = {
+  appStore,
+  homeStore,
+  channelStore,
+};
+
+export const MyContext = React.createContext({ repository, provider });
+export const RootStore = React.createContext({ ...stores });
 
 const App = () => {
   // leading slash, but no trailing slash

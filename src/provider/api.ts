@@ -2,13 +2,25 @@ import * as convert from 'xml-js';
 import config from '../config.json';
 import { Channel } from '../reducers';
 
-// fetch channel list
-export const fetchList = async (path: string): Promise<string[]> => {
-  const response = await fetch(`${config.host}/${path}/`);
-  const list = await response.json();
+export interface IList {
+  [key: string]: string[];
+}
 
-  // todo:
-  return list.channels;
+// fetch channel list
+export const fetchList = (): IList => {
+  const response: IList = {};
+
+  Promise.all(
+    config.paths.map(async path => {
+      fetch(`${config.host}/${path}`)
+        .then(data => data.json())
+        .then(list => {
+          response[path] = list.channels;
+        });
+    })
+  );
+
+  return response;
 };
 
 // fetch channel contents

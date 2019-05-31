@@ -1,7 +1,14 @@
-export const _set = async (key: string, value: string) => {
-  localStorage.setItem(key, value)
+export interface IList {
+  [key: string]: { channel: string; thumbnail?: string }[];
 }
 
-export const _get = async (key: string) => {
-  return localStorage.getItem(key)
-}
+export const repository = {
+  list: (): IList => {
+    return JSON.parse(localStorage.getItem('list') || '{}');
+  },
+  contents: () => {},
+  setList: (list: IList) => {
+    localStorage.setItem('list', JSON.stringify(list));
+  },
+  setContents: () => {},
+};
