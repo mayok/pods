@@ -24,7 +24,7 @@ const Thumbnail = (props: ThumbnailProps) => {
   const { width = 192, height = 192 } = props;
 
   return (
-    <Element styles={styles.thumbnail} className={props.className}>
+    <Element styles={styles.thumbnail} className={props.className} onClick={props.onClick}>
       <Image className={styles.image} src={props.src} width={width} height={height} />
       <Text className={styles.text}>{props.title}</Text>
     </Element>

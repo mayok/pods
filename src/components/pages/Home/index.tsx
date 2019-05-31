@@ -9,7 +9,8 @@ const Home = (props: Props) => {
   const store = useContext(RootStore);
 
   const onClick = (channel: string) => {
-    //
+    store.appStore.setComponent('channel');
+    store.channelStore.setChannelName(channel);
   };
 
   useEffect(() => {

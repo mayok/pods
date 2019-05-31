@@ -17,20 +17,20 @@ interface Props {
 const ThumbnailList = (props: Props) => {
   return (
     <Element styles={styles.root}>
-      {/* props.data.filter(props.filter).map */}
-      {props.data.map(e => (
-        // onClick
-        <Thumbnail
-          key={e.title}
-          className={styles.thumbnail}
-          src={e.src}
-          onClick={() => {
-            props.onClick!(e.title!);
-          }}
-          width={192}
-          height={192}
-        />
-      ))}
+      {props.data
+        .filter(e => props.filter == e.title || !!props.filter)
+        .map(e => (
+          <Thumbnail
+            key={e.title}
+            className={styles.thumbnail}
+            src={e.src}
+            onClick={() => {
+              props.onClick!(e.title!);
+            }}
+            width={192}
+            height={192}
+          />
+        ))}
     </Element>
   );
 };

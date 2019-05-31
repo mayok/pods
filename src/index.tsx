@@ -9,6 +9,7 @@ import { repository } from './repository';
 import appStore from './store/app';
 import homeStore from './store/home';
 import channelStore from './store/channel';
+import App from './components/pages/App';
 
 const stores = {
   appStore,
@@ -19,18 +20,18 @@ const stores = {
 export const MyContext = React.createContext({ repository, provider });
 export const RootStore = React.createContext({ ...stores });
 
-const App = () => {
-  // leading slash, but no trailing slash
-  const basename = '/' + config.basename.split('/').filter((e: string) => e)[0];
+// const App = () => {
+//   // leading slash, but no trailing slash
+//   const basename = '/' + config.basename.split('/').filter((e: string) => e)[0];
 
-  return (
-    <BrowserRouter basename={basename}>
-      <Switch>
-        <Route exact path="/" render={() => <Home />} />
-        <Route path="/:channel" render={() => <Channel />} />
-      </Switch>
-    </BrowserRouter>
-  );
-};
+//   return (
+//     <BrowserRouter basename={basename}>
+//       <Switch>
+//         <Route exact path="/" render={() => <Home />} />
+//         <Route path="/:channel" render={() => <Channel />} />
+//       </Switch>
+//     </BrowserRouter>
+//   );
+// };
 
 ReactDOM.render(<App />, document.querySelector('.app'));
