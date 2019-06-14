@@ -8,18 +8,18 @@ export interface AnchorClassName {
 }
 
 export interface AnchorProps {
-  to?: string;
+  href?: string;
   className?: string;
   children?: React.ReactNode;
 }
 
 const Anchor = (props: AnchorProps) => {
-  const { to = '/' } = props;
+  const { href = '/' } = props;
 
   return (
-    <Link to={to} className={styles.anchor} {...props}>
+    <a href={href} className={styles.anchor} {...props}>
       {props.children}
-    </Link>
+    </a>
   );
 };
 export default Anchor;

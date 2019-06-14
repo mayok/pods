@@ -10,15 +10,20 @@ export interface tLayoutClassNames {
 }
 
 export interface Props extends ElementProps {
-  children: React.ReactNodeArray;
+  header?: React.ReactNode;
+  nav?: React.ReactNode;
+  main?: React.ReactNode;
 }
 
 const TLayout = (props: Props) => {
   return (
-    <Element styles={styles.root} {...props}>
-      <div className={styles.header}>{props.children[0]}</div>
-      <div className={styles.nav}>{props.children[1]}</div>
-      <div className={styles.body}>{props.children.slice(2)}</div>
+    <Element styles={styles.root}>
+      <div className={styles.header}>{props.header}</div>
+      <div className={styles.body}>
+        {props.nav}
+        {props.main}
+        <div />
+      </div>
     </Element>
   );
 };

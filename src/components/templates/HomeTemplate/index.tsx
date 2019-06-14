@@ -1,8 +1,9 @@
 import * as React from 'react';
 import ThumbnailList from '../../organisms/ThubmnailList';
+import { IListItem } from '../../../repository';
 
 export interface Props {
-  data?: any;
+  data?: IListItem[];
   filter?: string;
   onClick?: (key: string) => void;
 }

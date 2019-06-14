@@ -13,9 +13,12 @@
     "build:dev": "cross-env NODE_ENV=development parcel build src/index.html --public-url ./"
   },
   "dependencies": {
+    "components": "^0.1.0",
+    "config.json": "^0.0.4",
+    "index": "^0.4.0",
     "mobx": "^5.9.4",
-    "mobx-react": "^5.4.3",
-    "mobx-react-lite": "^1.2.0",
+    "mobx-react": "^6.0.3",
+    "postcss-modules": "^1.4.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-router-dom": "^5.0.0",

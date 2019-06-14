@@ -15,11 +15,11 @@ export interface HeaderProps extends ElementProps {
 }
 
 const Header = (props: HeaderProps) => {
-  const { title = 'Pods ' } = props;
+  const { title = 'Sample' } = props;
 
   return (
     <Element styles={styles.header} {...props}>
-      <Anchor to="/">
+      <Anchor href="/">
         <Heading level={1} visualLevel={4} className={styles.logo} {...props}>
           {title}
         </Heading>

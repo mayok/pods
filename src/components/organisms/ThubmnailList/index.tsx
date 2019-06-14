@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Thumbnail, { ThumbnailProps } from '../Thumbnail';
 import { Element } from '../../utils';
+import { IListItem } from '../../../repository';
+import { Link } from 'react-router-dom';
 const styles: ThumbnailListClassName = require('./thumbnailList.scss');
 
 export interface ThumbnailListClassName {
@@ -9,7 +11,7 @@ export interface ThumbnailListClassName {
 }
 
 interface Props {
-  data: ThumbnailProps[];
+  data?: IListItem[];
   filter?: string;
   onClick?: (title: string) => void;
 }
@@ -17,20 +19,22 @@ interface Props {
 const ThumbnailList = (props: Props) => {
   return (
     <Element styles={styles.root}>
-      {props.data
-        .filter(e => props.filter == e.title || !!props.filter)
-        .map(e => (
-          <Thumbnail
-            key={e.title}
-            className={styles.thumbnail}
-            src={e.src}
-            onClick={() => {
-              props.onClick!(e.title!);
-            }}
-            width={192}
-            height={192}
-          />
-        ))}
+      {props.data &&
+        props.data
+          .filter(e => props.filter === e.group || !props.filter)
+          .map(e => (
+            <Link to={`/${e.group}/${e.shortname}`} key={e.shortname}>
+              <Thumbnail
+                className={styles.thumbnail}
+                src=""
+                onClick={() => {
+                  props.onClick!(e.shortname);
+                }}
+                width={192}
+                height={192}
+              />
+            </Link>
+          ))}
     </Element>
   );
 };

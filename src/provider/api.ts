@@ -7,15 +7,15 @@ export interface IList {
 }
 
 // fetch channel list
-export const fetchList = (): IList => {
+export const fetchList = async (): Promise<IList> => {
   const response: IList = {};
 
-  Promise.all(
+  await Promise.all(
     config.paths.map(async path => {
-      fetch(`${config.host}/${path}`)
+      await fetch(`${config.host}/${path}/`)
         .then(data => data.json())
-        .then(list => {
-          response[path] = list.channels;
+        .then(json => {
+          response[path] = json.channels;
         });
     })
   );

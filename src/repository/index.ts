@@ -1,16 +1,22 @@
-export interface IList {
+export interface IListItem {
   group: string;
-  title: string;
+  shortname: string;
   thumbnail?: string;
 }
 
 export const repository = {
-  list: (): IList[] => {
+  list: (): IListItem[] => {
     return JSON.parse(localStorage.getItem('list') || '[]');
   },
-  contents: () => {},
-  setList: (list: IList[]) => {
+  contents: (shortname: string) => {
+    const item = localStorage.getItem(`${shortname}`);
+    if (item) {
+      return JSON.parse(item);
+    }
+    return item;
+  },
+  setList: (list: IListItem[]) => {
     localStorage.setItem('list', JSON.stringify(list));
   },
-  setContents: () => {},
+  setContents: (title: string) => {},
 };

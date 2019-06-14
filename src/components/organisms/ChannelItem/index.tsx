@@ -3,6 +3,7 @@ import MediaObjectLayout from '../../atoms/MediaObjectLayout';
 import Icon from '../../atoms/Icon';
 import { ElementProps } from '../../utils';
 import Text from '../../atoms/Text';
+import { IContent } from '../../../store/channel';
 const styles: ChannelItemClassname = require('./channel-item.scss');
 
 export interface ChannelItemClassname {
@@ -12,18 +13,19 @@ export interface ChannelItemClassname {
   time?: string;
 }
 
-export interface ChannelItemProps extends ElementProps {
-  src?: string;
-  title?: string;
-  time?: string;
-}
+// export interface ChannelItemProps extends ElementProps {
+//   src?: string;
+//   title?: string;
+//   time?: string;
+// }
+export interface Props extends IContent, ElementProps {}
 
-const ChannelItem = (props: ChannelItemProps) => {
+const ChannelItem = (props: Props) => {
   return (
     <MediaObjectLayout styles={styles.item} className={props.className}>
-      <Icon src={props.src} className={styles.icon} />
-      <Text className={styles.title}>{props.title}</Text>
-      <Text className={styles.time}>{props.time}</Text>
+      <Icon src={props.url} className={styles.icon} />
+      <Text className={styles.title}>{props.name}</Text>
+      <Text className={styles.time}>{props.date}</Text>
     </MediaObjectLayout>
   );
 };
